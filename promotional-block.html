@@ -1,0 +1,56 @@
+<style>
+  .promotional-2024-03-07-block .container {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(5, [col] 100px);
+    grid-template-rows: repeat(3, [row] auto);
+    background-color: #fff;
+    color: #242424;
+  }
+
+  .promotional-2024-03-07-block .box {
+    background-color: #242424;
+    color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 150%;
+    z-index: 10;
+  }
+
+  .promotional-2024-03-07-block .image {
+    grid-column: col / span 3;
+    grid-row: row / span 28;
+    background-color: rgba(149, 71, 71, 0.5);
+    z-index: 20;
+  }
+
+  .promotional-2024-03-07-block .price {
+    grid-column: col 4 / span 2;
+  }
+
+  .promotional-2024-03-07-block .background {
+    grid-column: col 3 / span 3;
+    grid-row: row 2 / span 28;
+    background-color: rgba(49, 121, 207, 0.5);
+  }
+
+  .promotional-2024-03-07-block .caption {
+    grid-column: col / span 2;
+  }
+</style>
+<article class="promotional-2024-03-07-block">
+  <div class="container">
+    <div class="image box">
+      <h2>Image</h2>
+    </div>
+    <div class="box price">
+      <p>$1.99</p>
+    </div>
+    <div class="box caption">
+      <p>Image is doing something</p>
+    </div>
+    <div class="background box">
+      <span> Background </span>
+    </div>
+  </div>
+</article>
