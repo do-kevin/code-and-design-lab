@@ -1,7 +1,27 @@
 <style>
+  body {
+    background: #181818;
+  }
   .promotional-2024-03-07-block,
   .promotional-2024-03-07-block * {
     box-sizing: border-box;
+  }
+
+  .promotional-2024-03-07-block img {
+    max-width: 100%;
+    opacity: 0.75;
+  }
+
+  .promotional-2024-03-07-block .flex-start {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .promotional-2024-03-07-block p {
+    padding-right: 15px;
+    font-size: clamp(16px, 20px, 2vw);
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .promotional-2024-03-07-block .center-all {
@@ -16,65 +36,87 @@
     grid-gap: 10px;
     grid-template-columns: repeat(5, [col] auto);
     grid-template-rows: repeat(3, [row] auto);
-    background-color: #fff;
-    color: #242424;
     margin: 0 auto;
   }
 
   .promotional-2024-03-07-block .box {
-    background-color: #242424;
     color: #fff;
-    border-radius: 5px;
-    padding: 20px;
-    font-size: 150%;
+    border-radius: 4px;
+    font-size: 1.25rem;
     z-index: 10;
+    background: transparent;
   }
 
   .promotional-2024-03-07-block .image {
-    grid-column: col / span 3;
-    grid-row: row / span 115;
+    grid-column: 1 / col 3;
+    grid-row: row 1 / span 12;
     background-color: rgba(149, 71, 71, 0.5);
-    z-index: 20;
+    border: 2px dashed green;
+    z-index: 30;
   }
 
   .promotional-2024-03-07-block .price {
-    grid-column: col 4 / span 2;
-    grid-row: 20;
+    grid-row: 4;
+  }
+
+  .promotional-2024-03-07-block .price p {
+    font-size: clamp(16px, 32px, 4vw);
   }
 
   .promotional-2024-03-07-block .background {
-    grid-column: col 3 / span 3;
-    grid-row: row 20 / span 105;
-    background-color: rgba(49, 121, 207, 0.5);
+    grid-column: col 2 / span 3;
+    grid-row: row 4 / span 12;
+    border: 2px dashed blue;
+    background: transparent;
   }
 
   .promotional-2024-03-07-block .caption {
-    grid-column: col / span 2;
+    grid-column: 1;
   }
 </style>
 
 <article class="promotional-2024-03-07-block">
-  <div
-    style="max-width: 1440px; margin: 0 auto; position: relative; z-index: 20"
-  >
+  <div style="max-width: 1440px; margin: 0 auto">
     <h1
-      style="text-align: center; position: absolute; left: 40%; font-size: 9ch"
+      style="
+        text-align: center;
+        font-size: clamp(52px, 144px, 9vw);
+        position: relative;
+        z-index: 99;
+        top: 2.5vw;
+        line-height: 1;
+        height: 0;
+        color: pink;
+      "
     >
-      Heading
+      Be Your Best Self
     </h1>
   </div>
   <div class="container">
-    <div class="image box center-all">
-      <h2>Image</h2>
+    <div class="image box">
+      <picture>
+        <img
+          src="./assets/images/vince-mariel-conlu-ajDUxve6clA-unsplash-min.jpg"
+          alt=""
+        />
+      </picture>
     </div>
     <div class="box price">
       <p>$1.99</p>
     </div>
     <div class="box caption">
-      <p>Image is doing something</p>
+      <p>
+        ↑ Jane Doe holding
+        <u style="text-underline-offset: 2px">Rare Beauty lip oil</u>.
+      </p>
     </div>
-    <div class="background box center-all">
-      <span> Background </span>
+    <div class="background box flex-start">
+      <picture>
+        <img
+          src="./assets/images/susan-wilkinson-Da8-AqI460k-unsplash-min.jpg"
+          alt=""
+        />
+      </picture>
     </div>
   </div>
 </article>
