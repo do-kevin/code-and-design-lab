@@ -1,36 +1,36 @@
 <style>
   body {
-    background: #181818;
+    background: #000;
   }
-  .promotional-2024-03-07-block,
-  .promotional-2024-03-07-block * {
+  .promotional-2024-03-04-block,
+  .promotional-2024-03-04-block * {
     box-sizing: border-box;
   }
 
-  .promotional-2024-03-07-block img {
+  .promotional-2024-03-04-block img {
     max-width: 100%;
-    opacity: 0.75;
   }
 
-  .promotional-2024-03-07-block .flex-start {
+  .promotional-2024-03-04-block .flex-start {
     display: flex;
     align-items: flex-start;
   }
 
-  .promotional-2024-03-07-block p {
+  .promotional-2024-03-04-block p {
     padding-right: 15px;
+    font-size: 16px;
     font-size: clamp(16px, 20px, 2vw);
     margin-top: 0;
     margin-bottom: 0;
   }
 
-  .promotional-2024-03-07-block .center-all {
+  .promotional-2024-03-04-block .center-all {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .promotional-2024-03-07-block .container {
+  .promotional-2024-03-04-block .container {
     max-width: 1440px;
     display: grid;
     grid-gap: 10px;
@@ -39,43 +39,55 @@
     margin: 0 auto;
   }
 
-  .promotional-2024-03-07-block .box {
+  .promotional-2024-03-04-block .box {
     color: #fff;
     border-radius: 4px;
-    font-size: 1.25rem;
     z-index: 10;
     background: transparent;
   }
 
-  .promotional-2024-03-07-block .image {
+  .promotional-2024-03-04-block .image {
     grid-column: 1 / col 3;
     grid-row: row 1 / span 12;
-    background-color: rgba(149, 71, 71, 0.5);
-    border: 2px dashed green;
     z-index: 30;
   }
 
-  .promotional-2024-03-07-block .price {
+  .promotional-2024-03-04-block .price {
     grid-row: 4;
+    grid-column: 3;
+    grid-row: 2;
   }
 
-  .promotional-2024-03-07-block .price p {
+  .promotional-2024-03-04-block .price p {
+    font-size: 16px;
     font-size: clamp(16px, 32px, 4vw);
   }
 
-  .promotional-2024-03-07-block .background {
+  .promotional-2024-03-04-block .background {
     grid-column: col 2 / span 3;
-    grid-row: row 4 / span 12;
-    border: 2px dashed blue;
+    grid-row: row 3 / span 12;
     background: transparent;
   }
 
-  .promotional-2024-03-07-block .caption {
+  .promotional-2024-03-04-block .caption {
     grid-column: 1;
+  }
+
+  .promotional-2024-03-04-block .hidden {
+    display: none;
+  }
+
+  .promotional-2024-03-04-block a {
+    color: #fff;
+  }
+
+  .promotional-2024-03-04-block a:hover,
+  .promotional-2024-03-04-block a:active {
+    color: #d8d8d8;
   }
 </style>
 
-<article class="promotional-2024-03-07-block">
+<article class="promotional-2024-03-04-block">
   <div style="max-width: 1440px; margin: 0 auto">
     <h1
       style="
@@ -94,10 +106,16 @@
   </div>
   <div class="container">
     <div class="image box">
-      <picture>
+      <picture class="slide">
         <img
-          src="./assets/images/vince-mariel-conlu-ajDUxve6clA-unsplash-min.jpg"
-          alt=""
+          src="./assets/images/vince-mariel-conlu-rare-beauty-lipoil-unsplash-min.jpg"
+          alt="Jane Doe looking at the Rare Beaty lip oil she's holding."
+        />
+      </picture>
+      <picture class="slide hidden">
+        <img
+          src="./assets/images/peter-kalonji-woman-applying-lipoil-unsplash-min.jpg"
+          alt="Jane Doe looking at the Rare Beaty lip oil she's holding."
         />
       </picture>
     </div>
@@ -106,8 +124,11 @@
     </div>
     <div class="box caption">
       <p>
-        ↑ Jane Doe holding
-        <u style="text-underline-offset: 2px">Rare Beauty lip oil</u>.
+        ▲ Jane Doe holding
+        <a href="/" style="text-underline-offset: 5px; font-weight: bold"
+          >Rare Beauty</a
+        >
+        lip oil.
       </p>
     </div>
     <div class="background box flex-start">
@@ -120,3 +141,23 @@
     </div>
   </div>
 </article>
+<script src="./assets/js/custom-slider.js"></script>
+<script>
+  (function () {
+    const slider = new customSlider({
+      targetClassName: ".promotional-2024-03-04-block .slide",
+    });
+
+    if (
+      document.readyState === "loading" ||
+      document.readyState === "complete"
+    ) {
+      slider.start();
+      return null;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      slider.start();
+    });
+  })();
+</script>
