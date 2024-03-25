@@ -1,0 +1,26 @@
+<div id="content-placeholder"></div>
+<script>
+const htmlUrl = 'https://raw.githubusercontent.com/do-kevin/code-and-design-lab/feat-load-html/src/pages/html-sample.html';
+
+fetch(htmlUrl)
+  .then(response => {
+    if (response.ok) {
+      return response.text();
+    }
+    throw new Error('Network response was not ok.');
+  })
+  .then(html => {
+    const contentPlaceholder = document.getElementById('content-placeholder');
+
+    if (contentPlaceholder) {
+      contentPlaceholder.innerHTML = html;
+      return null;
+    }
+    
+    console.error('Element with ID content-placeholder not found');
+  })
+  .catch(error => {
+    console.error('Error fetching HTML content: ', error);
+  });
+
+</script>
