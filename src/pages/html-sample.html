@@ -1,0 +1,164 @@
+<style>
+  body {
+    background: #000;
+  }
+  .promotional-2024-03-05-reverse-block,
+  .promotional-2024-03-05-reverse-block * {
+    box-sizing: border-box;
+  }
+
+  .promotional-2024-03-05-reverse-block img {
+    max-width: 100%;
+  }
+
+  .promotional-2024-03-05-reverse-block .flex-start {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .promotional-2024-03-05-reverse-block p {
+    padding-right: 15px;
+    font-size: 16px;
+    font-size: clamp(16px, 20px, 2vw);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .promotional-2024-03-05-reverse-block .center-all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .promotional-2024-03-05-reverse-block .container {
+    max-width: 1440px;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(5, [col] auto);
+    grid-template-rows: repeat(3, [row] auto);
+    margin: 0 auto;
+  }
+
+  .promotional-2024-03-05-reverse-block .box {
+    color: #fff;
+    border-radius: 4px;
+    z-index: 10;
+    background: transparent;
+  }
+
+  .promotional-2024-03-05-reverse-block .front-surface {
+    grid-column: 5 / col 3;
+    grid-row: row 1 / span 12;
+    z-index: 30;
+  }
+
+  .promotional-2024-03-05-reverse-block .price {
+    grid-column: 1 / span 2;
+    grid-row: 4;
+  }
+
+  .promotional-2024-03-05-reverse-block .price p {
+    font-size: 16px;
+    font-size: clamp(16px, 32px, 4vw);
+    text-align: right;
+  }
+
+  .promotional-2024-03-05-reverse-block .back-surface {
+    grid-column: col 1 / span 3;
+    grid-row: row 4 / span 12;
+    background: transparent;
+  }
+
+  .promotional-2024-03-05-reverse-block .caption {
+    grid-column: 4;
+    grid-row: 13;
+  }
+
+  .promotional-2024-03-05-reverse-block .hidden {
+    display: none;
+  }
+
+  .promotional-2024-03-05-reverse-block a {
+    color: #fff;
+  }
+
+  .promotional-2024-03-05-reverse-block a:hover,
+  .promotional-2024-03-05-reverse-block a:active {
+    color: #d8d8d8;
+  }
+</style>
+
+<article class="promotional-2024-03-05-reverse-block">
+  <div style="max-width: 1440px; margin: 0 auto">
+    <h1
+      style="
+        text-align: center;
+        font-size: clamp(52px, 144px, 9vw);
+        position: relative;
+        z-index: 99;
+        top: 2.5vw;
+        line-height: 1;
+        height: 0;
+        color: pink;
+      "
+    >
+      Be Your Best Self
+    </h1>
+  </div>
+  <div class="container">
+    <div class="front-surface box">
+      <picture class="slide">
+        <img
+          src="../assets/images/vince-mariel-conlu-rare-beauty-lipoil-unsplash-min.jpg"
+          alt="Jane Doe looking at the Rare Beaty lip oil she's holding."
+        />
+      </picture>
+      <picture class="slide hidden">
+        <img
+          src="../assets/images/peter-kalonji-woman-applying-lipoil-unsplash-min.jpg"
+          alt="Jane Doe looking at the Rare Beaty lip oil she's holding."
+        />
+      </picture>
+    </div>
+    <div class="box price">
+      <p>$1.99</p>
+    </div>
+    <div class="box caption">
+      <p>
+        ▲ Jane Doe holding
+        <a href="/" style="text-underline-offset: 5px; font-weight: bold"
+          >Rare Beauty</a
+        >
+        lip oil.
+      </p>
+    </div>
+    <div class="back-surface box flex-start">
+      <picture>
+        <img
+          src="../assets/images/susan-wilkinson-Da8-AqI460k-unsplash-min.jpg"
+          alt=""
+        />
+      </picture>
+    </div>
+  </div>
+</article>
+<script type="text/javascript" src="assets/js/custom-slider.js"></script>
+<script type="text/javascript">
+  (function () {
+    const slider = new customSlider({
+      targetClassName: ".promotional-2024-03-05-reverse-block .slide",
+    });
+
+    if (
+      document.readyState === "loading" ||
+      document.readyState === "complete"
+    ) {
+      slider.start();
+      return null;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      slider.start();
+    });
+  })();
+</script>
