@@ -1,0 +1,147 @@
+<style>
+    body:has(.transition-timing-article) {
+        --body-margin: 8px;
+        --ball-container-padding: 1rem;
+        margin: var(--body-margin);
+
+        h2 {
+            margin-bottom: 0;
+        }
+
+        p {
+            margin-top: 0;
+        }
+    }
+    .ball {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(126deg,rgba(176,126,126,1) 0%,rgba(233,66,66,1) 100%);
+    }
+
+    .ball-container {
+        background-color: hsla(120, 100%, 50%, 0.05);
+        padding: 1rem;
+        border: 1px solid hsla(120, 100%, 50%, 0.5);
+    }
+
+    .ball-container:hover .ball {
+        transform: translateX(calc(100vw - 100px - calc(var(--body-margin) * 2) + calc(var(--ball-container-padding) * -2)));
+    }
+    .ball--ease {
+        transition: all 1.2s ease;
+    }
+
+    .ball--linear {
+        transition: all 1.2s linear;
+    }
+
+    .ball--ease-in {
+        transition: all 1.2s ease-in;
+    }
+    .ball--ease-out {
+        transition: all 1.2s ease-out;
+    }
+    .ball--ease-in-out {
+        transition: all 1.2s ease-in-out;
+    }
+    .ball--delay-ease {
+        transition-property: transform;
+        transition-duration: 1.5s;
+        transition-delay: 2s;
+        transition-timing-function: ease;
+    }
+    .ball--step-start {
+        transition: all 1.2s step-start;
+    }
+    .ball--step-end {
+        transition: all 1.2s step-end;
+    }
+    .ball--steps {
+        transition: all 1.2s steps(8, start);
+    }
+</style>
+<article class="transition-timing-article">
+    <section>
+        <h2>
+            ease
+        </h2>
+        <p>
+            the change starts slow, then goes faster, then finishes slow.
+        </p>
+        <div class="ball-container">
+            <div class="ball ball--ease"></div>
+        </div>
+    </section>
+        <section>
+        <h2>
+            linear
+        </h2>
+        <p>the change occurs at the same rate.</p>
+        <div class="ball-container">
+            <div class="ball ball--linear"></div>
+        </div>
+    </section>
+    <section>
+        <h2>
+            ease in: the change starts slow, then goes faster before the end. 
+        </h2>
+        <div class="ball-container">
+            <div class="ball ball--ease-in"></div>
+        </div>
+    </section>
+    <section>
+        <h2>
+            ease-out
+        </h2>
+        <p>the change starts fast, then goes slow before the end.</p>
+        <div class="ball-container">
+            <div class="ball ball--ease-out"></div>
+        </div>
+    </section>
+    <section>
+        <h2>
+            ease-in-out
+        </h2>
+        <p>the change starts slow, speeds faster in the middle, then finishes slow.</p>
+        <div class="ball-container">
+            <div class="ball ball--ease-in-out"></div>
+        </div>
+    </section>
+    <section>
+        <h2>
+            delay with ease
+        </h2>
+        <p>using transition-delay</p>
+        <div class="ball-container">
+            <div class="ball ball--delay-ease"></div>
+        </div>
+    </section>
+    <section>
+        <h2>
+            step-start
+        </h2>
+        <p>When the play head reaches the first keyframe</p>
+        <div class="ball-container">
+            <div class="ball ball--step-start"></div>
+        </div>
+    </section>
+    <section>
+        <h2>
+            step-end
+        </h2>
+        <p>When the play head reaches the last keyframe</p>
+        <div class="ball-container">
+            <div class="ball ball--step-end"></div>
+        </div>
+    </section>
+        <section>
+        <h2>
+            steps
+        </h2>
+        <p>Set the number of intervals and then choose step-start or step-end</p>
+        <div class="ball-container">
+            <div class="ball ball--steps"></div>
+        </div>
+    </section>
+</article>
