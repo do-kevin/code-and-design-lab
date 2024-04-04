@@ -1,0 +1,116 @@
+<style>
+    body:has(.transition-timing-article) {
+        --body-margin: 8px;
+        --ball-container-padding: 1rem;
+        margin: var(--body-margin);
+
+        h2 {
+            margin-bottom: 0;
+        }
+
+        p {
+            margin-top: 0;
+        }
+    }
+    .ball {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(126deg,rgb(126, 129, 176) 0%,rgb(66, 233, 144) 100%);
+        transition: all 700ms ease;
+    }
+
+    .ball-container {
+        background-color: hsla(120, 100%, 50%, 0.05);
+        padding: 1rem;
+        border: 1px solid hsla(120, 100%, 50%, 0.5);
+    }
+
+    .ball-container:hover .ball--move {
+        transform: translate(
+            calc(100vw - 100px - calc(var(--body-margin) * 2) + calc(var(--ball-container-padding) * -2)),
+            100%
+        );
+    }
+
+    .ball-container:hover .ball--grow {
+        transform: scale(90%, 50%);
+    }
+
+    .ball-container:hover .ball--rotate {
+        transform: rotate(450deg);
+    }
+
+    .ball-container:hover .ball--rotate-2 {
+        transform: rotate(-2.5turn);
+        transform: rotate(-450grad);
+    }
+
+    .ball-container:hover .ball--skew {
+        transform: skew(15deg, 22.5deg);
+    }
+   
+    .ball-container:hover .ball--pivot {
+        transform: rotate(40deg);
+        transform-origin: 30% 80%;
+    }
+
+    .mb-1 {
+        margin-bottom: 1rem;
+    }
+</style>
+<article class="transition-timing-article">
+    <h1>
+        CSS 2D Transforms
+    </h1>
+    <section>
+        <h2>
+            translateX, translateY, translate
+        </h2>
+        <p>
+            Moves the element on a 2d plane: x-axis and y-axis.
+        </p>
+        <div class="ball-container">
+            <div class="ball ball--move"></div>
+        </div>
+    </section>
+        <section>
+        <h2>
+            scale
+        </h2>
+        <p>Adjusts the width and height of an element.</p>
+        <div class="ball-container">
+            <div class="ball ball--grow"></div>
+        </div>
+    </section>
+    <section>
+        <h2>
+            rotate
+        </h2>
+        <p>by degrees.</p>
+        <div class="ball-container mb-1">
+            <div class="ball ball--rotate"></div>
+        </div>
+        <div class="ball-container">
+            <div class="ball ball--rotate-2"></div>
+        </div>
+    </section>
+    <section>
+        <h2>
+            skew
+        </h2>
+        <p>Similar to rotation</p>
+        <div class="ball-container">
+            <div class="ball ball--skew"></div>
+        </div>
+    </section>
+    <section>
+        <h2>
+            origin
+        </h2>
+        <p>Moves the "center point" of the element. Options include <em>top</em>, <em>right</em>, <em>bottom</em>, <em>top right</em>, <em>left</em>, etc...</p>
+        <div class="ball-container">
+            <div class="ball ball--pivot" style="border-radius: 0;"></div>
+        </div>
+    </section>
+</article>
