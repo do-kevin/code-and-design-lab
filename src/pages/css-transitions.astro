@@ -55,13 +55,22 @@
         transform-origin: 30% 80%;
     }
 
+    .ball-container:hover .ball--zoom {
+        transform: translateZ(300px);
+        transform: translate3d(41vw,0,300px);
+    }
+
+    .ball-container:hover .ball--rotate3d {
+        transform: rotate3d(11, 1, 2, 60deg);
+    }
+
     .mb-1 {
         margin-bottom: 1rem;
     }
 </style>
 <article class="transition-timing-article">
     <h1>
-        CSS 2D Transforms
+        CSS Transforms
     </h1>
     <section>
         <h2>
@@ -111,6 +120,33 @@
         <p>Moves the "center point" of the element. Options include <em>top</em>, <em>right</em>, <em>bottom</em>, <em>top right</em>, <em>left</em>, etc...</p>
         <div class="ball-container">
             <div class="ball ball--pivot" style="border-radius: 0;"></div>
+        </div>
+    </section>
+    <section>
+        <h2>
+            origin
+        </h2>
+        <p>Moves the "center point" of the element. Options include <em>top</em>, <em>right</em>, <em>bottom</em>, <em>top right</em>, <em>left</em>, etc...</p>
+        <div class="ball-container">
+            <div class="ball ball--pivot" style="border-radius: 0;"></div>
+        </div>
+    </section>
+    <section>
+        <h2>
+           3D Transforms 
+        </h2>
+        <p>We place <em>perspective</em> in the container of the target element whenever we want to create a 3d environment. It is the distance between our eyes and the screen.</p>
+        <p>
+            And we can use <em>translateZ()</em> which affects the element on the z-axis. Imagine the two points are our eyes and the screen for the z-axis. <em>translateZ</em> is affected by <em>perspective</em>.
+        </p>
+        <div class="ball-container" style="perspective: 500px">
+            <div class="ball ball--zoom" style="border-radius: 0;"></div>
+        </div>
+        <h2>
+          Rotation in 3D 
+        </h2>
+        <div class="ball-container" style="perspective: 500px">
+            <div class="ball ball--rotate3d" style="border-radius: 0;"></div>
         </div>
     </section>
 </article>
