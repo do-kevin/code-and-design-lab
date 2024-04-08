@@ -1,3 +1,4 @@
+// v16 - add trim()
 function customSlider({
   minWidth = 768,
   maxWidth = 767,
@@ -6,13 +7,13 @@ function customSlider({
 }) {
   if (!targetClassName || typeof targetClassName !== "string") {
     throw new Error(
-      'The "targetClassName" parameter is missing or not a string.'
+      'The "targetClassName" parameter is missing or not a string.',
     );
   }
 
   if (typeof minWidth !== "number" || typeof maxWidth !== "number") {
     throw new Error(
-      'The "minWidth" and "maxWidth" parameters should be of type number.'
+      'The "minWidth" and "maxWidth" parameters should be of type number.',
     );
   }
 
@@ -42,23 +43,23 @@ function customSlider({
     linkElem.as = "image";
 
     const doesDesktopLinkExist = document.querySelector(
-      'link[href="' + slider[index].children[0].srcset + '"]'
+      'link[href="' + slider[index].children[0].srcset.trim() + '"]',
     );
 
     const doesMobileLinkExist = document.querySelector(
-      'link[href="' + slider[index].lastElementChild.src + '"]'
+      'link[href="' + slider[index].lastElementChild.src.trim() + '"]',
     );
 
     if (!doesDesktopLinkExist) {
       var linkDesktopElem = linkElem.cloneNode(false);
-      linkDesktopElem.href = slider[index].children[0].srcset;
+      linkDesktopElem.href = slider[index].children[0].srcset.trim();
       linkDesktopElem.media = "(min-width: 768px)";
       document.head.appendChild(linkDesktopElem);
     }
 
     if (!doesMobileLinkExist) {
       var linkMobileElem = linkElem.cloneNode(false);
-      linkMobileElem.href = slider[index].lastElementChild.src;
+      linkMobileElem.href = slider[index].lastElementChild.src.trim();
       linkMobileElem.media = "(max-width: 767px)";
       document.head.appendChild(linkMobileElem);
     }
