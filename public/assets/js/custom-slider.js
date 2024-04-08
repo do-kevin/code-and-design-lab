@@ -1,4 +1,3 @@
-// v16 - add trim()
 function customSlider({
   minWidth = 768,
   maxWidth = 767,
@@ -43,23 +42,23 @@ function customSlider({
     linkElem.as = "image";
 
     const doesDesktopLinkExist = document.querySelector(
-      'link[href="' + slider[index].children[0].srcset.trim() + '"]',
+      'link[href="' + slider[index].children[0].srcset + '"]',
     );
 
     const doesMobileLinkExist = document.querySelector(
-      'link[href="' + slider[index].lastElementChild.src.trim() + '"]',
+      'link[href="' + slider[index].lastElementChild.src + '"]',
     );
 
     if (!doesDesktopLinkExist) {
       var linkDesktopElem = linkElem.cloneNode(false);
-      linkDesktopElem.href = slider[index].children[0].srcset.trim();
+      linkDesktopElem.href = slider[index].children[0].srcset;
       linkDesktopElem.media = "(min-width: 768px)";
       document.head.appendChild(linkDesktopElem);
     }
 
     if (!doesMobileLinkExist) {
       var linkMobileElem = linkElem.cloneNode(false);
-      linkMobileElem.href = slider[index].lastElementChild.src.trim();
+      linkMobileElem.href = slider[index].lastElementChild.src;
       linkMobileElem.media = "(max-width: 767px)";
       document.head.appendChild(linkMobileElem);
     }
