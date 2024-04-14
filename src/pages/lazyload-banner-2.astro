@@ -147,10 +147,45 @@ import Layout from '../layouts/Layout.astro';
     .lazyloading-banner .overflow-hidden {
       overflow: hidden;
     }
+
+    .lazyloading-banner #play-btn {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      z-index: 99;
+      display: flex;
+      background: transparent;
+      border: none;
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+
+    .lazyloading-banner #play-btn span {
+      background: hsla(0, 0%, 0%, 30%);
+      color: #fff;
+      padding: 2px 4px;
+      border-radius: 25%;
+      width: 20px;
+      height: 20px;
+    }
+
+    .lazyloading-banner #play-btn:hover span,
+    .lazyloading-banner #play-btn:active span {
+      background: hsla(0, 0%, 0%, 50%);
+    }
+
+    .lazyloading-banner #play-btn:focus span {
+      outline: none;
+      box-shadow: 0 0 0 2px hsl(0deg 0% 0% / 30%), 0 0 3px 5px #85c1ff;
+    }
   </style>
   <article class="lazyloading-banner">
     <div class="container d-flex position-relative">
-        <a class="overflow-hidden left-side position-relative" aria-label="" href="/lazyload-banner" style="line-height: 0">
+      <div class="overflow-hidden left-side position-relative d-flex">
+        <button id="play-btn">
+          <span>&#9654;</span>
+        </button>
+        <a class="" aria-label="" href="/lazyload-banner" style="line-height: 0">
           <picture class="blur lozad slide slide--first">
             <source
               data-srcset="assets/images/banner/Frame_1_D.jpg"
@@ -214,15 +249,14 @@ import Layout from '../layouts/Layout.astro';
             />
           </picture>
         </a>
+      </div>
       <div class="right-side position-relative overflow-hidden">
         <picture class="blur lozad">
           <source
-            srcset="assets/images/banner/Frame_Background_D.jpg"
             data-srcset="assets/images/banner/Frame_Background_D.jpg"
             media="(min-width: 768px)"
           />
           <source
-            srcset="assets/images/banner/Frame_Background_M.jpg"
             data-srcset="assets/images/banner/Frame_Background_M.jpg"
             media="(max-width: 767px)"
           />
@@ -254,7 +288,7 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </article>
   <script type="text/javascript" src="assets/lib/lozad.min.js"></script>
-  <script type="text/javascript" src="assets/js/custom-slider.min.js"></script>
+  <script type="text/javascript" src="assets/js/custom-slider-with-stop.js"></script>
   <script type="text/javascript">
     (function () {
       var slider = new customSlider({
@@ -265,6 +299,8 @@ import Layout from '../layouts/Layout.astro';
         load: function(el) {
           if (el.nodeName === 'IMG') {
             const sourceElements = el.parentNode.querySelectorAll('source');
+
+
             sourceElements.forEach(source => {
               source.srcset = source.dataset.srcset;
             });
@@ -279,16 +315,35 @@ import Layout from '../layouts/Layout.astro';
           }
         }
       });
+
+      var sliderPaused = false;
+
+      function initPlayButton() {
+        var toggleButton = document.getElementById('play-btn');
+        toggleButton.addEventListener('click', function() {
+          if (sliderPaused) {
+            slider.start();
+            this.querySelector("span").innerHTML = '&#9654;';
+          } else {
+            slider.stop();
+            this.querySelector("span").innerHTML = "&#9208;";
+          }
+          sliderPaused = !sliderPaused;
+        });
+      }
     
+
       if (
         document.readyState === "complete" ||
         document.readyState === "interactive"
       ) {
         observer.observe();
+        initPlayButton();
         return null;
       }
       document.addEventListener("DOMContentLoaded", function () {
         observer.observe();
+        initPlayButton();
       });
     })();
   </script>
