@@ -313,12 +313,23 @@ import Layout from '../layouts/Layout.astro';
       let observerFinished = false;
 
       const observer = lozad('.lozad', {
-        loaded: function(el) {
-          el.classList.add("no-blur");
+        load: function(el) {
+          if (el.nodeName === 'IMG') {
+            const sourceElements = el.parentNode.querySelectorAll('source');
 
-          if (!observerFinished) {
-            slider.start();
-            observerFinished = true;
+            console.log("source elements: ", sourceElements);
+
+            sourceElements.forEach(source => {
+              source.srcset = source.dataset.srcset;
+            });
+            el.src = el.dataset.src;
+          }
+          el.onload = function() {
+            el.parentNode.classList.add('no-blur');
+
+            if (el.parentNode.classList.contains('slide--first')) {
+                slider.start();
+            }
           }
         }
       });
