@@ -7,8 +7,6 @@ import Layout from '../layouts/Layout.astro';
   }
 </style>
 <Layout title="Lazyloading Banner">
-  <script type="text/javascript" src="assets/lib/lozad.min.js"></script>
-  <script type="text/javascript" src="assets/js/custom-slider-with-stop.js"></script>
   <style>
     .lazyloading-banner,
     .lazyloading-banner * {
@@ -200,12 +198,10 @@ import Layout from '../layouts/Layout.astro';
             <img
               src="assets/images/banner/Frame_1_M_Placeholder_MIN.jpg"  
               data-src="assets/images/banner/Frame_1_M.jpg"      
-              data-srcset="assets/images/banner/Frame_1_D.jpg" 
               alt="Your alt text"
               height="752"
               width="100%"
               style="height: auto"
-              class="lozad"
             />
             <noscript>
               <img
@@ -213,7 +209,6 @@ import Layout from '../layouts/Layout.astro';
                 width="100%"
                 height="752"
                 style="height: auto"
-                loading="lazy"
                 alt=""
               />
             </noscript>
@@ -272,12 +267,10 @@ import Layout from '../layouts/Layout.astro';
           <img
             src="assets/images/banner/Frame_Background_M_Placeholder_MIN.jpg"
             data-src="assets/images/banner/Frame_Background_M.jpg"
-            data-srcset="assets/images/banner/Frame_Background_D.jpg"
             alt=""
             width="100%"
             height="752"
             style="height: auto"
-            class="lozad"
           />
           <noscript>
             <img
@@ -307,28 +300,25 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
   </article>
+  <script type="text/javascript" src="assets/lib/lozad.min.js"></script>
+  <script type="text/javascript" src="assets/js/custom-slider-with-stop.js"></script>
   <script type="text/javascript">
     (function () {
       var slider = new customSlider({
         targetClassName: ".lazyloading-banner .slide",
       });
 
+      let img = null;
+      let element = null;
+      let observerFinished = false;
+
       const observer = lozad('.lozad', {
-        load: function(el) {
-          if (el.nodeName === 'IMG') {
-            const sourceElements = el.parentNode.querySelectorAll('source');
+        loaded: function(el) {
+          el.classList.add("no-blur");
 
-            sourceElements.forEach(source => {
-              source.srcset = source.dataset.srcset;
-            });
-            el.src = el.dataset.src;
-          }
-          el.onload = function() {
-            el.parentNode.classList.add('no-blur');
-
-            if (el.parentNode.classList.contains("slide--first")) {
-              slider.start();
-            }
+          if (!observerFinished) {
+            slider.start();
+            observerFinished = true;
           }
         }
       });
@@ -361,12 +351,16 @@ import Layout from '../layouts/Layout.astro';
         document.readyState === "complete" ||
         document.readyState === "interactive"
       ) {
-        observer.observe();
+        if (!observerFinished) {
+          observer.observe();
+        }
         initPlayButton();
         return null;
       }
       document.addEventListener("DOMContentLoaded", function () {
-        observer.observe();
+        if (!observerFinished) {
+          observer.observe();
+        }
         initPlayButton();
       });
     })();
