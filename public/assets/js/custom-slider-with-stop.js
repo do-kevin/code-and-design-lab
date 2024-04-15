@@ -77,8 +77,10 @@ function customSlider({
     }
   }, duration);
 
+  var slideTimer = null;
+
   this.start = function () {
-    setInterval(function () {
+    slideTimer = setInterval(function () {
       [].forEach.call(self.slider, function (el, index) {
         self.setImagePreloadLink(index, self.slider);
         el.classList.add("hidden");
@@ -90,5 +92,9 @@ function customSlider({
 
       self.slider[self.currentSlide - 1].classList.remove("hidden");
     }, duration);
+  };
+
+  this.stop = function () {
+    clearInterval(slideTimer);
   };
 }
