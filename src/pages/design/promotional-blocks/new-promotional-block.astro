@@ -1,0 +1,84 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+---
+<Layout title="whatever">
+    <style>
+        .promotional-block {
+            display: flex;
+            max-width: 90%;
+            margin: auto;
+            align-items: flex-end;
+            flex-direction: row;
+            justify-content: center;
+        }
+        .promotional-block img {
+            max-width: 100%;
+        }
+        .promotional-block .hidden {
+            display: none;
+        }
+        .promotional-block .front-surface {
+            z-index: 1;
+            flex: 0 0 45%;
+            margin-left: -13%;
+        }
+        .promotional-block .back-surface {
+            flex: 0 0 50%;
+            margin-left: 6.5%;
+            padding-bottom: 13%;
+        }
+    </style>
+    <article class="promotional-block">
+        <div class="back-surface">
+            <h2 style="color: blue">
+                Headline 1
+            </h2>
+            <div style="position: relative">
+                <picture class="slide">
+                    <img
+                    src="/assets/images/vince-mariel-conlu-rare-beauty-lipoil-unsplash-min.avif"
+                    alt="Jane Doe looking at the Rare Beaty lip oil she's holding."
+                    />
+                </picture>
+                <picture class="slide hidden">
+                    <img
+                    src="/assets/images/peter-kalonji-woman-applying-lipoil-unsplash-min.avif"
+                    alt="Jane Doe looking at the Rare Beaty lip oil she's holding."
+                    />
+                </picture>
+            </div>
+        </div>
+        <div class="front-surface">
+            <h3 style="margin-left: 30%; color: red">
+                Headline 2
+            </h3>
+            <picture>
+                <img
+                src="/assets/images/susan-wilkinson-Da8-AqI460k-unsplash-min.avif"
+                alt=""
+                />
+            </picture>
+        </div>
+    </article>
+    <script type="text/javascript" src="/assets/js/custom-slider.js"></script>
+    <script type="text/javascript">
+    (function () {
+        console.log(window);
+        const slider = new customSlider({
+        targetClassName: ".promotional-block .slide",
+        });
+
+        if (
+        document.readyState === "loading" ||
+        document.readyState === "complete"
+        ) {
+        slider.start();
+        return null;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+        slider.start();
+        });
+    })();
+    </script>
+</Layout>
