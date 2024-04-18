@@ -4,12 +4,9 @@ import Layout from '../../../layouts/Layout.astro';
 <Layout title="whatever">
     <style>
         .promotional-block {
-            display: flex;
-            max-width: 90%;
-            margin: auto;
-            align-items: flex-end;
-            flex-direction: row;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(5, [ col ] auto);
+            grid-template-rows: repeat(3, [ row ] auto);
         }
         .promotional-block img {
             max-width: 100%;
@@ -18,14 +15,33 @@ import Layout from '../../../layouts/Layout.astro';
             display: none;
         }
         .promotional-block .front-surface {
-            z-index: 1;
-            flex: 0 0 45%;
-            margin-left: -13%;
+            grid-column: 4 / span 2;
+            grid-row: 3 / span 9;
+            z-index: 10;
         }
         .promotional-block .back-surface {
-            flex: 0 0 50%;
-            margin-left: 6.5%;
-            padding-bottom: 13%;
+            grid-column: 2 / span 3;
+            grid-row: 1 / span 5;
+        }
+        @media screen and (min-width: 768px) {
+            .promotional-block {
+                display: flex;
+                max-width: 90%;
+                margin: auto;
+                align-items: flex-end;
+                flex-direction: row;
+                justify-content: center;
+            }
+            .promotional-block .front-surface {
+                z-index: 1;
+                flex: 0 0 45%;
+                margin-left: -13%;
+            }
+            .promotional-block .back-surface {
+                flex: 0 0 50%;
+                margin-left: 6.5%;
+                padding-bottom: 13%;
+            }
         }
     </style>
     <article class="promotional-block">
