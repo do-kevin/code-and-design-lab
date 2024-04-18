@@ -7,6 +7,18 @@ import Layout from '../../../layouts/Layout.astro';
             display: grid;
             grid-template-columns: repeat(5, [ col ] auto);
             grid-template-rows: repeat(3, [ row ] auto);
+            position: relative;
+        }
+        .promotional-block .headline-1 {
+            text-align: right;
+        }
+        .promotional-block .headline-2 {
+            position: absolute;
+            top: 26px;
+            text-align: right;
+            white-space: nowrap;
+            margin-right: 21%;
+            right: 0;
         }
         .promotional-block img {
             max-width: 100%;
@@ -16,7 +28,7 @@ import Layout from '../../../layouts/Layout.astro';
         }
         .promotional-block .front-surface {
             grid-column: 4 / span 2;
-            grid-row: 3 / span 9;
+            grid-row: 4 / span 9;
             z-index: 10;
         }
         .promotional-block .back-surface {
@@ -32,10 +44,19 @@ import Layout from '../../../layouts/Layout.astro';
                 flex-direction: row;
                 justify-content: center;
             }
+            .promotional-block .headline-1 {
+                text-align: left;
+            }
             .promotional-block .front-surface {
                 z-index: 1;
                 flex: 0 0 45%;
                 margin-left: -13%;
+            }
+            .promotional-block .headline-2 {
+                margin-left: 30%;
+                position: unset;
+                text-align: left;
+                width: auto;
             }
             .promotional-block .back-surface {
                 flex: 0 0 50%;
@@ -46,7 +67,7 @@ import Layout from '../../../layouts/Layout.astro';
     </style>
     <article class="promotional-block">
         <div class="back-surface">
-            <h2 style="color: blue">
+            <h2 class="headline-1" style="color: blue">
                 Headline 1
             </h2>
             <div style="position: relative">
@@ -65,8 +86,8 @@ import Layout from '../../../layouts/Layout.astro';
             </div>
         </div>
         <div class="front-surface">
-            <h3 style="margin-left: 30%; color: red">
-                Headline 2
+            <h3 class="headline-2" style="color: red">
+                Lorem ipsum blah blah
             </h3>
             <picture>
                 <img
