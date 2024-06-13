@@ -1,0 +1,209 @@
+<section class="embla">
+  <div class="embla__viewport">
+    <div class="embla__container">
+      <div class="embla__slide">
+        <div class="embla__slide__number">1</div>
+      </div>
+      <div class="embla__slide">
+        <div class="embla__slide__number">2</div>
+      </div>
+      <div class="embla__slide">
+        <div class="embla__slide__number">3</div>
+      </div>
+      <div class="embla__slide">
+        <div class="embla__slide__number">4</div>
+      </div>
+      <div class="embla__slide">
+        <div class="embla__slide__number">5</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="embla__controls">
+    <div class="embla__buttons">
+      <button class="embla__button embla__button--prev" type="button">
+        <svg class="embla__button__svg" viewBox="0 0 532 532">
+          <path
+            fill="currentColor"
+            d="M355.66 11.354c13.793-13.805 36.208-13.805 50.001 0 13.785 13.804 13.785 36.238 0 50.034L201.22 266l204.442 204.61c13.785 13.805 13.785 36.239 0 50.044-13.793 13.796-36.208 13.796-50.002 0a5994246.277 5994246.277 0 0 0-229.332-229.454 35.065 35.065 0 0 1-10.326-25.126c0-9.2 3.393-18.26 10.326-25.2C172.192 194.973 332.731 34.31 355.66 11.354Z"
+          ></path>
+        </svg>
+      </button>
+
+      <button class="embla__button embla__button--next" type="button">
+        <svg class="embla__button__svg" viewBox="0 0 532 532">
+          <path
+            fill="currentColor"
+            d="M176.34 520.646c-13.793 13.805-36.208 13.805-50.001 0-13.785-13.804-13.785-36.238 0-50.034L330.78 266 126.34 61.391c-13.785-13.805-13.785-36.239 0-50.044 13.793-13.796 36.208-13.796 50.002 0 22.928 22.947 206.395 206.507 229.332 229.454a35.065 35.065 0 0 1 10.326 25.126c0 9.2-3.393 18.26-10.326 25.2-45.865 45.901-206.404 206.564-229.332 229.52Z"
+          ></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="embla__dots"></div>
+  </div>
+</section>
+<style>
+  html {
+    background-color: #f2f2f2;
+    --brand-primary: rgb(47, 112, 193);
+    --brand-secondary: rgb(116, 97, 195);
+    --brand-alternative: rgb(19, 120, 134);
+    --background-site: rgb(249, 249, 249);
+    --background-code: rgb(244, 244, 244);
+    --text-body: rgb(54, 49, 61);
+    --text-comment: rgb(99, 94, 105);
+    --text-high-contrast: rgb(49, 49, 49);
+    --text-medium-contrast: rgb(99, 94, 105);
+    --text-low-contrast: rgb(116, 109, 118);
+    --detail-high-contrast: rgb(192, 192, 192);
+    --detail-medium-contrast: rgb(234, 234, 234);
+    --detail-low-contrast: rgb(240, 240, 242);
+    --admonition-note: rgb(46, 109, 188);
+    --admonition-warning: rgb(255, 196, 9);
+    --admonition-danger: rgb(220, 38, 38);
+    --brand-primary-rgb-value: 47, 112, 193;
+    --brand-secondary-rgb-value: 116, 97, 195;
+    --brand-alternative-rgb-value: 19, 120, 134;
+    --background-site-rgb-value: 249, 249, 249;
+    --background-code-rgb-value: 244, 244, 244;
+    --text-body-rgb-value: 54, 49, 61;
+    --text-comment-rgb-value: 99, 94, 105;
+    --text-high-contrast-rgb-value: 49, 49, 49;
+    --text-medium-contrast-rgb-value: 99, 94, 105;
+    --text-low-contrast-rgb-value: 116, 109, 118;
+    --detail-high-contrast-rgb-value: 192, 192, 192;
+    --detail-medium-contrast-rgb-value: 234, 234, 234;
+    --detail-low-contrast-rgb-value: 240, 240, 242;
+    --admonition-note-rgb-value: 46, 109, 188;
+    --admonition-warning-rgb-value: 255, 196, 9;
+    --admonition-danger-rgb-value: 220, 38, 38;
+
+    --slide-height: 19rem;
+    --slide-spacing: 1rem;
+    --slide-size: 100%;
+  }
+
+  .embla {
+    max-width: 48rem;
+    margin: auto;
+  }
+  .embla__viewport {
+    overflow: hidden;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .embla__container {
+    backface-visibility: hidden;
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+    margin-left: calc(var(--slide-spacing) * -1);
+  }
+  .embla__slide {
+    flex: 0 0 var(--slide-size);
+    min-width: 0;
+    padding-left: var(--slide-spacing);
+  }
+  .embla__slide__number {
+    background: #fff;
+    border: 2px solid rgb(234, 234, 234);
+    border-radius: 1.8rem;
+    font-size: 4rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--slide-height);
+  }
+  .embla__controls {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    justify-content: space-between;
+    gap: 1.2rem;
+    margin-top: 1.8rem;
+  }
+  .embla__buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    align-items: center;
+  }
+  .embla__button {
+    -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    touch-action: manipulation;
+    display: inline-flex;
+    text-decoration: none;
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
+    width: 3.6rem;
+    height: 3.6rem;
+    z-index: 1;
+    border-radius: 50%;
+    color: var(--text-body);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .embla__button:disabled {
+    color: var(--detail-high-contrast);
+  }
+  .embla__button__svg {
+    width: 35%;
+    height: 35%;
+  }
+  .embla__dots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: calc((2.6rem - 1.4rem) / 2 * -1);
+  }
+  .embla__dot {
+    -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    touch-action: manipulation;
+    display: inline-flex;
+    text-decoration: none;
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    width: 2.6rem;
+    height: 2.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .embla__dot:after {
+    box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    content: "";
+  }
+  .embla__dot--selected:after {
+    box-shadow: inset 0 0 0 0.2rem var(--text-body);
+  }
+</style>
+<script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script>
+<script>
+  const OPTIONS = {};
+  const emblaNode = document.querySelector(".embla");
+  const viewportNode = emblaNode?.querySelector(".embla__viewport");
+  const prevBtnNode = emblaNode?.querySelector(".embla__button--prev");
+  const nextBtnNode = emblaNode?.querySelector(".embla__button--next");
+  const dotsNode = emblaNode?.querySelector(".embla__dots");
+
+  const emblaApi = EmblaCarousel(viewportNode, OPTIONS);
+</script>
