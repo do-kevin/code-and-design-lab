@@ -1,20 +1,28 @@
 <section class="embla">
+  <div id="stepper">
+    <button class="step"></button>
+    <button class="step"></button>
+    <button class="step"></button>
+    <button class="step"></button>
+    <button class="step"></button>
+  </div>
+
   <div class="embla__viewport">
     <div class="embla__container">
       <div class="embla__slide">
-        <div class="embla__slide__number">1</div>
+        <div class="embla__slide__number">Step 1</div>
       </div>
       <div class="embla__slide">
-        <div class="embla__slide__number">2</div>
+        <div class="embla__slide__number">Step 2</div>
       </div>
       <div class="embla__slide">
-        <div class="embla__slide__number">3</div>
+        <div class="embla__slide__number">Step 3</div>
       </div>
       <div class="embla__slide">
-        <div class="embla__slide__number">4</div>
+        <div class="embla__slide__number">Step 4</div>
       </div>
       <div class="embla__slide">
-        <div class="embla__slide__number">5</div>
+        <div class="embla__slide__number">Step 5</div>
       </div>
     </div>
   </div>
@@ -39,81 +47,58 @@
         </svg>
       </button>
     </div>
-
-    <div class="embla__dots"></div>
   </div>
 </section>
 <style>
   html {
     background-color: #f2f2f2;
-    --brand-primary: rgb(47, 112, 193);
-    --brand-secondary: rgb(116, 97, 195);
-    --brand-alternative: rgb(19, 120, 134);
-    --background-site: rgb(249, 249, 249);
-    --background-code: rgb(244, 244, 244);
-    --text-body: rgb(54, 49, 61);
-    --text-comment: rgb(99, 94, 105);
-    --text-high-contrast: rgb(49, 49, 49);
-    --text-medium-contrast: rgb(99, 94, 105);
-    --text-low-contrast: rgb(116, 109, 118);
     --detail-high-contrast: rgb(192, 192, 192);
     --detail-medium-contrast: rgb(234, 234, 234);
-    --detail-low-contrast: rgb(240, 240, 242);
-    --admonition-note: rgb(46, 109, 188);
-    --admonition-warning: rgb(255, 196, 9);
-    --admonition-danger: rgb(220, 38, 38);
-    --brand-primary-rgb-value: 47, 112, 193;
-    --brand-secondary-rgb-value: 116, 97, 195;
-    --brand-alternative-rgb-value: 19, 120, 134;
-    --background-site-rgb-value: 249, 249, 249;
-    --background-code-rgb-value: 244, 244, 244;
-    --text-body-rgb-value: 54, 49, 61;
-    --text-comment-rgb-value: 99, 94, 105;
     --text-high-contrast-rgb-value: 49, 49, 49;
-    --text-medium-contrast-rgb-value: 99, 94, 105;
-    --text-low-contrast-rgb-value: 116, 109, 118;
-    --detail-high-contrast-rgb-value: 192, 192, 192;
-    --detail-medium-contrast-rgb-value: 234, 234, 234;
-    --detail-low-contrast-rgb-value: 240, 240, 242;
-    --admonition-note-rgb-value: 46, 109, 188;
-    --admonition-warning-rgb-value: 255, 196, 9;
-    --admonition-danger-rgb-value: 220, 38, 38;
 
-    --slide-height: 19rem;
+    --slide-height: 32rem;
     --slide-spacing: 1rem;
     --slide-size: 100%;
   }
 
   .embla {
-    max-width: 48rem;
+    max-width: 22rem;
     margin: auto;
+    position: relative;
   }
   .embla__viewport {
     overflow: hidden;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    border: 2px solid rgb(234, 234, 234);
+    border-radius: 1.8rem;
+    background: rgb(217, 183, 255);
   }
   .embla__container {
     backface-visibility: hidden;
     display: flex;
     touch-action: pan-y pinch-zoom;
-    margin-left: calc(var(--slide-spacing) * -1);
+    background: rgb(217, 183, 255);
+    /* margin-left: calc(var(--slide-spacing) * -1); */
+    position: relative;
+    height: var(--slide-height);
   }
   .embla__slide {
     flex: 0 0 var(--slide-size);
     min-width: 0;
-    padding-left: var(--slide-spacing);
+    /* padding-left: var(--slide-spacing); */
+    opacity: 0;
+    transition: all 1.2s ease-in-out;
+    position: absolute;
+    width: 100%;
   }
   .embla__slide__number {
-    background: #fff;
-    border: 2px solid rgb(234, 234, 234);
-    border-radius: 1.8rem;
+    background: rgb(74, 175, 237);
     font-size: 4rem;
     font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
     height: var(--slide-height);
+    width: 100%;
   }
   .embla__controls {
     display: grid;
@@ -121,6 +106,9 @@
     justify-content: space-between;
     gap: 1.2rem;
     margin-top: 1.8rem;
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
   }
   .embla__buttons {
     display: grid;
@@ -157,53 +145,144 @@
     width: 35%;
     height: 35%;
   }
-  .embla__dots {
+
+  #stepper {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    align-items: center;
-    margin-right: calc((2.6rem - 1.4rem) / 2 * -1);
+    justify-content: space-between;
+    margin-bottom: 1rem;
   }
-  .embla__dot {
-    -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
-    -webkit-appearance: none;
-    appearance: none;
-    background-color: transparent;
-    touch-action: manipulation;
-    display: inline-flex;
-    text-decoration: none;
+
+  #stepper .step {
+    border: 2px solid var(--detail-high-contrast);
+    padding: 0.5rem;
+    border-radius: 50%;
+    background-color: #fff;
     cursor: pointer;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    width: 2.6rem;
-    height: 2.6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
   }
-  .embla__dot:after {
-    box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
-    width: 1.4rem;
-    height: 1.4rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    content: "";
+
+  .step.step--is-active {
+    background-color: rgb(103, 195, 244) !important;
   }
-  .embla__dot--selected:after {
-    box-shadow: inset 0 0 0 0.2rem var(--text-body);
+
+  .embla__slide.is-active {
+    opacity: 1;
+  }
+  .embla__button--prev:disabled {
+    opacity: 0;
   }
 </style>
 <script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script>
 <script>
-  const OPTIONS = {};
+  const OPTIONS = {
+    loop: false,
+    containScroll: false,
+    speed: 0,
+  };
   const emblaNode = document.querySelector(".embla");
   const viewportNode = emblaNode?.querySelector(".embla__viewport");
   const prevBtnNode = emblaNode?.querySelector(".embla__button--prev");
   const nextBtnNode = emblaNode?.querySelector(".embla__button--next");
   const dotsNode = emblaNode?.querySelector(".embla__dots");
+  const slides = emblaNode.querySelectorAll(".embla__slide");
 
   const emblaApi = EmblaCarousel(viewportNode, OPTIONS);
+
+  const addTogglePrevNextBtnsActive = (emblaApi, prevBtn, nextBtn) => {
+    const togglePrevNextBtnsState = () => {
+      if (emblaApi.canScrollPrev()) prevBtn.removeAttribute("disabled");
+      else prevBtn.setAttribute("disabled", "disabled");
+
+      if (emblaApi.canScrollNext()) nextBtn.removeAttribute("disabled");
+      else nextBtn.removeAttribute("disabled");
+    };
+
+    emblaApi
+      .on("select", togglePrevNextBtnsState)
+      .on("init", togglePrevNextBtnsState)
+      .on("reInit", togglePrevNextBtnsState);
+
+    return () => {
+      prevBtn.removeAttribute("disabled");
+      nextBtn.removeAttribute("disabled");
+    };
+  };
+
+  const addPrevNextBtnsClickHandlers = (emblaApi, prevBtn, nextBtn) => {
+    const scrollPrev = () => {
+      emblaApi.scrollPrev();
+    };
+    const scrollNext = () => {
+      emblaApi.scrollNext();
+    };
+    prevBtn.addEventListener("click", scrollPrev, false);
+    nextBtn.addEventListener("click", scrollNext, false);
+
+    const removeTogglePrevNextBtnsActive = addTogglePrevNextBtnsActive(
+      emblaApi,
+      prevBtn,
+      nextBtn,
+    );
+
+    return () => {
+      removeTogglePrevNextBtnsActive();
+      prevBtn.removeEventListener("click", scrollPrev, false);
+      nextBtn.removeEventListener("click", scrollNext, false);
+    };
+  };
+
+  const removePrevNextBtnsClickHandlers = addPrevNextBtnsClickHandlers(
+    emblaApi,
+    prevBtnNode,
+    nextBtnNode,
+  );
+
+  const updateActiveSlide = () => {
+    const selectedIndex = emblaApi.selectedScrollSnap();
+    slides.forEach((slide, index) => {
+      if (index === selectedIndex) {
+        slide.classList.add("is-active");
+      } else {
+        slide.classList.remove("is-active");
+      }
+    });
+  };
+
+  emblaApi.on("select", updateActiveSlide);
+  emblaApi.on("init", updateActiveSlide);
+  emblaApi.on("reInit", updateActiveSlide);
+
+  const stepper = document.querySelector("#stepper");
+
+  stepper.querySelectorAll(".step").forEach((step, index) => {
+    step.addEventListener("click", function () {
+      stepper
+        .querySelectorAll(".step")
+        .forEach((_s) => _s.classList.remove("step--is-active"));
+      step.classList.add("step--is-active");
+      emblaApi.scrollTo(index);
+    });
+  });
+
+  // const test = emblaApi.scrollSnapList();
+  // const test2 = emblaApi.selectedScrollSnap();
+
+  // console.log("test: ", test);
+  // console.log("test2: ", test2);
+
+  // const slidesInSnap = emblaApi.internalEngine().slideRegistry[2];
+  // const { scrollSnaps, containerRect } = emblaApi.internalEngine();
+
+  // console.log(containerRect.width * 2);
+
+  // function getSlideTransform(position) {
+  //   const { axis } = emblaApi.internalEngine();
+  //   const translateAxis = axis.scroll.toUpperCase();
+  //   return `translate${translateAxis}(${axis.direction(position)}px)`;
+  // }
+
+  // emblaApi.slideNodes()[2].style.transform = getSlideTransform(
+  //   containerRect.width * 2,
+  // );
+
+  emblaApi.on("destroy", removePrevNextBtnsClickHandlers);
 </script>
