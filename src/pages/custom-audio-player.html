@@ -1,0 +1,183 @@
+<style>
+  .custom-vtt-player {
+    border: 1px solid red;
+    margin-top: 5rem;
+  }
+  .custom-vtt-player .controls {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .custom-vtt-player .controls .buttons {
+    display: flex;
+    gap: 5px;
+    margin: 0 auto;
+  }
+</style>
+<div class="custom-vtt-player">
+  <div class="controls">
+    <div class="buttons">
+      <button class="rwd"><< 3</button>
+      <button class="playpause">Play</button>
+      <button class="stop">Stop</button>
+      <button class="fwd">3 >></button>
+    </div>
+    <div style="width: 100%">
+      <input
+        type="range"
+        class="seek-bar"
+        value="0"
+        min="0"
+        style="width: 100%"
+      />
+      <div class="time">00:00</div>
+    </div>
+  </div>
+  <audio class="audio-player" crossorigin="anonymous">
+    <source src="assets/audio/shelley-frankenstein-sample.mp3" />
+    <track
+      default
+      class="transcript"
+      kind="captions"
+      src="assets/audio/vtt/shelley-frankenstein-sample-transcript.vtt"
+    />
+  </audio>
+  <div class="transcript-cues"></div>
+</div>
+<script>
+  (function () {
+    function convertToPlayerTime(time) {
+      const mins = Math.floor(time / 60)
+        .toString()
+        .padStart(2, "0");
+      const secs = Math.floor(time % 60)
+        .toString()
+        .padStart(2, "0");
+
+      return `${mins}:${secs}`;
+    }
+
+    const initAudioPlayer = () => {
+      let audio = document.querySelector(".custom-vtt-player .audio-player");
+
+      console.log(audio.children);
+
+      audio.removeAttribute("controls");
+
+      const playPauseBtn = document.querySelector(".playpause");
+      const stopBtn = document.querySelector(".stop");
+      const rwdBtn = document.querySelector(".rwd");
+      const fwdBtn = document.querySelector(".fwd");
+      const timeLabel = document.querySelector(".time");
+
+      playPauseBtn.onclick = () => {
+        if (audio.paused) {
+          audio.play();
+          playPauseBtn.textContent = "Pause";
+        } else {
+          audio.pause();
+          playPauseBtn.textContent = "Play";
+        }
+      };
+
+      stopBtn.onclick = () => {
+        audio.pause();
+        audio.currentTime = 0;
+        playPauseBtn.textContent = "Play";
+      };
+
+      rwdBtn.onclick = () => {
+        audio.currentTime -= 3;
+      };
+
+      fwdBtn.onclick = () => {
+        audio.currentTime += 3;
+        if (audio.currentTime >= audio.duration || audio.paused) {
+          audio.pause();
+          audio.currentTime = 0;
+          playPauseBtn.textContent = "Play";
+        }
+      };
+
+      audio.ontimeupdate = () => {
+        const minutes = Math.floor(audio.currentTime / 60);
+        const seconds = Math.floor(audio.currentTime - minutes * 60);
+        const minuteValue = minutes < 10 ? `0${minutes}` : minutes;
+        const secondValue = seconds < 10 ? `0${seconds}` : seconds;
+
+        const mediaTime = `${minuteValue}:${secondValue}`;
+        timeLabel.textContent = mediaTime;
+      };
+
+      const seekBar = document.querySelector(".seek-bar");
+
+      seekBar.max = audio.duration;
+
+      seekBar.addEventListener("input", function () {
+        const time = (audio.duration / 100) * seekBar.value;
+        audio.currentTime = time;
+      });
+
+      audio.ontimeupdate = () => {
+        if (!seekBar.getAttribute("data-moving")) {
+          seekBar.value = audio.currentTime;
+        }
+        const mediaTime = convertToPlayerTime(audio.currentTime);
+        timeLabel.textContent = mediaTime;
+      };
+
+      seekBar.addEventListener("input", function () {
+        audio.currentTime = seekBar.value;
+        seekBar.setAttribute("data-moving", "true");
+      });
+
+      seekBar.addEventListener("change", function () {
+        audio.currentTime = seekBar.value;
+        seekBar.removeAttribute("data-moving");
+      });
+
+      const seek = (seconds) => {
+        audio.currentTime = seconds;
+        audio.play();
+      };
+
+      let transcript = audio.querySelector("track.transcript");
+
+      let transcriptCues = document.querySelector(
+        ".custom-vtt-player .transcript-cues",
+      );
+
+      console.log("cues: ", transcript.track.cues);
+
+      if (transcript.track.cues.length) {
+        for (let i = 0; i < transcript.track.cues.length; i++) {
+          const cue = transcript.track.cues[i];
+
+          console.log(cue);
+
+          const p = document.createElement("p");
+          p.innerText = `[${convertToPlayerTime(cue.startTime)} - ${convertToPlayerTime(cue.endTime)}]:  ${cue.text}`;
+
+          p.addEventListener("click", function () {
+            seek(cue.startTime);
+          });
+          console.log(transcriptCues);
+
+          transcriptCues.append(p);
+        }
+      }
+    };
+
+    if (
+      document.readyState === "complete" ||
+      document.readyState === "interactive"
+    ) {
+      setTimeout(initAudioPlayer, 700);
+    } else {
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(initAudioPlayer, 700);
+      });
+    }
+  })();
+</script>
