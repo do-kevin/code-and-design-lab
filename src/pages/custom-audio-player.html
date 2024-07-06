@@ -14,6 +14,9 @@
     gap: 5px;
     margin: 0 auto;
   }
+  .custom-vtt-player .highlight {
+    background-color: yellow;
+  }
 </style>
 <div class="custom-vtt-player">
   <div class="controls">
@@ -47,6 +50,14 @@
 </div>
 <script>
   (function () {
+    function onTranscriptLoad() {
+      document
+        .querySelector(".audio-player track.transcript")
+        .addEventListener("load", function () {
+          initAudioPlayer();
+        });
+    }
+
     function convertToPlayerTime(time) {
       const mins = Math.floor(time / 60)
         .toString()
@@ -60,8 +71,6 @@
 
     const initAudioPlayer = () => {
       let audio = document.querySelector(".custom-vtt-player .audio-player");
-
-      console.log(audio.children);
 
       audio.removeAttribute("controls");
 
@@ -100,16 +109,6 @@
         }
       };
 
-      audio.ontimeupdate = () => {
-        const minutes = Math.floor(audio.currentTime / 60);
-        const seconds = Math.floor(audio.currentTime - minutes * 60);
-        const minuteValue = minutes < 10 ? `0${minutes}` : minutes;
-        const secondValue = seconds < 10 ? `0${seconds}` : seconds;
-
-        const mediaTime = `${minuteValue}:${secondValue}`;
-        timeLabel.textContent = mediaTime;
-      };
-
       const seekBar = document.querySelector(".seek-bar");
 
       seekBar.max = audio.duration;
@@ -125,6 +124,7 @@
         }
         const mediaTime = convertToPlayerTime(audio.currentTime);
         timeLabel.textContent = mediaTime;
+        highlightActiveCue();
       };
 
       seekBar.addEventListener("input", function () {
@@ -148,24 +148,38 @@
         ".custom-vtt-player .transcript-cues",
       );
 
-      console.log("cues: ", transcript.track.cues);
-
       if (transcript.track.cues.length) {
         for (let i = 0; i < transcript.track.cues.length; i++) {
           const cue = transcript.track.cues[i];
 
-          console.log(cue);
-
           const p = document.createElement("p");
+          p.classList.add("cue");
+          p.dataset.startTime = cue.startTime;
+          p.dataset.endTime = cue.endTime;
           p.innerText = `[${convertToPlayerTime(cue.startTime)} - ${convertToPlayerTime(cue.endTime)}]:  ${cue.text}`;
 
           p.addEventListener("click", function () {
             seek(cue.startTime);
           });
-          console.log(transcriptCues);
 
           transcriptCues.append(p);
         }
+      }
+
+      function highlightActiveCue() {
+        const currentTime = audio.currentTime;
+        const cues = document.querySelectorAll(".custom-vtt-player .cue");
+
+        cues.forEach((cue) => {
+          const startTime = parseFloat(cue.dataset.startTime);
+          const endTime = parseFloat(cue.dataset.endTime);
+
+          if (currentTime >= startTime && currentTime <= endTime) {
+            cue.classList.add("highlight");
+          } else {
+            cue.classList.remove("highlight");
+          }
+        });
       }
     };
 
@@ -173,11 +187,10 @@
       document.readyState === "complete" ||
       document.readyState === "interactive"
     ) {
-      setTimeout(initAudioPlayer, 700);
-    } else {
-      document.addEventListener("DOMContentLoaded", function () {
-        setTimeout(initAudioPlayer, 700);
-      });
+      onTranscriptLoad();
+      return null;
     }
+
+    document.addEventListener("DOMContentLoaded", onTranscriptLoad);
   })();
 </script>
