@@ -17,6 +17,10 @@
   .custom-vtt-player .highlight {
     background-color: yellow;
   }
+
+  .custom-vtt-player .seek-bar[data-moving="true"] {
+    outline: 1px solid green;
+  }
 </style>
 <div class="custom-vtt-player">
   <div class="controls">
@@ -50,138 +54,210 @@
 </div>
 <script>
   (function () {
+    class CustomAudioPlayer {
+      defaultOptions = {
+        elements: {
+          audioPlayer: ".custom-vtt-player .audio-player",
+        },
+        isClickable: {
+          transcriptLine: false,
+        },
+      };
+
+      constructor(options) {
+        this.options = {
+          elements: Object.assign(
+            {},
+            this.defaultOptions.elements,
+            options.elements,
+          ),
+          isClickable: Object.assign(
+            {},
+            this.defaultOptions.isClickable,
+            options.isClickable,
+          ),
+        };
+
+        console.log(this.options);
+        this.state = {
+          isPlaying:
+            !!!document.querySelector(this.options.elements.audioPlayer)
+              .paused || false,
+          interaction: {
+            isSeekBarMoving: false,
+          },
+        };
+        console.log(this.state);
+      }
+
+      debounce = (func, wait) => {
+        let timeout;
+        return function (...args) {
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+      };
+
+      convertToPlayerTime = (time) => {
+        const mins = Math.floor(time / 60)
+          .toString()
+          .padStart(2, "0");
+        const secs = Math.floor(time % 60)
+          .toString()
+          .padStart(2, "0");
+
+        return `${mins}:${secs}`;
+      };
+
+      init = () => {
+        console.log("hit");
+
+        console.log(this.options);
+        const audio = document.querySelector(this.options.elements.audioPlayer);
+
+        audio.removeAttribute("controls");
+
+        const playPauseBtn = document.querySelector(".playpause");
+        const stopBtn = document.querySelector(".stop");
+        const rwdBtn = document.querySelector(".rwd");
+        const fwdBtn = document.querySelector(".fwd");
+        const timeLabel = document.querySelector(".time");
+
+        playPauseBtn.onclick = () => {
+          if (!this.state.isPlaying) {
+            this.state.isPlaying = true;
+            audio.play();
+            playPauseBtn.textContent = "Pause";
+            return null;
+          }
+
+          this.state.isPlaying = false;
+          audio.pause();
+          playPauseBtn.textContent = "Play";
+        };
+
+        stopBtn.onclick = () => {
+          audio.pause();
+          audio.currentTime = 0;
+          playPauseBtn.textContent = "Play";
+        };
+
+        rwdBtn.onclick = () => {
+          audio.currentTime -= 3;
+        };
+
+        fwdBtn.onclick = () => {
+          audio.currentTime += 3;
+          if (audio.currentTime >= audio.duration || audio.paused) {
+            audio.pause();
+            audio.currentTime = 0;
+            playPauseBtn.textContent = "Play";
+          }
+        };
+
+        const seekBar = document.querySelector(".seek-bar");
+
+        seekBar.max = audio.duration;
+
+        seekBar.addEventListener("input", function () {
+          const time = (audio.duration / 100) * seekBar.value;
+          audio.currentTime = time;
+        });
+
+        audio.ontimeupdate = () => {
+          if (!seekBar.getAttribute("data-moving")) {
+            seekBar.value = audio.currentTime;
+          }
+          const mediaTime = this.convertToPlayerTime(audio.currentTime);
+          timeLabel.textContent = mediaTime;
+
+          const highlightCue = this.debounce(highlightActiveCue, 1000);
+
+          highlightCue();
+        };
+
+        seekBar.addEventListener("input", () => {
+          audio.currentTime = seekBar.value;
+
+          this.state.interaction.isSeekBarMoving = true;
+          seekBar.setAttribute("data-moving", "true");
+        });
+
+        seekBar.addEventListener("change", () => {
+          audio.currentTime = seekBar.value;
+
+          seekBar.removeAttribute("data-moving");
+          this.state.interaction.isSeekBarMoving = false;
+        });
+
+        const seek = (seconds) => {
+          audio.currentTime = seconds;
+          audio.play();
+        };
+
+        const transcript = audio.querySelector("track.transcript");
+
+        const transcriptCues = document.querySelector(
+          ".custom-vtt-player .transcript-cues",
+        );
+
+        if (transcript.track.cues.length) {
+          for (let i = 0; i < transcript.track.cues.length; i++) {
+            const cue = transcript.track.cues[i];
+
+            const p = document.createElement("p");
+            p.classList.add("cue");
+            p.dataset.startTime = cue.startTime;
+            p.dataset.endTime = cue.endTime;
+            p.innerText = `[${this.convertToPlayerTime(cue.startTime)} - ${this.convertToPlayerTime(cue.endTime)}]:  ${cue.text}`;
+
+            console.log(this.options);
+
+            if (this.options.isClickable.transcriptLine) {
+              p.addEventListener("click", function () {
+                seek(cue.startTime);
+              });
+            }
+
+            transcriptCues.append(p);
+          }
+        }
+
+        const highlightActiveCue = () => {
+          const currentTime = document.querySelector(
+            this.options.elements.audioPlayer,
+          ).currentTime;
+
+          console.log("current TIme:", currentTime);
+          const cues = document.querySelectorAll(".custom-vtt-player .cue");
+
+          cues.forEach((cue) => {
+            const startTime = parseFloat(cue.dataset.startTime);
+            const endTime = parseFloat(cue.dataset.endTime);
+
+            if (currentTime >= startTime && currentTime <= endTime) {
+              cue.classList.add("highlight");
+            } else {
+              cue.classList.remove("highlight");
+            }
+          });
+        };
+      };
+    }
+
+    const myPlayer = new CustomAudioPlayer({
+      isClickable: {
+        transcriptLine: false,
+      },
+    });
+
     function onTranscriptLoad() {
       document
         .querySelector(".audio-player track.transcript")
         .addEventListener("load", function () {
-          initAudioPlayer();
+          myPlayer.init();
         });
     }
-
-    function convertToPlayerTime(time) {
-      const mins = Math.floor(time / 60)
-        .toString()
-        .padStart(2, "0");
-      const secs = Math.floor(time % 60)
-        .toString()
-        .padStart(2, "0");
-
-      return `${mins}:${secs}`;
-    }
-
-    const initAudioPlayer = () => {
-      let audio = document.querySelector(".custom-vtt-player .audio-player");
-
-      audio.removeAttribute("controls");
-
-      const playPauseBtn = document.querySelector(".playpause");
-      const stopBtn = document.querySelector(".stop");
-      const rwdBtn = document.querySelector(".rwd");
-      const fwdBtn = document.querySelector(".fwd");
-      const timeLabel = document.querySelector(".time");
-
-      playPauseBtn.onclick = () => {
-        if (audio.paused) {
-          audio.play();
-          playPauseBtn.textContent = "Pause";
-        } else {
-          audio.pause();
-          playPauseBtn.textContent = "Play";
-        }
-      };
-
-      stopBtn.onclick = () => {
-        audio.pause();
-        audio.currentTime = 0;
-        playPauseBtn.textContent = "Play";
-      };
-
-      rwdBtn.onclick = () => {
-        audio.currentTime -= 3;
-      };
-
-      fwdBtn.onclick = () => {
-        audio.currentTime += 3;
-        if (audio.currentTime >= audio.duration || audio.paused) {
-          audio.pause();
-          audio.currentTime = 0;
-          playPauseBtn.textContent = "Play";
-        }
-      };
-
-      const seekBar = document.querySelector(".seek-bar");
-
-      seekBar.max = audio.duration;
-
-      seekBar.addEventListener("input", function () {
-        const time = (audio.duration / 100) * seekBar.value;
-        audio.currentTime = time;
-      });
-
-      audio.ontimeupdate = () => {
-        if (!seekBar.getAttribute("data-moving")) {
-          seekBar.value = audio.currentTime;
-        }
-        const mediaTime = convertToPlayerTime(audio.currentTime);
-        timeLabel.textContent = mediaTime;
-        highlightActiveCue();
-      };
-
-      seekBar.addEventListener("input", function () {
-        audio.currentTime = seekBar.value;
-        seekBar.setAttribute("data-moving", "true");
-      });
-
-      seekBar.addEventListener("change", function () {
-        audio.currentTime = seekBar.value;
-        seekBar.removeAttribute("data-moving");
-      });
-
-      const seek = (seconds) => {
-        audio.currentTime = seconds;
-        audio.play();
-      };
-
-      let transcript = audio.querySelector("track.transcript");
-
-      let transcriptCues = document.querySelector(
-        ".custom-vtt-player .transcript-cues",
-      );
-
-      if (transcript.track.cues.length) {
-        for (let i = 0; i < transcript.track.cues.length; i++) {
-          const cue = transcript.track.cues[i];
-
-          const p = document.createElement("p");
-          p.classList.add("cue");
-          p.dataset.startTime = cue.startTime;
-          p.dataset.endTime = cue.endTime;
-          p.innerText = `[${convertToPlayerTime(cue.startTime)} - ${convertToPlayerTime(cue.endTime)}]:  ${cue.text}`;
-
-          p.addEventListener("click", function () {
-            seek(cue.startTime);
-          });
-
-          transcriptCues.append(p);
-        }
-      }
-
-      function highlightActiveCue() {
-        const currentTime = audio.currentTime;
-        const cues = document.querySelectorAll(".custom-vtt-player .cue");
-
-        cues.forEach((cue) => {
-          const startTime = parseFloat(cue.dataset.startTime);
-          const endTime = parseFloat(cue.dataset.endTime);
-
-          if (currentTime >= startTime && currentTime <= endTime) {
-            cue.classList.add("highlight");
-          } else {
-            cue.classList.remove("highlight");
-          }
-        });
-      }
-    };
 
     if (
       document.readyState === "complete" ||
