@@ -1,7 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+<style>
+  html {
+    font-family: system-ui, sans-serif;
+  }
+</style>
 <style>
   .custom-vtt-player {
-    border: 1px solid red;
-    margin-top: 5rem;
+    margin-top: 1rem;
+    font-size: 1rem;
   }
   .custom-vtt-player .controls {
     display: flex;
@@ -15,6 +35,7 @@
     display: flex;
     gap: 5px;
     margin: 0 auto;
+    position: relative;
   }
   .custom-vtt-player .controls .playpause {
     border: none;
@@ -24,13 +45,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1.25rem;
+    color: #000;
+    background-color: #f2f2f2;
   }
   .custom-vtt-player .controls .playpause:hover,
   .custom-vtt-player .controls .playpause:active {
     background: #e1e1e1;
   }
   .custom-vtt-player .highlight {
-    background-color: yellow;
+    background-color: rgb(245, 220, 77);
+    font-weight: 600;
   }
 
   .custom-vtt-player .seek-bar[data-moving="true"] {
@@ -39,68 +64,188 @@
   .custom-vtt-player .fwd {
     width: 3rem;
   }
+  .custom-vtt-player .volume-controls {
+    display: flex;
+  }
+  .custom-vtt-player .transcript-cues {
+    list-style-type: none;
+    padding: 1rem;
+    margin: 0;
+  }
+  .custom-vtt-player .transcript-cues li {
+    padding: 12px 24px;
+    display: flex;
+    font-size: 1.5rem;
+    flex-direction: column;
+  }
+
+  .custom-vtt-player .transcript-cues li span:nth-child(1) {
+    color: #3a3a3a;
+    font-size: 1rem;
+    margin-right: 0.25rem;
+  }
+
+  @media screen and (min-width: 1024px) {
+    .custom-vtt-player .transcript-cues li {
+      font-size: 1rem;
+    }
+    .custom-vtt-player .transcript-cues li span:nth-child(1) {
+      font-size: inherit;
+    }
+    .custom-vtt-player .transcript-cues li {
+      flex-direction: row;
+    }
+  }
+  /* .custom-vtt-player .volume-slider {
+    width: 0;
+    opacity: 0;
+    transition: all 300ms ease-in-out;
+  }
+  .custom-vtt-player .volume-controls:hover .volume-slider,
+  .custom-vtt-player .volume-controls:active .volume-slider {
+    width: 100%;
+    opacity: 1;
+  } */
 </style>
-<div class="custom-vtt-player">
-  <div class="controls">
-    <div class="buttons">
-      <!-- <button class="rwd"><< 3</button> -->
-      <button class="playpause" aria-label="Play or pause audio">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="play-icon"
+<article style="max-width: 900px; margin: 0 auto auto; padding-bottom: 52px">
+  <div class="custom-vtt-player">
+    <div class="controls">
+      <div class="buttons">
+        <!-- <button class="rwd"><< 3</button> -->
+        <button class="playpause" aria-label="Play">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            style="width: 1em; height: 1em"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="play-icon"
+          >
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            style="width: 1em; height: 1em; display: none"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="pause-icon"
+          >
+            <rect x="6" y="4" width="4" height="16"></rect>
+            <rect x="14" y="4" width="4" height="16"></rect>
+          </svg>
+        </button>
+        <time
+          class="timelapse"
+          aria-label="time"
+          tabindex="0"
+          style="
+            display: flex;
+            align-items: center;
+            min-width: 6rem;
+            font-size: 1rem;
+            white-space: nowrap;
+          "
         >
-          <polygon points="5 3 19 12 5 21 5 3"></polygon>
-        </svg>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="pause-icon"
-          style="display: none"
-        >
-          <rect x="6" y="4" width="4" height="16"></rect>
-          <rect x="14" y="4" width="4" height="16"></rect>
-        </svg>
-      </button>
-      <div
-        class="timelapse"
-        style="display: flex; align-items: center; min-width: 6rem"
-      >
-        <span class="time" style="margin-right: 4px">00:00</span>
-        <span class="time-end">/ 00:00</span>
+          <span class="time" tabindex="0" style="margin-right: 4px">0:00</span>
+          <span class="time-end" tabindex="0">/ 0:00</span>
+        </time>
+        <!-- <button class="stop">Stop</button> -->
+        <!-- <button class="fwd">3 >></button> -->
       </div>
-      <!-- <button class="stop">Stop</button> -->
-      <!-- <button class="fwd">3 >></button> -->
+      <div style="width: 100%; display: flex; align-items: center">
+        <input
+          type="range"
+          aria-label="seek bar"
+          class="seek-bar"
+          value="0"
+          min="0"
+          style="width: 100%"
+        />
+      </div>
+      <div class="volume-controls">
+        <button
+          class="volume-toggle"
+          aria-label="Mute or unmute audio"
+          style="border: none; background: #f2f2f2"
+        >
+          <svg
+            class="mute-icon"
+            viewBox="0 0 14 12"
+            width="20"
+            height="18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1.64508e-06 6L7.5 0.803848L7.5 11.1962L1.64508e-06 6Z"
+              fill="currentColor"
+            />
+            <rect
+              x="1.90735e-06"
+              y="3.5"
+              width="5"
+              height="5"
+              fill="currentColor"
+            />
+            <path
+              d="M8.5 3C8.8283 3 9.15339 3.0776 9.45671 3.22836C9.76002 3.37913 10.0356 3.6001 10.2678 3.87868C10.4999 4.15726 10.6841 4.48797 10.8097 4.85195C10.9353 5.21593 11 5.60603 11 6C11 6.39397 10.9353 6.78407 10.8097 7.14805C10.6841 7.51203 10.4999 7.84274 10.2678 8.12132C10.0356 8.3999 9.76002 8.62087 9.45671 8.77164C9.15339 8.9224 8.8283 9 8.5 9L8.5 6L8.5 3Z"
+              fill="currentColor"
+            />
+            <path
+              d="M8.5 7.13262e-07C9.22227 6.8169e-07 9.93747 0.155195 10.6048 0.456723C11.272 0.758252 11.8784 1.20021 12.3891 1.75736C12.8998 2.31451 13.3049 2.97595 13.5813 3.7039C13.8577 4.43185 14 5.21207 14 6C14 6.78793 13.8577 7.56815 13.5813 8.2961C13.3049 9.02405 12.8998 9.68549 12.3891 10.2426C11.8784 10.7998 11.272 11.2417 10.6048 11.5433C9.93747 11.8448 9.22227 12 8.5 12L8.5 10.8C9.07782 10.8 9.64997 10.6758 10.1838 10.4346C10.7176 10.1934 11.2027 9.83983 11.6113 9.39411C12.0198 8.94839 12.3439 8.41924 12.5651 7.83688C12.7862 7.25452 12.9 6.63035 12.9 6C12.9 5.36966 12.7862 4.74548 12.5651 4.16312C12.3439 3.58076 12.0198 3.05161 11.6113 2.60589C11.2027 2.16017 10.7176 1.8066 10.1838 1.56538C9.64997 1.32416 9.07782 1.2 8.5 1.2L8.5 7.13262e-07Z"
+              fill="currentColor"
+            />
+          </svg>
+          <svg
+            class="unmute-icon"
+            width="20"
+            height="18"
+            viewBox="0 0 14 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="display: none"
+          >
+            <path
+              d="M-2.62268e-07 6L7.5 0.803848L7.5 11.1962L-2.62268e-07 6Z"
+              fill="black"
+            />
+            <rect y="3.5" width="5" height="5" fill="black" />
+            <path d="M9 4L13 8" stroke="black" />
+            <path d="M9 8L13 4" stroke="black" />
+          </svg>
+        </button>
+        <input
+          aria-label="volume slider"
+          style="width: 70px"
+          type="range"
+          value="0.8"
+          min="0"
+          max="1"
+          step="0.01"
+          class="volume-slider"
+        />
+      </div>
     </div>
-    <div style="width: 100%; display: flex; align-items: center">
-      <input type="range" class="seek-bar" min="0" style="width: 100%" />
-    </div>
+    <audio class="audio-player" crossorigin="anonymous">
+      <source src="assets/audio/shelley-frankenstein-sample.mp3" />
+      <track
+        default
+        class="transcript"
+        kind="captions"
+        src="assets/audio/vtt/shelley-frankenstein-sample-transcript.vtt"
+      />
+    </audio>
+    <ul class="transcript-cues"></ul>
   </div>
-  <audio class="audio-player" crossorigin="anonymous">
-    <source src="assets/audio/shelley-frankenstein-sample.mp3" />
-    <track
-      default
-      class="transcript"
-      kind="captions"
-      src="assets/audio/vtt/shelley-frankenstein-sample-transcript.vtt"
-    />
-  </audio>
-  <div class="transcript-cues"></div>
-</div>
+</article>
+
 <script>
   (function () {
     class CustomAudioPlayer {
@@ -132,6 +277,7 @@
           isPlaying:
             !!!document.querySelector(this.options.elements.audioPlayer)
               .paused || false,
+          isMuted: false,
           interaction: {
             isSeekBarMoving: false,
           },
@@ -173,11 +319,19 @@
         const fwdBtn = document.querySelector(".custom-vtt-player .fwd");
         const timeLabel = document.querySelector(".custom-vtt-player .time");
 
+        const muteBtn = document.querySelector(
+          ".custom-vtt-player .volume-toggle",
+        );
+        const volumeSlider = document.querySelector(
+          ".custom-vtt-player .volume-slider",
+        );
+
         playPauseBtn.onclick = () => {
           if (!this.state.isPlaying) {
             this.state.isPlaying = true;
             audio.play();
             playPauseBtn.querySelector(".pause-icon").style.display = "block";
+            playPauseBtn.setAttribute("aria-label", "Pause");
             playPauseBtn.querySelector(".play-icon").style.display = "none";
             return null;
           }
@@ -185,14 +339,45 @@
           this.state.isPlaying = false;
           audio.pause();
           playPauseBtn.querySelector(".play-icon").style.display = "block";
+          playPauseBtn.setAttribute("aria-label", "Play");
           playPauseBtn.querySelector(".pause-icon").style.display = "none";
         };
+
+        muteBtn.onclick = () => {
+          if (!this.state.isMuted) {
+            this.state.isMuted = true;
+            audio.muted = true;
+            muteBtn.querySelector(".mute-icon").style.display = "none";
+            muteBtn.querySelector(".unmute-icon").style.display = "block";
+            return null;
+          }
+
+          this.state.isMuted = false;
+          audio.muted = false;
+          muteBtn.querySelector(".mute-icon").style.display = "block";
+          muteBtn.querySelector(".unmute-icon").style.display = "none";
+        };
+
+        volumeSlider.addEventListener("input", function (event) {
+          console.log("event: ", event);
+          audio.volume = volumeSlider.value;
+          if (this.value == 0) {
+            audio.muted = true;
+            muteBtn.querySelector(".mute-icon").style.display = "none";
+            muteBtn.querySelector(".unmute-icon").style.display = "block";
+          } else {
+            audio.muted = false;
+            muteBtn.querySelector(".mute-icon").style.display = "block";
+            muteBtn.querySelector(".unmute-icon").style.display = "none";
+          }
+        });
 
         if (stopBtn) {
           stopBtn.onclick = () => {
             audio.pause();
             audio.currentTime = 0;
             playPauseBtn.querySelector(".play-icon").style.display = "block";
+            playPauseBtn.setAttribute("aria-label", "Play");
             playPauseBtn.querySelector(".pause-icon").style.display = "none";
           };
         }
@@ -210,6 +395,7 @@
               audio.pause();
               audio.currentTime = 0;
               playPauseBtn.querySelector(".play-icon").style.display = "block";
+              playPauseBtn.setAttribute("aria-label", "Play");
               playPauseBtn.querySelector(".pause-icon").style.display = "none";
             }
           };
@@ -217,14 +403,27 @@
 
         const seekBar = document.querySelector(".custom-vtt-player .seek-bar");
 
-        audio.addEventListener("loadedmetadata", () => {
+        console.log("readyState: ", audio.readyState);
+
+        if (audio.readyState > 0) {
+          seekBar.value = 0;
           seekBar.max = audio.duration;
 
           if (seekBar.max) {
             document.querySelector(".custom-vtt-player .time-end").innerText =
               ` / ${this.convertToPlayerTime(seekBar.max)}`;
           }
-        });
+        } else {
+          audio.addEventListener("loadedmetadata", () => {
+            seekBar.value = 0;
+            seekBar.max = audio.duration;
+
+            if (seekBar.max) {
+              document.querySelector(".custom-vtt-player .time-end").innerText =
+                ` / ${this.convertToPlayerTime(seekBar.max)}`;
+            }
+          });
+        }
 
         seekBar.addEventListener("input", function () {
           const time = (audio.duration / 100) * seekBar.value;
@@ -252,9 +451,6 @@
 
         seekBar.addEventListener("change", () => {
           audio.currentTime = seekBar.value;
-
-          console.log("test: ", this.convertToPlayerTime(seekBar.max));
-
           seekBar.removeAttribute("data-moving");
           this.state.interaction.isSeekBarMoving = false;
         });
@@ -274,11 +470,11 @@
           for (let i = 0; i < transcript.track.cues.length; i++) {
             const cue = transcript.track.cues[i];
 
-            const p = document.createElement("p");
-            p.classList.add("cue");
-            p.dataset.startTime = cue.startTime;
-            p.dataset.endTime = cue.endTime;
-            p.innerText = `[${this.convertToPlayerTime(cue.startTime)} - ${this.convertToPlayerTime(cue.endTime)}]:  ${cue.text}`;
+            const li = document.createElement("li");
+            li.classList.add("cue");
+            li.dataset.startTime = cue.startTime;
+            li.dataset.endTime = cue.endTime;
+            li.innerHTML = `<span style="white-space: nowrap; margin-right: 0.5rem">${this.convertToPlayerTime(cue.startTime)} - ${this.convertToPlayerTime(cue.endTime)}</span>  <span>${cue.text}</span>`;
 
             console.log(this.options);
 
@@ -288,7 +484,7 @@
               });
             }
 
-            transcriptCues.append(p);
+            transcriptCues.append(li);
           }
         }
 
