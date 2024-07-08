@@ -6,7 +6,9 @@
   .custom-vtt-player .controls {
     display: flex;
     justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
+    background: #f2f2f2;
+    padding: 12px 24px;
   }
 
   .custom-vtt-player .controls .buttons {
@@ -14,31 +16,78 @@
     gap: 5px;
     margin: 0 auto;
   }
+  .custom-vtt-player .controls .playpause {
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .custom-vtt-player .controls .playpause:hover,
+  .custom-vtt-player .controls .playpause:active {
+    background: #e1e1e1;
+  }
   .custom-vtt-player .highlight {
     background-color: yellow;
   }
 
   .custom-vtt-player .seek-bar[data-moving="true"] {
-    outline: 1px solid green;
+  }
+  .custom-vtt-player .rwd,
+  .custom-vtt-player .fwd {
+    width: 3rem;
   }
 </style>
 <div class="custom-vtt-player">
   <div class="controls">
     <div class="buttons">
-      <button class="rwd"><< 3</button>
-      <button class="playpause">Play</button>
-      <button class="stop">Stop</button>
-      <button class="fwd">3 >></button>
+      <!-- <button class="rwd"><< 3</button> -->
+      <button class="playpause" aria-label="Play or pause audio">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="play-icon"
+        >
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="pause-icon"
+          style="display: none"
+        >
+          <rect x="6" y="4" width="4" height="16"></rect>
+          <rect x="14" y="4" width="4" height="16"></rect>
+        </svg>
+      </button>
+      <div
+        class="timelapse"
+        style="display: flex; align-items: center; min-width: 6rem"
+      >
+        <span class="time" style="margin-right: 4px">00:00</span>
+        <span class="time-end">/ 00:00</span>
+      </div>
+      <!-- <button class="stop">Stop</button> -->
+      <!-- <button class="fwd">3 >></button> -->
     </div>
-    <div style="width: 100%">
-      <input
-        type="range"
-        class="seek-bar"
-        value="0"
-        min="0"
-        style="width: 100%"
-      />
-      <div class="time">00:00</div>
+    <div style="width: 100%; display: flex; align-items: center">
+      <input type="range" class="seek-bar" min="0" style="width: 100%" />
     </div>
   </div>
   <audio class="audio-player" crossorigin="anonymous">
@@ -99,9 +148,8 @@
       };
 
       convertToPlayerTime = (time) => {
-        const mins = Math.floor(time / 60)
-          .toString()
-          .padStart(2, "0");
+        const mins = Math.floor(time / 60).toString();
+
         const secs = Math.floor(time % 60)
           .toString()
           .padStart(2, "0");
@@ -117,47 +165,66 @@
 
         audio.removeAttribute("controls");
 
-        const playPauseBtn = document.querySelector(".playpause");
-        const stopBtn = document.querySelector(".stop");
-        const rwdBtn = document.querySelector(".rwd");
-        const fwdBtn = document.querySelector(".fwd");
-        const timeLabel = document.querySelector(".time");
+        const playPauseBtn = document.querySelector(
+          ".custom-vtt-player .playpause",
+        );
+        const stopBtn = document.querySelector(".custom-vtt-player .stop");
+        const rwdBtn = document.querySelector(".custom-vtt-player .rwd");
+        const fwdBtn = document.querySelector(".custom-vtt-player .fwd");
+        const timeLabel = document.querySelector(".custom-vtt-player .time");
 
         playPauseBtn.onclick = () => {
           if (!this.state.isPlaying) {
             this.state.isPlaying = true;
             audio.play();
-            playPauseBtn.textContent = "Pause";
+            playPauseBtn.querySelector(".pause-icon").style.display = "block";
+            playPauseBtn.querySelector(".play-icon").style.display = "none";
             return null;
           }
 
           this.state.isPlaying = false;
           audio.pause();
-          playPauseBtn.textContent = "Play";
+          playPauseBtn.querySelector(".play-icon").style.display = "block";
+          playPauseBtn.querySelector(".pause-icon").style.display = "none";
         };
 
-        stopBtn.onclick = () => {
-          audio.pause();
-          audio.currentTime = 0;
-          playPauseBtn.textContent = "Play";
-        };
-
-        rwdBtn.onclick = () => {
-          audio.currentTime -= 3;
-        };
-
-        fwdBtn.onclick = () => {
-          audio.currentTime += 3;
-          if (audio.currentTime >= audio.duration || audio.paused) {
+        if (stopBtn) {
+          stopBtn.onclick = () => {
             audio.pause();
             audio.currentTime = 0;
-            playPauseBtn.textContent = "Play";
+            playPauseBtn.querySelector(".play-icon").style.display = "block";
+            playPauseBtn.querySelector(".pause-icon").style.display = "none";
+          };
+        }
+
+        if (rwdBtn) {
+          rwdBtn.onclick = () => {
+            audio.currentTime -= 3;
+          };
+        }
+
+        if (fwdBtn) {
+          fwdBtn.onclick = () => {
+            audio.currentTime += 3;
+            if (audio.currentTime >= audio.duration || audio.paused) {
+              audio.pause();
+              audio.currentTime = 0;
+              playPauseBtn.querySelector(".play-icon").style.display = "block";
+              playPauseBtn.querySelector(".pause-icon").style.display = "none";
+            }
+          };
+        }
+
+        const seekBar = document.querySelector(".custom-vtt-player .seek-bar");
+
+        audio.addEventListener("loadedmetadata", () => {
+          seekBar.max = audio.duration;
+
+          if (seekBar.max) {
+            document.querySelector(".custom-vtt-player .time-end").innerText =
+              ` / ${this.convertToPlayerTime(seekBar.max)}`;
           }
-        };
-
-        const seekBar = document.querySelector(".seek-bar");
-
-        seekBar.max = audio.duration;
+        });
 
         seekBar.addEventListener("input", function () {
           const time = (audio.duration / 100) * seekBar.value;
@@ -185,6 +252,8 @@
 
         seekBar.addEventListener("change", () => {
           audio.currentTime = seekBar.value;
+
+          console.log("test: ", this.convertToPlayerTime(seekBar.max));
 
           seekBar.removeAttribute("data-moving");
           this.state.interaction.isSeekBarMoving = false;
