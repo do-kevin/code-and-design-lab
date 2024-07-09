@@ -1,0 +1,345 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body style="margin: 0">
+    <slot />
+  </body>
+</html>
+<style>
+  .scroller {
+    padding: 2rem 0;
+  }
+  .scroller,
+  .scroller * {
+    box-sizing: border-box;
+  }
+  .scroller .container {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 2.5rem;
+    overflow-x: auto;
+    margin: 0 auto;
+  }
+  .scroller .card {
+    min-width: 323px;
+    height: 739px;
+    display: block;
+    visibility: unset;
+    max-height: 739px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  .scroller .headline {
+    text-align: center;
+    font-size: clamp(45px, 5.25vw, 100px);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+    padding: 0 15px;
+  }
+  .scroller .container::-webkit-scrollbar-track {
+    margin: 0 2.5rem;
+  }
+  @media screen and (min-width: 768px) {
+    .scroller .container {
+      display: inline-flex;
+    }
+    .scroller .headline {
+      margin-bottom: 0.95rem;
+    }
+  }
+  .scroller .skeleton {
+    animation: 0.5s linear infinite alternate skeleton-2024-7-loading;
+    border-radius: 5px;
+  }
+  @keyframes skeleton-2024-7-loading {
+    0% {
+      background-color: #c2cfd6;
+    }
+    100% {
+      background-color: #f0f3f5;
+    }
+  }
+</style>
+<style>
+  .parent-modal {
+  }
+  .parent-modal,
+  .parent-modal * {
+    box-sizing: border-box;
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      "Open Sans",
+      "Helvetica Neue",
+      sans-serif;
+    text-align: center;
+  }
+  .parent-modal img {
+    max-width: 100%;
+  }
+  .parent-modal .container {
+    display: flex;
+  }
+  .parent-modal .content {
+    width: 100%;
+    padding: 2rem 15px 2.25rem;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .parent-modal .call-to-action {
+    color: #000;
+    padding: 0.5rem 1.25rem;
+    background: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-size: clamp(14px, 1.1vw, 21px);
+    font-weight: 600;
+    border: 1px solid transparent;
+    letter-spacing: 0.066rem;
+  }
+  .parent-modal .call-to-action:active,
+  .parent-modal .call-to-action:hover {
+    color: #fff;
+    background: #000;
+    border: 1px solid #fff;
+  }
+  .parent-modal .d-inline-block {
+    display: inline-block;
+  }
+  .parent-modal .d-none {
+    display: none;
+  }
+  .parent-modal .video-promo {
+    height: auto;
+  }
+  .parent-modal #modal {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: rgba(55, 51, 48, 0.902);
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 170ms;
+  }
+  .parent-modal .close-modal-btn--cross {
+    color: #fff;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    font-size: 20px;
+  }
+  .parent-modal .close-modal-btn--bottom {
+    text-decoration: underline;
+    margin-top: 10px;
+    text-underline-offset: 2px;
+    font-size: 14px;
+    font-size: clamp(14px, 1vw, 1rem);
+  }
+  .parent-modal #iframe-container {
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: end;
+    flex-direction: column;
+    align-items: end;
+  }
+  .parent-modal .modal-cta {
+    background: #fff;
+    color: #000;
+    font-weight: 600;
+    padding: 7px 24px;
+    margin-top: 20px;
+    letter-spacing: 0.066rem;
+    font-size: 14px;
+    font-size: clamp(14px, 1vw, 1rem);
+  }
+  .parent-modal .modal-cta:active,
+  .parent-modal .modal-cta:hover {
+    background: #000;
+    color: #fff;
+  }
+  .parent-modal .modal-cta:-webkit-any-link {
+    background: #fff;
+    color: #000;
+  }
+  .parent-modal .modal-cta:-webkit-any-link:active,
+  .parent-modal .modal-cta:-webkit-any-link:hover {
+    background: #000;
+    color: #fff;
+  }
+
+  @media screen and (min-width: 768px) {
+    .parent-modal .container {
+      flex-direction: row;
+    }
+    .parent-modal .content {
+      padding: 1rem 15px;
+    }
+  }
+  @media screen and (min-width: 834px) {
+    .parent-modal .d-md-none {
+      display: none;
+    }
+    .parent-modal .d-md-inline-block {
+      display: inline-block;
+    }
+  }
+</style>
+<article class="parent-modal">
+  <div id="modal" style="height: 0" tabindex="0">
+    <div id="iframe-container">
+      <button
+        class="close-modal-btn close-modal-btn--cross"
+        aria-label="Close"
+        style="max-width: 1.5rem"
+      >
+        X
+      </button>
+      <iframe
+        id="youtube-iframe"
+        class="card"
+        name="__tt_embed__v7316349416237993248"
+        sandbox="allow-popups allow-popups-to-escape-sandbox allow-scripts allow-top-navigation allow-same-origin"
+        src="https://www.tiktok.com/embed/v2/7316349416237993248?loop=1&lang=en-US&amp;referrer=https%3A%2F%2Fgithub.com%2Fdo-kevin"
+        style="height: 47rem; width: 20rem; border-radius: 10px"
+      ></iframe>
+    </div>
+  </div>
+  <article class="scroller">
+    <h2 class="headline">HELLO WORLD</h2>
+    <p
+      style="
+        font-size: 1rem;
+        margin-bottom: 1.688rem;
+        font-weight: 600;
+        text-align: center;
+        font-size: clamp(1rem, 2.2vw, 20px);
+        padding: 0 15px;
+      "
+    >
+      Lorem ipsum. TikTok scroller with modal popup.
+    </p>
+    <div style="display: flex; justify-content: center">
+      <div class="container">
+        <div class="skeleton" data-tiktok-video-id="7316349416237993248">
+          <img class="card" src="" alt="" />
+        </div>
+        <div class="skeleton" data-tiktok-video-id="7231846685561916677">
+          <img class="card" src="" alt="" />
+        </div>
+
+        <div class="skeleton" data-tiktok-video-id="7248980093098560814">
+          <img class="card" src="" alt="" />
+        </div>
+
+        <div class="skeleton" data-tiktok-video-id="7131901250622246150">
+          <img class="card" src="" alt="" />
+        </div>
+
+        <div class="skeleton" data-tiktok-video-id="7185982491130350875">
+          <img class="card" src="" alt="" />
+        </div>
+
+        <div class="skeleton" data-tiktok-video-id="7284957232909782314">
+          <img class="card" src="" alt="" />
+        </div>
+
+        <div class="skeleton" data-tiktok-video-id="7324050459776371969">
+          <img class="card" src="" alt="" />
+        </div>
+      </div>
+    </div>
+  </article>
+</article>
+<script>
+  (function () {
+    let currentIframeLink =
+      "https://www.tiktok.com/embed/v2/7316349416237993248?loop=1&lang=en-US&amp;referrer=https%3A%2F%2Fgithub.com%2Fdo-kevin";
+    let currentName = "__tt_embed__v7316349416237993248";
+    function initModal() {
+      const modal = document.querySelector(".parent-modal #modal");
+      function openModal(event, tiktokVideoId) {
+        event.preventDefault();
+        modal.style.height = "100%";
+        modal.style.opacity = 1;
+        modal.style["z-index"] = 9999;
+        modal.style.position = "fixed";
+        setIframe(tiktokVideoId);
+      }
+      function closeModal(event) {
+        console.log("hit");
+        if (event && typeof event.preventDefault === "function") {
+          event.preventDefault();
+        }
+        modal.style.height = 0;
+        modal.style["z-index"] = -1;
+        modal.style.opacity = 0;
+        modal.style.position = "relative";
+        youtubeIframe.src = currentIframeLink;
+        modal.blur();
+      }
+      const youtubeIframe = document.querySelector(
+        ".parent-modal #youtube-iframe",
+      );
+      const setIframe = (id) => {
+        currentIframeLink = `https://www.tiktok.com/embed/v2/${id}?loop=1&lang=en-US&amp;referrer=https%3A%2F%2Fgithub.com%2Fdo-kevin`;
+        currentName = `__tt_embed__v${id}`;
+        youtubeIframe.src = currentIframeLink;
+        youtubeIframe.setAttribute("name", currentName);
+      };
+      document.querySelectorAll(".parent-modal .skeleton").forEach((node) => {
+        console.log(node);
+        const tiktokId = node.getAttribute("data-tiktok-video-id");
+        node.addEventListener("click", (event) => {
+          console.log("tiktokId: ", tiktokId);
+          openModal(event, tiktokId);
+        });
+      });
+
+      document
+        .querySelector(".parent-modal #modal")
+        .addEventListener("keyup", function (event) {
+          if (event.isComposing || event.keyCode !== 27) {
+            return null;
+          }
+          closeModal();
+        });
+      document
+        .querySelector(".parent-modal .close-modal-btn")
+        .addEventListener("click", closeModal);
+    }
+    if (
+      document.readyState === "complete" ||
+      document.readyState === "interactive"
+    ) {
+      initModal();
+      return null;
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+      initModal();
+    });
+  })();
+</script>
