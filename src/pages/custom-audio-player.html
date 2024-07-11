@@ -29,6 +29,7 @@
     flex-direction: row;
     background: #f2f2f2;
     padding: 12px 24px;
+    border-radius: 4px;
   }
 
   .custom-vtt-player .controls .buttons {
@@ -54,8 +55,9 @@
     background: #e1e1e1;
   }
   .custom-vtt-player .highlight {
-    background-color: rgb(245, 220, 77);
+    background-color: #abefe2;
     font-weight: 600;
+    border-radius: 4px;
   }
 
   .custom-vtt-player .seek-bar[data-moving="true"] {
@@ -73,22 +75,19 @@
     margin: 0;
   }
   .custom-vtt-player .transcript-cues li {
-    padding: 12px 24px;
+    padding: 0.75rem 1rem;
     display: flex;
-    font-size: 1.5rem;
+    font-size: 1rem;
     flex-direction: column;
   }
 
   .custom-vtt-player .transcript-cues li span:nth-child(1) {
-    color: #3a3a3a;
-    font-size: 1rem;
-    margin-right: 0.25rem;
+    color: #454545;
+    font-size: 14px;
+    margin-right: 0.5rem;
   }
 
   @media screen and (min-width: 1024px) {
-    .custom-vtt-player .transcript-cues li {
-      font-size: 1rem;
-    }
     .custom-vtt-player .transcript-cues li span:nth-child(1) {
       font-size: inherit;
     }
@@ -96,16 +95,106 @@
       flex-direction: row;
     }
   }
-  /* .custom-vtt-player .volume-slider {
-    width: 0;
-    opacity: 0;
-    transition: all 300ms ease-in-out;
-  }
-  .custom-vtt-player .volume-controls:hover .volume-slider,
-  .custom-vtt-player .volume-controls:active .volume-slider {
+
+  .custom-vtt-player input[type="range"] {
+    appearance: none;
     width: 100%;
-    opacity: 1;
-  } */
+    background: transparent;
+  }
+
+  .custom-vtt-player input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+  }
+
+  .custom-vtt-player input[type="range"]::-ms-track {
+    width: 100%;
+    cursor: pointer;
+
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+
+  .custom-vtt-player input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 2.5px solid #fff;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #6ed7c4;
+    cursor: pointer;
+    margin-top: -6px;
+  }
+
+  .custom-vtt-player input[type="range"]::-moz-range-thumb {
+    border: 2.5px solid #fff;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #6ed7c4;
+    cursor: pointer;
+  }
+
+  .custom-vtt-player input[type="range"]::-ms-thumb {
+    border: 2.5px solid #fff;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #6ed7c4;
+    cursor: pointer;
+  }
+
+  .custom-vtt-player input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+
+    background: -webkit-linear-gradient(
+      to right,
+      #6ed7c4,
+      #74dcc9
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #6ed7c4, #74dcc9);
+    border-radius: 4px;
+    border: 0.2px solid #f2f2f2;
+  }
+
+  .custom-vtt-player input[type="range"]:focus::-webkit-slider-runnable-track {
+  }
+
+  .custom-vtt-player input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+
+    background: linear-gradient(to left, #6ed7c4, #74dcc9);
+    border-radius: 4px;
+    border: 0.2px solid #f2f2f2;
+  }
+
+  .custom-vtt-player input[type="range"]::-ms-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    border-width: 16px 0;
+    color: transparent;
+  }
+  .custom-vtt-player input[type="range"]::-ms-fill-lower {
+    background: linear-gradient(to left, #6ed7c4, #74dcc9);
+    border: 0.2px solid #e9fbf8;
+    border-radius: 4px;
+  }
+  .custom-vtt-player input[type="range"]:focus::-ms-fill-lower {
+  }
+  .custom-vtt-player input[type="range"]::-ms-fill-upper {
+    background: linear-gradient(to left, #6ed7c4, #74dcc9);
+    border: 0.2px solid #e9fbf8;
+    border-radius: 4px;
+  }
+  .custom-vtt-player input[type="range"]:focus::-ms-fill-upper {
+  }
 </style>
 <article style="max-width: 900px; margin: 0 auto auto; padding-bottom: 52px">
   <div class="custom-vtt-player">
