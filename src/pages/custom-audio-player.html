@@ -22,7 +22,8 @@
   .custom-vtt-player {
     margin-top: 1rem;
     font-size: 1rem;
-    --seeker-progress: 0%;
+    --seeker-progress-width: 0%;
+    --volume-level-width: 60%;
   }
   .custom-vtt-player .controls {
     display: flex;
@@ -59,6 +60,10 @@
     font-weight: 600;
     border-radius: 4px;
   }
+  .custom-vtt-player .seek-bar,
+  .custom-vtt-player .volume-slider {
+    position: relative;
+  }
   .custom-vtt-player .seek-bar[data-moving="true"] {
   }
   .custom-vtt-player .rwd,
@@ -85,6 +90,19 @@
     margin-right: 0.5rem;
     white-space: nowrap;
   }
+  .custom-vtt-player .timelapse {
+    display: flex;
+    align-items: center;
+    min-width: 4.75rem;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  @media screen and (min-width: 430px) {
+    .custom-vtt-player .timelapse {
+      min-width: 6rem;
+      font-size: 1rem;
+    }
+  }
   @media screen and (min-width: 1024px) {
     .custom-vtt-player .transcript-cues li span:nth-child(1) {
       font-size: inherit;
@@ -110,7 +128,7 @@
   }
   .custom-vtt-player input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    border: 2.5px solid #fff;
+    border: 2.5px solid #485cc7;
     height: 20px;
     width: 20px;
     border-radius: 50%;
@@ -119,7 +137,7 @@
     margin-top: -6px;
   }
   .custom-vtt-player input[type="range"]::-moz-range-thumb {
-    border: 2.5px solid #fff;
+    border: 2.5px solid #485cc7;
     height: 20px;
     width: 20px;
     border-radius: 50%;
@@ -127,7 +145,7 @@
     cursor: pointer;
   }
   .custom-vtt-player input[type="range"]::-ms-thumb {
-    border: 2.5px solid #fff;
+    border: 2.5px solid #485cc7;
     height: 20px;
     width: 20px;
     border-radius: 50%;
@@ -138,9 +156,9 @@
     width: 100%;
     height: 8.4px;
     cursor: pointer;
-    background: #485cc7;
+    background: #f2f2f2;
     border-radius: 4px;
-    border: 0.2px solid #f2f2f2;
+    border: 0.2px solid #999999;
   }
   .custom-vtt-player input[type="range"]:focus::-webkit-slider-runnable-track {
   }
@@ -148,9 +166,9 @@
     width: 100%;
     height: 8.4px;
     cursor: pointer;
-    background: #485cc7;
+    background: #f2f2f2;
     border-radius: 4px;
-    border: 0.2px solid #f2f2f2;
+    border: 0.2px solid #999999;
   }
   .custom-vtt-player input[type="range"]::-ms-track {
     width: 100%;
@@ -162,25 +180,49 @@
     color: transparent;
   }
   .custom-vtt-player input[type="range"]::-ms-fill-lower {
-    background: #485cc7;
+    background: #ccc;
     border: 0.2px solid #999999;
     border-radius: 4px;
   }
   .custom-vtt-player input[type="range"]:focus::-ms-fill-lower {
   }
   .custom-vtt-player input[type="range"]::-ms-fill-upper {
-    background: #485cc7;
+    background: #ccc;
     border: 0.2px solid #999999;
     border-radius: 4px;
   }
   .custom-vtt-player input[type="range"]:focus::-ms-fill-upper {
+  }
+
+  .custom-vtt-player input[type="range"].seek-bar::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: var(--seeker-progress-width);
+    height: 8px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    background-color: #485cc7;
+    cursor: pointer;
+  }
+  .custom-vtt-player input[type="range"].volume-slider::before {
+    position: absolute;
+    content: "";
+    top: 10px;
+    left: 0;
+    width: var(--volume-level-width);
+    height: 8px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    background-color: #485cc7;
+    cursor: pointer;
   }
 </style>
 <article style="max-width: 900px; margin: 0 auto auto; padding-bottom: 52px">
   <div class="custom-vtt-player">
     <div class="controls">
       <div class="buttons">
-        <!-- <button class="rwd"><< 3</button> -->
         <button class="playpause" aria-label="Play">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -210,18 +252,7 @@
             <rect x="14" y="4" width="4" height="16"></rect>
           </svg>
         </button>
-        <time
-          class="timelapse"
-          aria-label="time"
-          tabindex="0"
-          style="
-            display: flex;
-            align-items: center;
-            min-width: 6rem;
-            font-size: 1rem;
-            white-space: nowrap;
-          "
-        >
+        <time class="timelapse" aria-label="time" tabindex="0" style="">
           <span class="time" tabindex="0" style="margin-right: 4px">0:00</span>
           <span class="time-end" tabindex="0">/ 0:00</span>
         </time>
@@ -262,11 +293,11 @@
               fill="currentColor"
             />
             <path
-              d="M8.5 3C8.8283 3 9.15339 3.0776 9.45671 3.22836C9.76002 3.37913 10.0356 3.6001 10.2678 3.87868C10.4999 4.15726 10.6841 4.48797 10.8097 4.85195C10.9353 5.21593 11 5.60603 11 6C11 6.39397 10.9353 6.78407 10.8097 7.14805C10.6841 7.51203 10.4999 7.84274 10.2678 8.12132C10.0356 8.3999 9.76002 8.62087 9.45671 8.77164C9.15339 8.9224 8.8283 9 8.5 9L8.5 6L8.5 3Z"
+              d="M8.5 3C8.8283 3 9.15339 3.0776 9.45671 3.22836C9.76002 3.37913 10.0356 3.6001 10.2678 3.87868C10.4999 4.15726 10.6841 4.48797 10.8097 4.85197C10.9353 5.21593 11 5.60603 11 6C11 6.39397 10.9353 6.78407 10.8097 7.14805C10.6841 7.51203 10.4999 7.84274 10.2678 8.12132C10.0356 8.3999 9.76002 8.62087 9.45671 8.77164C9.15339 8.9224 8.8283 9 8.5 9L8.5 6L8.5 3Z"
               fill="currentColor"
             />
             <path
-              d="M8.5 7.13262e-07C9.22227 6.8169e-07 9.93747 0.155195 10.6048 0.456723C11.272 0.758252 11.8784 1.20021 12.3891 1.75736C12.8998 2.31451 13.3049 2.97595 13.5813 3.7039C13.8577 4.43185 14 5.21207 14 6C14 6.78793 13.8577 7.56815 13.5813 8.2961C13.3049 9.02405 12.8998 9.68549 12.3891 10.2426C11.8784 10.7998 11.272 11.2417 10.6048 11.5433C9.93747 11.8448 9.22227 12 8.5 12L8.5 10.8C9.07782 10.8 9.64997 10.6758 10.1838 10.4346C10.7176 10.1934 11.2027 9.83983 11.6113 9.39411C12.0198 8.94839 12.3439 8.41924 12.5651 7.83688C12.7862 7.25452 12.9 6.63035 12.9 6C12.9 5.36966 12.7862 4.74548 12.5651 4.16312C12.3439 3.58076 12.0198 3.05161 11.6113 2.60589C11.2027 2.16017 10.7176 1.8066 10.1838 1.56538C9.64997 1.32416 9.07782 1.2 8.5 1.2L8.5 7.13262e-07Z"
+              d="M8.5 7.13262e-07C9.22227 6.8169e-07 9.93747 0.155197 10.6048 0.456723C11.272 0.758252 11.8784 1.20021 12.3891 1.75736C12.8998 2.31451 13.3049 2.97597 13.5813 3.7039C13.8577 4.43185 14 5.21207 14 6C14 6.78793 13.8577 7.56815 13.5813 8.2961C13.3049 9.02405 12.8998 9.68549 12.3891 10.2426C11.8784 10.7998 11.272 11.2417 10.6048 11.5433C9.93747 11.8448 9.22227 12 8.5 12L8.5 10.8C9.07782 10.8 9.64997 10.6758 10.1838 10.4346C10.7176 10.1934 11.2027 9.83983 11.6113 9.39411C12.0198 8.94839 12.3439 8.41924 12.5651 7.83688C12.7862 7.25452 12.9 6.63035 12.9 6C12.9 5.36966 12.7862 4.74548 12.5651 4.16312C12.3439 3.58076 12.0198 3.05161 11.6113 2.60589C11.2027 2.16017 10.7176 1.8066 10.1838 1.56538C9.64997 1.32416 9.07782 1.2 8.5 1.2L8.5 7.13262e-07Z"
               fill="currentColor"
             />
           </svg>
@@ -318,6 +349,7 @@
     class CustomAudioPlayer {
       defaultOptions = {
         elementRefs: {
+          parentContainer: document.querySelector(".custom-vtt-player"),
           audioPlayer: document.querySelector(
             ".custom-vtt-player .audio-player",
           ),
@@ -454,8 +486,17 @@
           elementRefs.muteSignifier.style.display = "block";
           elementRefs.unMuteSignifier.style.display = "none";
         };
+
         elementRefs.volumeSlider.addEventListener("input", function (event) {
           audio.volume = elementRefs.volumeSlider.value;
+
+          elementRefs.parentContainer.style.setProperty(
+            "--volume-level-width",
+            (elementRefs.volumeSlider.value / elementRefs.volumeSlider.max) *
+              75 +
+              "%",
+          );
+
           if (this.value == 0) {
             audio.muted = true;
             elementRefs.muteSignifier.style.display = "none";
@@ -512,25 +553,50 @@
             }
           });
         }
-        elementRefs.seekBar.addEventListener("input", function () {
-          const time = (audio.duration / 100) * elementRefs.seekBar.value;
-          audio.currentTime = time;
-        });
+
         audio.ontimeupdate = () => {
           if (!elementRefs.seekBar.getAttribute("data-moving")) {
             elementRefs.seekBar.value = audio.currentTime;
           }
+
+          elementRefs.parentContainer.style.setProperty(
+            "--seeker-progress-width",
+            (elementRefs.seekBar.value / elementRefs.seekBar.max) * 97.1 + "%",
+          );
+
           const mediaTime = this.convertToPlayerTime(audio.currentTime);
           elementRefs.currentTime.textContent = mediaTime;
           const highlightCue = this.debounce(highlightActiveCue, 500);
           highlightCue();
         };
-        elementRefs.seekBar.addEventListener("input", () => {
-          audio.currentTime = elementRefs.seekBar.value;
+
+        elementRefs.seekBar.addEventListener("input", (event) => {
+          const time = (audio.duration / 100) * elementRefs.seekBar.value;
+          audio.currentTime = time;
+
           this.state.interaction.isSeekBarMoving = true;
           elementRefs.seekBar.setAttribute("data-moving", "true");
         });
-        elementRefs.seekBar.addEventListener("change", () => {
+        elementRefs.seekBar.addEventListener("change", (event) => {
+          elementRefs.parentContainer.style.setProperty(
+            "--seeker-progress-width",
+            (elementRefs.seekBar.value / elementRefs.seekBar.max) * 97.1 + "%",
+          );
+
+          audio.currentTime = elementRefs.seekBar.value;
+          elementRefs.seekBar.removeAttribute("data-moving");
+          this.state.interaction.isSeekBarMoving = false;
+        });
+
+        elementRefs.volumeSlider.addEventListener("change", (event) => {
+          elementRefs.parentContainer.style.setProperty(
+            "--volume-level-width",
+            (elementRefs.volumeSlider.value /
+              elementRefs.volumeSlider.seekBar.max) *
+              75 +
+              "%",
+          );
+
           audio.currentTime = elementRefs.seekBar.value;
           elementRefs.seekBar.removeAttribute("data-moving");
           this.state.interaction.isSeekBarMoving = false;
