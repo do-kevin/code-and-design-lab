@@ -243,7 +243,7 @@
       Lorem ipsum. TikTok scroller with modal popup.
     </p>
     <div style="display: flex; justify-content: center">
-      <div class="container tiktok-cards-container">
+      <div class="container">
         <div class="skeleton" data-tiktok-video-id="7316349416237993248">
           <img class="card" src="" alt="" />
         </div>
@@ -282,29 +282,6 @@
     function initModal() {
       const modal = document.querySelector(".parent-modal #modal");
 
-      const tiktokCardsContainer = document.querySelector(
-        ".parent-modal .tiktok-cards-container",
-      );
-
-      tiktokCardsContainer.addEventListener("click", (event) => {
-        let tiktokId = null;
-        console.log("event: ", event.target.parentNode);
-        console.log(event.target.hasAttribute("data-tiktok-video-id"));
-
-        if (
-          event.target.tagName.toLowerCase() === "img" &&
-          event.target.parentNode.hasAttribute("data-tiktok-video-id")
-        ) {
-          tiktokId = event.target.parentNode.getAttribute(
-            "data-tiktok-video-id",
-          );
-          console.log("tiktokId: ", tiktokId);
-          openModal(event, tiktokId);
-        }
-      });
-
-      console.log("test: ", tiktokCardsContainer);
-
       function openModal(event, tiktokVideoId) {
         event.preventDefault();
         modal.style.height = "100%";
@@ -338,14 +315,14 @@
         youtubeIframe.setAttribute("name", currentName);
       };
 
-      // document.querySelectorAll(".parent-modal .skeleton").forEach((node) => {
-      //   console.log(node);
-      //   const tiktokId = node.getAttribute("data-tiktok-video-id");
-      //   node.addEventListener("click", (event) => {
-      //     console.log("tiktokId: ", tiktokId);
-      //     openModal(event, tiktokId);
-      //   });
-      // });
+      document.querySelectorAll(".parent-modal .skeleton").forEach((node) => {
+        console.log(node);
+        const tiktokId = node.getAttribute("data-tiktok-video-id");
+        node.addEventListener("click", (event) => {
+          console.log("tiktokId: ", tiktokId);
+          openModal(event, tiktokId);
+        });
+      });
 
       document
         .querySelector(".parent-modal #modal")
