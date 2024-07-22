@@ -23,18 +23,18 @@
   .scroller .container {
     display: flex;
     gap: 1rem;
-    padding: 1rem 2.5rem;
     overflow-x: auto;
     margin: 0 auto;
+    padding: 1rem 2.5rem 2.5rem;
   }
   .scroller .card {
-    min-width: 323px;
-    height: 739px;
+    min-width: 375px;
+    max-width: 375px;
+    height: 375px;
     display: block;
     visibility: unset;
-    max-height: 739px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-radius: 15px;
+    cursor: pointer;
   }
   .scroller .headline {
     text-align: center;
@@ -44,8 +44,18 @@
     margin-bottom: 1.25rem;
     padding: 0 15px;
   }
+  .scroller .container::-webkit-scrollbar {
+    border-radius: 15px;
+    height: 8px;
+  }
+  .scroller .container::-webkit-scrollbar-thumb {
+    background-color: #757575;
+    border-radius: 15px;
+  }
   .scroller .container::-webkit-scrollbar-track {
     margin: 0 2.5rem;
+    background: #eaeaea;
+    border-radius: 15px;
   }
   @media screen and (min-width: 768px) {
     .scroller .container {
@@ -57,7 +67,7 @@
   }
   .scroller .skeleton {
     animation: 0.5s linear infinite alternate skeleton-2024-7-loading;
-    border-radius: 5px;
+    border-radius: 15px;
   }
   @keyframes skeleton-2024-7-loading {
     0% {
@@ -91,9 +101,7 @@
   .parent-modal img {
     max-width: 100%;
   }
-  .parent-modal .container {
-    display: flex;
-  }
+
   .parent-modal .content {
     width: 100%;
     padding: 2rem 15px 2.25rem;
@@ -132,7 +140,7 @@
   .parent-modal #modal {
     display: flex;
     position: relative;
-    flex-direction: column;
+    flex-direction: row;
     top: 0;
     left: 0;
     width: 100%;
@@ -144,6 +152,10 @@
     z-index: -1;
     opacity: 0;
     transition: opacity 170ms;
+    gap: 1rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 2rem;
   }
   .parent-modal .close-modal-btn--cross {
     color: #fff;
@@ -166,6 +178,18 @@
     flex-direction: column;
     align-items: end;
   }
+  @media screen and (max-height: 815px) {
+    .parent-modal #iframe-container {
+      margin-top: 17rem;
+    }
+  }
+
+  @media screen and (min-height: 816px) {
+    .parent-modal #iframe-container {
+      margin-top: 0;
+    }
+  }
+
   .parent-modal .modal-cta {
     background: #fff;
     color: #000;
@@ -190,6 +214,12 @@
     background: #000;
     color: #fff;
   }
+  @media screen and (max-width: 465px) {
+    .parent-modal #previous-button,
+    .parent-modal #next-button {
+      display: none;
+    }
+  }
 
   @media screen and (min-width: 768px) {
     .parent-modal .container {
@@ -207,16 +237,47 @@
       display: inline-block;
     }
   }
+
+  .parent-modal button {
+    color: #fff;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .parent-modal button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
 </style>
 <article class="parent-modal">
   <div id="modal" style="height: 0" tabindex="0">
+    <button id="previous-button">
+      <svg
+        width="30"
+        height="51"
+        viewBox="0 0 30 51"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M28 2L4 25.5L28 49" stroke="currentColor" stroke-width="5" />
+      </svg>
+    </button>
     <div id="iframe-container">
       <button
         class="close-modal-btn close-modal-btn--cross"
         aria-label="Close"
-        style="max-width: 1.5rem"
+        style="max-width: 1.5rem; position: relative; right: 8px"
       >
-        X
+        <svg
+          width="26"
+          height="26"
+          viewBox="0 0 26 26"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M2.5 2.5L23.5 23.5" stroke="currentColor" stroke-width="5" />
+          <path d="M24 2.5L3 23.5" stroke="currentColor" stroke-width="5" />
+        </svg>
       </button>
       <iframe
         id="youtube-iframe"
@@ -224,9 +285,25 @@
         name="__tt_embed__v7316349416237993248"
         sandbox="allow-popups allow-popups-to-escape-sandbox allow-scripts allow-top-navigation allow-same-origin"
         src="https://www.tiktok.com/embed/v2/7316349416237993248?loop=1&lang=en-US&amp;referrer=https%3A%2F%2Fgithub.com%2Fdo-kevin"
-        style="height: 47rem; width: 20rem; border-radius: 10px"
+        style="
+          height: 47rem;
+          width: 20rem;
+          border-radius: 10px;
+          background-color: #f2f2f2;
+        "
       ></iframe>
     </div>
+    <button id="next-button">
+      <svg
+        width="30"
+        height="51"
+        viewBox="0 0 30 51"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M2 2L26 25.5L2 49" stroke="currentColor" stroke-width="5" />
+      </svg>
+    </button>
   </div>
   <article class="scroller">
     <h2 class="headline">HELLO WORLD</h2>
@@ -245,7 +322,11 @@
     <div style="display: flex; justify-content: center">
       <div class="container tiktok-cards-container">
         <div class="skeleton" data-tiktok-video-id="7316349416237993248">
-          <img class="card" src="" alt="" />
+          <img
+            class="card"
+            src="/assets/images/first-tiktok-thumbnail-min.jpeg"
+            alt="Forest"
+          />
         </div>
         <div class="skeleton" data-tiktok-video-id="7231846685561916677">
           <img class="card" src="" alt="" />
@@ -276,9 +357,21 @@
 </article>
 <script>
   (function () {
-    let currentIframeLink =
-      "https://www.tiktok.com/embed/v2/7316349416237993248?loop=1&lang=en-US&amp;referrer=https%3A%2F%2Fgithub.com%2Fdo-kevin";
-    let currentName = "__tt_embed__v7316349416237993248";
+    let tiktokVideoIndex = 0;
+
+    const tiktokVideoIds = [
+      "7316349416237993248",
+      "7231846685561916677",
+      "7248980093098560814",
+      "7131901250622246150",
+      "7185982491130350875",
+      "7284957232909782314",
+      "7324050459776371969",
+    ];
+
+    let currentIframeLink = `https://www.tiktok.com/embed/v2/${tiktokVideoIds[0]}?loop=1&lang=en-US&amp;referrer=https%3A%2F%2Fgithub.com%2Fdo-kevin`;
+    let currentName = `__tt_embed__v${tiktokVideoIds[0]}`;
+
     function initModal() {
       const modal = document.querySelector(".parent-modal #modal");
 
@@ -287,26 +380,27 @@
       );
 
       tiktokCardsContainer.addEventListener("click", (event) => {
-        let tiktokId = null;
-        console.log("event: ", event.target.parentNode);
-        console.log(event.target.hasAttribute("data-tiktok-video-id"));
+        const node = event.target;
+
+        console.log(event.target);
 
         if (
-          event.target.tagName.toLowerCase() === "img" &&
-          event.target.parentNode.hasAttribute("data-tiktok-video-id")
+          node.tagName === "IMG" &&
+          node.parentNode.hasAttribute("data-tiktok-video-id")
         ) {
-          tiktokId = event.target.parentNode.getAttribute(
-            "data-tiktok-video-id",
+          tiktokVideoIndex = tiktokVideoIds.indexOf(
+            node.parentNode.getAttribute("data-tiktok-video-id"),
           );
-          console.log("tiktokId: ", tiktokId);
-          openModal(event, tiktokId);
+
+          openModal(event, tiktokVideoIds[tiktokVideoIndex]);
+
+          updateButtons();
         }
       });
 
-      console.log("test: ", tiktokCardsContainer);
-
       function openModal(event, tiktokVideoId) {
         event.preventDefault();
+        document.body.style["overflow-y"] = "hidden";
         modal.style.height = "100%";
         modal.style.opacity = 1;
         modal.style["z-index"] = 9999;
@@ -315,37 +409,54 @@
       }
 
       function closeModal(event) {
-        console.log("hit");
         if (event && typeof event.preventDefault === "function") {
           event.preventDefault();
         }
+        document.body.style["overflow-y"] = "auto";
         modal.style.height = 0;
         modal.style["z-index"] = -1;
         modal.style.opacity = 0;
         modal.style.position = "relative";
-        youtubeIframe.src = currentIframeLink;
+        tiktokIframe.src = currentIframeLink;
         modal.blur();
       }
 
-      const youtubeIframe = document.querySelector(
+      const tiktokIframe = document.querySelector(
         ".parent-modal #youtube-iframe",
       );
 
       const setIframe = (id) => {
         currentIframeLink = `https://www.tiktok.com/embed/v2/${id}?loop=1&lang=en-US&amp;referrer=https%3A%2F%2Fgithub.com%2Fdo-kevin`;
         currentName = `__tt_embed__v${id}`;
-        youtubeIframe.src = currentIframeLink;
-        youtubeIframe.setAttribute("name", currentName);
+        tiktokIframe.src = currentIframeLink;
+        tiktokIframe.setAttribute("name", currentName);
       };
 
-      // document.querySelectorAll(".parent-modal .skeleton").forEach((node) => {
-      //   console.log(node);
-      //   const tiktokId = node.getAttribute("data-tiktok-video-id");
-      //   node.addEventListener("click", (event) => {
-      //     console.log("tiktokId: ", tiktokId);
-      //     openModal(event, tiktokId);
-      //   });
-      // });
+      const prevButton = document.querySelector(
+        ".parent-modal #previous-button",
+      );
+      const nextButton = document.querySelector(".parent-modal #next-button");
+
+      prevButton.addEventListener("click", () => {
+        if (tiktokVideoIndex > 0) {
+          tiktokVideoIndex--;
+          setIframe(tiktokVideoIds[tiktokVideoIndex]);
+          updateButtons();
+        }
+      });
+
+      nextButton.addEventListener("click", () => {
+        if (tiktokVideoIndex < tiktokVideoIds.length - 1) {
+          tiktokVideoIndex++;
+          setIframe(tiktokVideoIds[tiktokVideoIndex]);
+          updateButtons();
+        }
+      });
+
+      function updateButtons() {
+        prevButton.disabled = tiktokVideoIndex === 0;
+        nextButton.disabled = tiktokVideoIndex === tiktokVideoIds.length - 1;
+      }
 
       document
         .querySelector(".parent-modal #modal")
@@ -355,19 +466,23 @@
           }
           closeModal();
         });
+
       document
         .querySelector(".parent-modal .close-modal-btn")
         .addEventListener("click", closeModal);
+
+      updateButtons();
     }
+
     if (
       document.readyState === "complete" ||
       document.readyState === "interactive"
     ) {
       initModal();
-      return null;
+    } else {
+      document.addEventListener("DOMContentLoaded", () => {
+        initModal();
+      });
     }
-    document.addEventListener("DOMContentLoaded", () => {
-      initModal();
-    });
   })();
 </script>
