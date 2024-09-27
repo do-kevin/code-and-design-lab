@@ -1,3 +1,4 @@
+console.log("HIT");
 function customSlider({
   minWidth = 768,
   maxWidth = 767,

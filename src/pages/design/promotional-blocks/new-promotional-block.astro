@@ -1,0 +1,121 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+---
+<Layout title="whatever">
+    <style>
+        .promotional-block {
+            display: grid;
+            grid-template-columns: repeat(5, [ col ] auto);
+            grid-template-rows: repeat(3, [ row ] auto);
+            position: relative;
+        }
+        .promotional-block .headline-1 {
+            text-align: right;
+        }
+        .promotional-block .headline-2 {
+            position: absolute;
+            top: 26px;
+            text-align: right;
+            white-space: nowrap;
+            margin-right: 21%;
+            right: 0;
+        }
+        .promotional-block img {
+            max-width: 100%;
+        }
+        .promotional-block .hidden {
+            display: none;
+        }
+        .promotional-block .front-surface {
+            grid-column: 4 / span 2;
+            grid-row: 4 / span 9;
+            z-index: 10;
+        }
+        .promotional-block .back-surface {
+            grid-column: 2 / span 3;
+            grid-row: 1 / span 5;
+        }
+        @media screen and (min-width: 768px) {
+            .promotional-block {
+                display: flex;
+                max-width: 90%;
+                margin: auto;
+                align-items: flex-end;
+                flex-direction: row;
+                justify-content: center;
+            }
+            .promotional-block .headline-1 {
+                text-align: left;
+            }
+            .promotional-block .front-surface {
+                z-index: 1;
+                flex: 0 0 45%;
+                margin-left: -13%;
+            }
+            .promotional-block .headline-2 {
+                margin-left: 30%;
+                position: unset;
+                text-align: left;
+                width: auto;
+            }
+            .promotional-block .back-surface {
+                flex: 0 0 50%;
+                margin-left: 6.5%;
+                padding-bottom: 13%;
+            }
+        }
+    </style>
+    <article class="promotional-block">
+        <div class="back-surface">
+            <h2 class="headline-1" style="color: blue">
+                Headline 1
+            </h2>
+            <div style="position: relative">
+                <picture class="slide">
+                    <img
+                    src="/assets/images/vince-mariel-conlu-rare-beauty-lipoil-unsplash-min.avif"
+                    alt="Jane Doe looking at the Rare Beaty lip oil she's holding."
+                    />
+                </picture>
+                <picture class="slide hidden">
+                    <img
+                    src="/assets/images/peter-kalonji-woman-applying-lipoil-unsplash-min.avif"
+                    alt="Jane Doe looking at the Rare Beaty lip oil she's holding."
+                    />
+                </picture>
+            </div>
+        </div>
+        <div class="front-surface">
+            <h3 class="headline-2" style="color: red">
+                Lorem ipsum blah blah
+            </h3>
+            <picture>
+                <img
+                src="/assets/images/susan-wilkinson-Da8-AqI460k-unsplash-min.avif"
+                alt=""
+                />
+            </picture>
+        </div>
+    </article>
+    <script type="text/javascript" src="/assets/js/custom-slider.js"></script>
+    <script type="text/javascript">
+    (function () {
+        console.log(window);
+        const slider = new customSlider({
+        targetClassName: ".promotional-block .slide",
+        });
+
+        if (
+        document.readyState === "loading" ||
+        document.readyState === "complete"
+        ) {
+        slider.start();
+        return null;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+        slider.start();
+        });
+    })();
+    </script>
+</Layout>
