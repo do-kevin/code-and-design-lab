@@ -1,0 +1,256 @@
+---
+import Layout from "../../../../../layouts/Layout.astro";
+---
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background-color: #f2f2f2;
+  }
+</style>
+<Layout title="Lazyloading Banner">
+  <style>
+    .gif-2024-11-banner,
+    .gif-2024-11-banner * {
+      box-sizing: border-box;
+      font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Oxygen,
+        Ubuntu,
+        Cantarell,
+        "Open Sans",
+        "Helvetica Neue",
+        sans-serif;
+      text-align: center;
+      color: #fff;
+    }
+    .gif-2024-11-banner .anchor {
+      outline: 0 !important;
+    }
+    .gif-2024-11-banner .anchor:focus-visible .call-to-action {
+      box-shadow: none;
+      outline: #639af9 inset 3px;
+      outline-offset: 5px;
+      visibility: visible;
+      opacity: 1;
+      background: 0 0;
+      border: 1px solid #000;
+      color: #000;
+    }
+    .gif-2024-11-banner img {
+      max-width: 100%;
+    }
+    .gif-2024-11-banner .d-flex {
+      display: flex;
+    }
+    .gif-2024-11-banner .d-block {
+      display: block;
+    }
+    .gif-2024-11-banner .d-none,
+    .gif-2024-11-banner .hidden {
+      display: none;
+    }
+    .gif-2024-11-banner .position-relative {
+      position: relative;
+    }
+    .gif-2024-11-banner .container {
+      flex-direction: column;
+    }
+    .gif-2024-11-banner .left-side,
+    .gif-2024-11-banner .right-side {
+      width: 100%;
+    }
+
+    .gif-2024-11-banner .left-side img,
+    .gif-2024-11-banner .right-side img {
+      aspect-ratio: 18 / 13;
+    }
+
+    .gif-2024-11-banner .content {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .gif-2024-11-banner .headline {
+      font-size: 32px;
+      font-size: clamp(32px, 3.4vw, 48px);
+      line-height: 1.2;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      box-sizing: content-box;
+      padding: 0 15px 0;
+    }
+    .gif-2024-11-banner .copy {
+      font-weight: 600;
+      font-size: 14px;
+      font-size: clamp(14px, 1.4vw, 20px);
+      box-sizing: content-box;
+      padding: 0 15px 1rem;
+    }
+    .gif-2024-11-banner .call-to-action {
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      background: #000;
+      text-decoration: none;
+      font-size: 14px;
+      font-size: clamp(14px, 0.9vw, 1rem);
+      font-weight: 600;
+      border: 1px solid #000;
+      transition: 270ms;
+    }
+    .gif-2024-11-banner .call-to-action:-webkit-any-link {
+      color: #fff;
+      background: #000;
+      text-decoration: none;
+      border: 1px solid #000;
+    }
+    .gif-2024-11-banner .call-to-action:active,
+    .gif-2024-11-banner .call-to-action:hover {
+      background: 0 0;
+      border: 1px solid #000;
+      color: #000;
+    }
+    .gif-2024-11-banner .call-to-action:active:-webkit-any-link,
+    .gif-2024-11-banner .call-to-action:hover:-webkit-any-link {
+      background: 0 0;
+      border: 1px solid #000;
+      color: #000;
+    }
+    @media screen and (min-width: 768px) {
+      .gif-2024-11-banner .container {
+        flex-direction: row;
+      }
+      .gif-2024-11-banner .left-side,
+      .gif-2024-11-banner .right-side {
+        width: 50%;
+      }
+      .gif-2024-11-banner .copy {
+        margin-bottom: 0.5rem;
+        padding: 0 15px 0.5rem;
+      }
+      .gif-2024-11-banner .headline {
+        padding: 0.4rem 15px 0;
+      }
+      .gif-2024-11-banner .d-md-none {
+        display: none;
+      }
+      .gif-2024-11-banner .d-md-block {
+        display: block;
+      }
+    }
+  </style>
+  <article class="gif-2024-11-banner">
+    <a
+      class="container d-flex position-relative anchor"
+      aria-label="Be your best self. Shop now."
+      href="#"
+    >
+      <div
+        class="left-side"
+        style="background-color: #85d3e2; min-height: 275px"
+      >
+        <picture class="slide hidden">
+          <source
+            srcset="/public/assets/images/banner/Frame_1_D.jpg"
+            media="(min-width: 768px)"
+            sizes="(min-width: 768px) 50vw, 100vw"
+          />
+          <img
+            src="/public/assets/images/banner/Frame_1_M.jpg"
+            loading="lazy"
+            sizes="100vw"
+            alt="Amazing Lip Oil"
+          />
+        </picture>
+        <picture class="slide">
+          <source
+            srcset="/public/assets/images/banner/Frame_2_D.jpg"
+            media="(min-width: 768px)"
+            sizes="(min-width: 768px) 50vw, 100vw"
+          />
+          <img
+            src="/public/assets/images/banner/Frame_2_M.jpg"
+            loading="lazy"
+            sizes="100vw"
+            alt="Hot Pink Oil"
+          />
+        </picture>
+        <picture class="slide hidden">
+          <source
+            srcset="/public/assets/images/banner/Frame_3_D.jpg"
+            media="(min-width: 768px)"
+            sizes="(min-width: 768px) 50vw, 100vw"
+          />
+          <img
+            src="/public/assets/images/banner/Frame_3_M.jpg"
+            loading="lazy"
+            sizes="100vw"
+            alt="Bold Eyeshadow"
+          />
+        </picture>
+      </div>
+      <div
+        class="right-side position-relative"
+        style="background-color: #bcd8e3; min-height: 275px"
+      >
+        <picture>
+          <source
+            srcset="/public/assets/images/banner/Frame_Background_D.jpg"
+            media="(min-width: 768px)"
+            sizes="(min-width: 768px) 50vw, 100vw"
+          />
+          <img
+            src="/public/assets/images/banner/Frame_Background_M.jpg"
+            alt=""
+            sizes="100vw"
+            loading="lazy"
+          />
+        </picture>
+        <div class="content d-flex">
+          <h2 class="headline">
+            Be your<br class="d-block d-md-none" />
+            best self.
+          </h2>
+          <p class="copy">
+            Dive in and see our collections<br class="d-block d-md-none" />
+            and pick up your faves<br class="d-none d-md-block" />
+            from<br class="d-block d-md-none" />
+            our <br />
+            lineups
+          </p>
+          <span id="gif-2024-11-banner-cta" class="call-to-action">
+            SHOP NOW
+          </span>
+        </div>
+      </div>
+    </a>
+  </article>
+  <script type="text/javascript" src="/public/assets/js/custom-slider.min.js"
+  ></script>
+  <script>
+    (function () {
+      var slider = new customSlider({
+        targetClassName: ".gif-2024-11-banner .slide",
+      });
+      if (
+        document.readyState === "complete" ||
+        document.readyState === "interactive"
+      ) {
+        slider.start();
+        return null;
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        slider.start();
+      });
+    })();
+  </script>
+</Layout>
