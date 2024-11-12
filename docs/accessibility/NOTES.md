@@ -40,3 +40,31 @@ https://webaim.org
 Not making content accessible can be costly for a business. For example, Domino Pizza got sued when a blind customer could not order food usin their site/app.
 
 And Websites and Software Applications Accessibility Act was introduced to the US Senate.
+
+# As developers
+
+ARIA allows us to tweak the accessbility tree to ensure presentation and behavior intact.
+
+We can create components that are accessible and wouldn't have been possible with just native HTML elements. For example, tablists or accordions.
+
+Can add extra descriptions and label text only exposed to assistive technologies. `aria-describedby`
+
+"NO ARIA is better than Bad Aria": Incorrect usage of ARIA could cause more accessbility barriers.
+
+The Authoring Practices Guide (APG) offers valuable principles for proper ARIA implementation and improving web accessbility.
+
+WAI-ARIA
+
+- provides a framework for the guidelines like a superset
+
+Accessbility Tree:
+
+- a modified DOM tree the browser provides to the assistive technology
+
+## Useful commands
+
+ctrl + options + U: brings up a list of links
+
+ctrl + option + cmd + G: navigate by image
+
+<img src="../images/emulate-screen-reader-commands-min.png">
