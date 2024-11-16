@@ -68,3 +68,31 @@ ctrl + options + U: brings up a list of links
 ctrl + option + cmd + G: navigate by image
 
 <img src="../images/emulate-screen-reader-commands-min.png">
+
+ARIA only modifies the accessbility tree, so it's developer's responsibility to ensure an element's responsiveness and functionality.
+
+Try to use native HTML elements as much as possible because they already have native semantics and keyboard functionalities. Check out the <select> from MDN.
+
+Google search bar is an autocomplete input.
+
+Roles are core aspects of the ARIA system and shorthand for defining a UI pattern. Adds semantic meaning to an element to allow assitive technology interpret the element in the way that is consistent with the way the user expects a type of widget to behave. For example, `combobox`.
+
+ARIA states have a higher likelihood of frequent changes due to user interaction. For example, `aria-checked`
+Properties are less likely to change.
+
+A common usage of aria-label would be for an icon button that closes something like the hamburger button.
+
+```html
+<button aria-label="Close" onclick="myDiaglog.close()">
+  <!-- insert svg icon here -->
+  <svg aria-hidden="true" focusable="false" />
+</button>
+```
+
+`aria-labelledby` is a relationship attribute because it creates a semantic relationship between elements. It references an id of another element that contains a label text.
+
+<img src="../images/aria-labelledby-tree-example-min.png">
+
+`aria-describedby`, another relationship attribute, links an element to an accessible description by referencing an element's id.
+
+`aria-invalid` indicates user input for an element is incorrect. Typically used in form elements like select menus and textareas.
