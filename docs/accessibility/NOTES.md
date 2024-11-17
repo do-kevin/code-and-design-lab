@@ -96,3 +96,41 @@ A common usage of aria-label would be for an icon button that closes something l
 `aria-describedby`, another relationship attribute, links an element to an accessible description by referencing an element's id.
 
 `aria-invalid` indicates user input for an element is incorrect. Typically used in form elements like select menus and textareas.
+
+# Semantic HTML
+
+Best to leverage semantic HTML to get accessbility gains. For example, using <button> and doing some heavy styling versus using a <div> with onclick with reduced CSS.
+
+Hamburger menu, links, and buttons are examples of tech affordances.
+
+Landmark html allows user to quickly navigate content. For example, nav, header, main, section, and footer.
+
+https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/main.html is a great example.
+
+# Images
+
+alt text holds a description of the associtated text. It also displays text when the image tag fails to load the image.
+
+## Decorative images
+
+They do not provide signifiant context. It is highly recommended to pass an empty string to the alt attribute; it removes the image from the accessbility tree. This tells the screen readers to ignore it.
+
+Some sites put empty alt text with aria-hidden="true", which can be redundant.
+
+## Functional images
+
+These images represent actions and interactions. It's more important to describe the assoicated action than the appearance.
+
+## Informative images
+
+Alt text should describe the meaning or the intent the image is trying to convey in a brief phrase.
+
+Visit marcysutton.com, open your screen reader, ctrl + option + cmd + u.
+
+The alt text in there are trying to describe the context of the image is trying to say.
+
+## Make your alt text succint and descriptive
+
+- and avoid using words like icon, image or picture. It's redundant because the screen readers already announce the element is an image.
+
+# Resources:
