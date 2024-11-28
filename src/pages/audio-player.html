@@ -1,0 +1,83 @@
+<style>
+  #webvtt-player--custom {
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+  }
+  #webvtt-player--custom .search {
+    display: none;
+    visibility: hidden;
+  }
+  #webvtt-player--custom audio {
+    width: 100%;
+    outline: none;
+  }
+  #webvtt-player--custom .active {
+    background-color: yellow;
+  }
+</style>
+<div id="webvtt-player--custom">
+  <div
+    id="webvtt-player"
+    data-audio="assets/audio/shelley-frankenstein-sample.mp3"
+    data-transcript="assets/audio/vtt/shelley-frankenstein-sample-transcript.vtt"
+  />
+</div>
+<script src="https://umd-mith.github.io/webvtt-player/webvtt-player.js"></script>
+<script>
+  let audioLines = document.querySelector(
+    "#webvtt-player--custom .track",
+  ).children;
+
+  const initAudioPlayer = function () {
+    const state = {
+      hasChildren: false,
+    };
+
+    audioLines = document.querySelector(
+      "#webvtt-player--custom .track",
+    ).children;
+
+    console.log(audioLines.children);
+
+    function setupAccessbility() {
+      for (let i = 0; i < audioLines.length; i++) {
+        const line = audioLines[i];
+        line.className = line.className.trim();
+
+        line.setAttribute("tabindex", "0");
+        line.setAttribute(
+          "aria-label",
+          `Play audio from ${line.querySelector(".time").textContent}`,
+        );
+
+        line.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+
+            line.click();
+          }
+        });
+      }
+    }
+
+    const checker = setInterval(function () {
+      if (audioLines.length > 0) {
+        setupAccessbility();
+
+        clearInterval(checker);
+      }
+    }, 500);
+  };
+
+  if (document.readyState === "complete" || document.readyState === "loading") {
+    initAudioPlayer();
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    initAudioPlayer();
+  });
+</script>
