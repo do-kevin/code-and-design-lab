@@ -1,0 +1,48 @@
+<style>
+  body {
+    box-sizing: border-box;
+    font-family: sans-serif;
+    background-color: #f2f2f2;
+  }
+  .sheen-hover {
+    padding: 1rem;
+    --btn-theme-1: #242424;
+    --btn-theme-2: #53ff5c;
+    --animation-time-1: 500ms;
+  }
+
+  .sheen-hover .btn {
+    text-decoration: none;
+    color: var(--btn-theme-1);
+    font-size: 24px;
+    border: 3px solid var(--btn-theme-1);
+    transition: all var(--animation-time-1) ease-in-out;
+    padding: 0.75rem 1.5rem;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .sheen-hover .btn:hover {
+    background-color: var(--btn-theme-2);
+  }
+  .sheen-hover .btn:before {
+    content: "";
+    background-color: white;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    position: absolute;
+    transform: translateX(-100%) rotate(45deg);
+    transition: all var(--animation-time-1) ease-in-out;
+  }
+  .sheen-hover .btn:hover:before {
+    transform: translateX(100%) rotate(45deg);
+  }
+</style>
+<article class="sheen-hover">
+  <h1 style="margin-bottom: 2rem; text-align: center;">Sheen</h1>
+  <section style="margin-bottom: 4rem; display: flex">
+    <a href="#" class="btn"> Shop Now </a>
+  </section>
+</article>

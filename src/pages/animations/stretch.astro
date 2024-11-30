@@ -1,0 +1,37 @@
+<style>
+body {
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.stretchy-hover {
+    padding: 1rem;
+    --btn-theme-1: #f44e4e;
+    --animation-time-1: 200ms;
+}
+
+.stretchy-hover .btn {
+    text-decoration: none;
+    color: var(--btn-theme-1);
+    font-size: 24px;
+    border: 3px solid var(--btn-theme-1);
+    transition: all var(--animation-time-1);
+    padding: 0.75rem 1.5rem;
+    margin: auto;
+}
+.stretchy-hover .btn:hover {
+    font-weight: bold;
+    letter-spacing: 4px; 
+    border: 6px solid var(--btn-theme-1);
+}
+
+</style>
+<article class="stretchy-hover">
+    <h1 style="margin-bottom: 2rem; text-align: center;">
+    Stretch Effect
+    </h1>
+    <section style="margin-bottom: 4rem; display: flex">
+        <a href="#" class="btn">
+            Read more
+        </a>
+    </section>
+</article>
