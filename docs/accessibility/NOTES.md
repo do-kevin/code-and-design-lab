@@ -107,6 +107,52 @@ Landmark html allows user to quickly navigate content. For example, nav, header,
 
 https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/main.html is a great example.
 
+## Aria label and labelled by
+
+- Using both aria-label and aria-labelledby is unnecessary. Only use one or the other. aria-labelledby accepts an ids while aria-label accepts a string. aria-labelledby can contenate the ids' text content values together.
+
+- aria-describedby provides context for the element.
+
+- aria-invalid is usually used to show user input is incorrect. Typically used in input fields, select menus and text areas. It takes a boolean.
+
+# Semantic HTML cont'd
+
+## Technical Affordances
+
+Perceptions of interactions one can take with a piece of software or technology.
+
+For example, the hambuger menu because it represents hidden context and contains links and buttons. It is usually a common link that's persistent between different pages within the website.
+
+## Headings
+
+h1 - h6 provide clear hierarchy for the informtion to help users navigate and identify the structure of the content.
+
+The order of how the screenreaders read these are based on the DOM order.
+
+Visit https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/general-principles.html to see how headings are structured, including landmarks.
+
+Don't use these heading elements for styling. Use CSS instead, alter font-size and etc.
+
+## Landmarks
+
+```html
+<header />
+<nav />
+<main>
+  <section />
+  <section />
+</main>
+<footer />
+```
+
+A lot of landmark elements are semantic HTML. They help screenreaders and users navigate content swiftly.
+
+## Alt Text
+
+If no alt text is present, then the screenreader will read the file name.
+
+If the image doesn't load, alt text would be shown visually on the img element.
+
 # Images
 
 alt text holds a description of the associtated text. It also displays text when the image tag fails to load the image.
@@ -132,5 +178,56 @@ The alt text in there are trying to describe the context of the image is trying 
 ## Make your alt text succint and descriptive
 
 - and avoid using words like icon, image or picture. It's redundant because the screen readers already announce the element is an image.
+
+# Labels and Inputs
+
+These two elements typically need to be used in conjunction with each other.
+
+Inputs that rely on placeholder text or icons exclude users with assitive technologies.
+
+So there are assistive benefits to using label and inputs together.
+
+For example, it allows the user to click on the label and it'll focus on the input associated with it. This improves UX and screenreaders will announce the labels properly.
+
+Explicit relationship
+
+```html
+<form>
+  <label for="email-id">Email address: </label>
+  <input id="email-id" type="email" />
+</form>
+```
+
+Implicit relationship
+
+```html
+<form>
+  <label
+    >Email address:
+    <input type="email" />
+  </label>
+</form>
+```
+
+## There are some situations where you want the label to be hidden.
+
+But we have to make sure assistive technologies can pick it up. Display: none and visibility: hidden are NOT suitable.
+
+You can apply this class to do so:
+
+```css
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+```
+
+This makes the element visually hidden but still accessible to the accessbility tree.
 
 # Resources:
