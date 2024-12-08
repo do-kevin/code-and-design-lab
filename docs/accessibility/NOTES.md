@@ -82,7 +82,7 @@ Properties are less likely to change.
 
 A common usage of aria-label would be for an icon button that closes something like the hamburger button.
 
-```html
+```
 <button aria-label="Close" onclick="myDiaglog.close()">
   <!-- insert svg icon here -->
   <svg aria-hidden="true" focusable="false" />
@@ -135,7 +135,7 @@ Don't use these heading elements for styling. Use CSS instead, alter font-size a
 
 ## Landmarks
 
-```html
+```
 <header />
 <nav />
 <main>
@@ -191,7 +191,7 @@ For example, it allows the user to click on the label and it'll focus on the inp
 
 Explicit relationship
 
-```html
+```
 <form>
   <label for="email-id">Email address: </label>
   <input id="email-id" type="email" />
@@ -200,7 +200,7 @@ Explicit relationship
 
 Implicit relationship
 
-```html
+```
 <form>
   <label
     >Email address:
@@ -215,7 +215,7 @@ But we have to make sure assistive technologies can pick it up. Display: none an
 
 You can apply this class to do so:
 
-```css
+```
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -229,5 +229,62 @@ You can apply this class to do so:
 ```
 
 This makes the element visually hidden but still accessible to the accessbility tree.
+
+# Color and Contrast
+
+Color contrast is a measurement of perceived diference in brightness between two colors. Improving this enhances the legibility of content.
+
+We can use a tool called WebAIM contrast checker: https://webaim.org/resources/contrastchecker
+
+It will show you the performance levels of AA and AAA, explanations, and graphic example.
+
+It could important to check WebAIM checklist item 1.4.1.
+
+It would be good to check out the Colour Blindness Awareness site.
+
+We can provide users multiple locations that provides critical information and doesn't rely on color.
+
+Check out validation errors such as Tailwind UI's input. There's an Email label. If there's an error, a error badge shows up inside the input. THe border goes red. And an error message shows up under the input.
+
+# Focus and Keyboard Interactions
+
+UI should be operable by both mouse and keyboard. Focus management is critical for users who rely solely on the keyboard to move around the webpage or screen.
+
+## Tab Order
+
+The sequence in which focus moves through the UI.
+
+Elements like images, paragraphs, and headers are intentionally excluded from the tab order. This is design choice that focuses on elements that users actively engage with to maintain a practicial and efficient user experience.
+
+In webdev tools and accessbility tab, there is a show tab order checkbox. Like the name implies, ticking it will show the sequence of the tab order on the website.
+
+Be cautious when altering the tab order with CSS. Such as using flex and order. Assistive technologies cannot access the tab order made by CSS.
+
+There could be cases where you may want to use CSS to achieve what the design team wants, but it hurts semantic HTML and accessbility.
+
+For example, design could want an image to appear above the heading when it's semantically better to have the image and copy be below the heading. It's semantically better because we want the heading to describe the content below. Following design team's also messes with the natural tab order and assistive technologies.
+
+You can do something like this on the image:
+
+```
+order: -1;
+```
+
+This would move the image before the heading. But the natural tab order is retained and it helps assistive technology.
+
+## tabindex
+
+Used in situations where we want to modify the tab order, we can set a tabindex attribute.
+
+`tabindex='-1'` removes it from the tab order and inaccessible with keyboard
+`tabindex='0'` include it in the default keyboard navigation
+
+Using positive tabindex value is not recommended and should be avoided.
+
+Any tabindex place higher than 0 will be placed at the forefront of the tab order regardless of DOM. It will confuse screen readers and disrupt tab flow. Workaround is just move the element higher in the DOM tree.
+
+Good example is APG website with toolbar example.
+
+Roving tabindex does circular navigation.
 
 # Resources:
