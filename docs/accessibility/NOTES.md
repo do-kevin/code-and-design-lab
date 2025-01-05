@@ -71,7 +71,7 @@ ctrl + option + cmd + G: navigate by image
 
 ARIA only modifies the accessbility tree, so it's developer's responsibility to ensure an element's responsiveness and functionality.
 
-Try to use native HTML elements as much as possible because they already have native semantics and keyboard functionalities. Check out the <select> from MDN.
+Try to use native HTML elements as much as possible because they already have native semantics and keyboard functionalities. Check out the `<select>` from MDN.
 
 Google search bar is an autocomplete input.
 
