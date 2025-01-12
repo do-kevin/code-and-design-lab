@@ -1,0 +1,95 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body style="margin: 0">
+    <slot />
+  </body>
+</html>
+<style>
+  /* Objective: Infinite scrolling videos without requesting video assets too many times */
+  /* May have to do something with translate x 100% and -100% */
+  .infinite-video-scroller video {
+    max-width: 375px;
+    margin-right: 1rem;
+    animation: horizontally-scroll 10s infinite linear;
+  }
+
+  /* .infinite-video-scroller .scroll-container:hover video {
+    animation-play-state: paused;
+  } */
+
+  @keyframes horizontally-scroll {
+    0% {
+      transform: translateX(-100vw);
+    }
+    50% {
+      transform: translateX(100vw);
+    }
+    100% {
+      transform: translateX(-100vw);
+    }
+  }
+</style>
+<article class="infinite-video-scroller">
+  <div
+    class="scroll-container"
+    style="
+      display: flex;
+      overflow-x: scroll;
+      padding-bottom: 2rem;
+      align-items: flex-start;
+    "
+  >
+    <video controls muted autoplay id="infinite-video-scroller__video-1">
+      <source src="/assets/videos/pixels-video-1-min.mp4" />
+    </video>
+  </div>
+</article>
+<script>
+  console.log("init 0");
+  (function () {
+    const initObserver = function () {
+      console.log("init");
+      const options = {
+        root: document.querySelector("#infinite-video-scroller__video-1"),
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const callback = (entries) => {
+        console.log("entries: ", entries);
+        entries.forEach((entry) => {
+          console.log("entry: ", entry);
+          if (entry.isIntersecting) {
+            console.log("HIT");
+          } else {
+            console.log("NO HIT");
+          }
+        });
+      };
+
+      let observer = new IntersectionObserver(callback, options);
+
+      console.log(observer);
+    };
+
+    if (
+      document.readyState === "loading" ||
+      document.readyState === "complete"
+    ) {
+      initObserver();
+      return null;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      initObserver();
+    });
+  })();
+</script>

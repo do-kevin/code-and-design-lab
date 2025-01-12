@@ -1,0 +1,197 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body style="margin: 0">
+    <slot />
+  </body>
+</html>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .scroll-container {
+    display: flex;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    height: auto;
+  }
+
+  .scroll-item {
+    display: inline-block;
+    height: 100%;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+  }
+
+  .scroll-item img,
+  .scroll-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
+<div class="scroll-container">
+  <div class="scroll-item" style="background-color: yellow">
+    <picture>
+      <source
+        srcset="/public/assets/images/banner/Frame_1_D.jpg"
+        media="(min-width: 768px)"
+        sizes="(min-width: 768px) 50vw, 100vw"
+      />
+      <img
+        src="/public/assets/images/banner/Frame_1_M.jpg"
+        loading="lazy"
+        sizes="100vw"
+        alt="Amazing Lip Oil"
+      />
+    </picture>
+  </div>
+  <div class="scroll-item" style="background-color: pink">
+    <video autoplay muted loop>
+      <source src="/assets/videos/pixels-video-4-min.mp4" />
+    </video>
+  </div>
+  <div class="scroll-item" style="background-color: blue">
+    <picture>
+      <source
+        srcset="/public/assets/images/banner/Frame_2_D.jpg"
+        media="(min-width: 768px)"
+        sizes="(min-width: 768px) 50vw, 100vw"
+      />
+      <img
+        src="/public/assets/images/banner/Frame_2_M.jpg"
+        loading="lazy"
+        sizes="100vw"
+        alt="Amazing Lip Oil"
+      />
+    </picture>
+  </div>
+  <div class="scroll-item" style="background-color: red">
+    <video autoplay muted loop>
+      <source src="/assets/videos/pixels-video-5-min.mp4" />
+    </video>
+  </div>
+  <div class="scroll-item" style="background-color: red">
+    <video autoplay muted loop>
+      <source src="/assets/videos/pixels-video-3-min.mp4" />
+    </video>
+  </div>
+  <div class="scroll-item" style="background-color: blue">
+    <picture>
+      <source
+        srcset="/public/assets/images/banner/Frame_3_D.jpg"
+        media="(min-width: 768px)"
+        sizes="(min-width: 768px) 50vw, 100vw"
+      />
+      <img
+        src="/public/assets/images/banner/Frame_3_M.jpg"
+        loading="lazy"
+        sizes="100vw"
+        alt="Amazing Lip Oil"
+      />
+    </picture>
+  </div>
+</div>
+<script>
+  (function () {
+    const initScrolling = function () {
+      const scrollContainer = document.querySelector(".scroll-container");
+      const items = Array.from(scrollContainer.children);
+
+      let positions = [];
+      let totalWidth = 0;
+
+      const scrollSpeed = 1.75;
+
+      function initializePositions() {
+        totalWidth = 0;
+        positions = [];
+
+        items.forEach((item, index) => {
+          const itemWidth = item.getBoundingClientRect().width;
+          positions[index] = totalWidth;
+          item.style.transform = `translateX(${totalWidth}px)`;
+          totalWidth += itemWidth + 16;
+        });
+      }
+
+      function ensureMediaLoaded() {
+        const mediaElements = items.flatMap((item) =>
+          Array.from(item.querySelectorAll("img, video")),
+        );
+
+        const mediaPromises = mediaElements.map((media) => {
+          if (media.tagName === "VIDEO") {
+            return new Promise((resolve) => {
+              if (media.readyState >= 3) {
+                resolve();
+              } else {
+                media.addEventListener("loadeddata", resolve, { once: true });
+              }
+            });
+          } else if (media.tagName === "IMG") {
+            return new Promise((resolve) => {
+              if (media.complete) {
+                resolve();
+              } else {
+                media.addEventListener("load", resolve, { once: true });
+              }
+            });
+          }
+          return Promise.resolve();
+        });
+
+        return Promise.all(mediaPromises);
+      }
+
+      function scrollItems() {
+        items.forEach((item, index) => {
+          const itemWidth = item.getBoundingClientRect().width;
+
+          positions[index] -= scrollSpeed;
+
+          if (positions[index] + itemWidth <= 0) {
+            const maxPosition = Math.max(...positions);
+            positions[index] = maxPosition + itemWidth + 16;
+          }
+
+          item.style.transform = `translateX(${positions[index]}px)`;
+        });
+
+        requestAnimationFrame(scrollItems);
+      }
+
+      window.addEventListener("resize", () => {
+        initializePositions();
+      });
+
+      ensureMediaLoaded().then(() => {
+        initializePositions();
+        scrollItems();
+      });
+    };
+
+    if (
+      document.readyState === "loading" ||
+      document.readyState === "complete"
+    ) {
+      initScrolling();
+      return null;
+    }
+
+    initScrolling();
+  })();
+</script>
