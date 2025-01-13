@@ -443,6 +443,8 @@
 <script src="https://unpkg.com/embla-carousel-auto-scroll/embla-carousel-auto-scroll.umd.js"></script>
 <script>
   (function () {
+    const DIRECTION = "backward";
+
     const addTogglePrevNextBtnsActive = (emblaApi, prevBtn, nextBtn) => {
       const togglePrevNextBtnsState = () => {
         if (emblaApi.canScrollPrev()) prevBtn.removeAttribute("disabled");
@@ -470,8 +472,16 @@
       const scrollNext = () => {
         emblaApi.scrollNext();
       };
-      prevBtn.addEventListener("click", scrollPrev, false);
-      nextBtn.addEventListener("click", scrollNext, false);
+
+      if (DIRECTION === "forward") {
+        prevBtn.addEventListener("click", scrollPrev, false);
+        nextBtn.addEventListener("click", scrollNext, false);
+      }
+
+      if (DIRECTION === "backward") {
+        prevBtn.addEventListener("click", scrollNext, false);
+        nextBtn.addEventListener("click", scrollPrev, false);
+      }
 
       const removeTogglePrevNextBtnsActive = addTogglePrevNextBtnsActive(
         emblaApi,
@@ -556,7 +566,7 @@
     const playBtn = document.querySelector(".embla__play");
 
     const emblaApi = EmblaCarousel(viewportNode, OPTIONS, [
-      EmblaCarouselAutoScroll({ playOnInit: true, direction: "backward" }),
+      EmblaCarouselAutoScroll({ playOnInit: true, direction: DIRECTION }),
     ]);
 
     const removePrevNextBtnsClickHandlers = addPrevNextBtnsClickHandlers(
