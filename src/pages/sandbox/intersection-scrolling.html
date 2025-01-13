@@ -65,8 +65,8 @@
   console.log("init 0");
   (function () {
     const initScroller = function () {
-      let defaultSpeed = 14;
-      let speed = 14;
+      let defaultSpeed = 8;
+      let speed = 8;
 
       document
         .querySelector("#stop-btn")
@@ -170,14 +170,14 @@
             }
 
             if (index === 3 && positions[index] < -1600) {
-              positions[index] = nextPosition - (1200 + 16);
+              positions[index] = nextPosition - (1200 + 12);
 
               item.style.transform = `translateX(${positions[index]}px)`;
               return;
             }
 
             if (index === 4 && positions[index] < -2000) {
-              positions[index] = nextPosition - (1600 + 16);
+              positions[index] = nextPosition - (1600 + 12);
 
               item.style.transform = `translateX(${positions[index]}px)`;
               return;
@@ -188,9 +188,7 @@
 
           console.log(positions);
 
-          if (speed !== 0) {
-            requestAnimationFrame(doScrolling);
-          }
+          requestAnimationFrame(doScrolling);
         }
 
         doScrolling();
