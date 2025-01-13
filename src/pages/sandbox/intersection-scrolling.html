@@ -19,10 +19,12 @@
   }
   .infinite-video-scroller .scroll-item {
     max-width: 400px;
-    margin-right: 1rem;
+    /* margin-right: 1rem; */
   }
 </style>
 <article class="infinite-video-scroller" style="position: relative">
+  <button id="stop-btn">stop</button>
+  <button id="play-btn">play</button>
   <div
     class="scroll-container"
     style="
@@ -92,12 +94,36 @@
         <source src="/assets/videos/pixels-video-3-min.mp4" />
       </video>
     </div>
+    <div class="scroll-item" style="background-color: pink">
+      <video autoplay muted loop controls>
+        <source src="/assets/videos/pixels-video-4-min.mp4" />
+      </video>
+    </div>
+    <div class="scroll-item" style="background-color: pink">
+      <video autoplay muted loop controls>
+        <source src="/assets/videos/pixels-video-5-min.mp4" />
+      </video>
+    </div>
   </div>
 </article>
 <script>
   console.log("init 0");
   (function () {
     const initScroller = function () {
+      let defaultSpeed = 14;
+      let speed = 14;
+
+      document
+        .querySelector("#stop-btn")
+        .addEventListener("click", function () {
+          speed = 0;
+        });
+      document
+        .querySelector("#play-btn")
+        .addEventListener("click", function () {
+          speed = defaultSpeed;
+        });
+
       const scrollContainer = document.querySelector(".scroll-container");
       let scrollItems = document.querySelectorAll(
         ".infinite-video-scroller .scroll-item",
@@ -166,7 +192,7 @@
             // 1. First, let's make sure the first item moves to the end of the scrollContainer elem
             // 2. Now do the same for the next scrollItem
 
-            positions[index] -= 6;
+            positions[index] -= speed;
 
             // console.log("hit: ", positions);
 
@@ -175,39 +201,77 @@
             //   -item.getBoundingClientRect().width * index,
             // );
 
-            if (
-              index === 0 &&
-              positions[index] &&
-              positions[index] < -item.getBoundingClientRect().width
-            ) {
-              console.log("HI1");
+            console.log(item.childNodes[1].tagName === "VIDEO");
+            if (item.childNodes[1].tagName === "VIDEO") {
+              if (
+                index <= 1 &&
+                positions[index] &&
+                positions[index] < -item.getBoundingClientRect().width * 2.2
+              ) {
+                console.log(
+                  "hit " + index,
+                  -item.getBoundingClientRect().width * 2,
+                );
 
-              console.log("next: ", nextPosition);
+                console.log("next: ", nextPosition);
 
-              positions[index] = nextPosition;
+                positions[index] = nextPosition;
 
-              item.style.transform = `translateX(${nextPosition}px)`;
+                item.style.transform = `translateX(${nextPosition}px)`;
 
-              return null;
+                return null;
+              }
+
+              if (
+                index > 1 &&
+                positions[index] &&
+                positions[index] < -item.getBoundingClientRect().width * 3.2
+              ) {
+                console.log(
+                  "hit " + index,
+                  -item.getBoundingClientRect().width * 2,
+                );
+
+                console.log("next: ", nextPosition);
+
+                positions[index] =
+                  nextPosition - item.getBoundingClientRect().width;
+
+                item.style.transform = `translateX(${positions[index]}px)`;
+
+                return null;
+              }
+            } else {
+              if (
+                positions[index] &&
+                positions[index] < -item.getBoundingClientRect().width
+              ) {
+                positions[index] = nextPosition;
+                item.style.transform = `translateX(${nextPosition}px)`;
+                return null;
+              }
             }
 
             // something about this condition makes them stack on top of each other after 2 cycles
-            if (
-              index > 0 &&
-              positions[index] &&
-              positions[index] <
-                -(item.getBoundingClientRect().width * index * 2.03)
-            ) {
-              console.log("HI2");
+            // if (
+            //   index > 1 &&
+            //   positions[index] &&
+            //   positions[index] < -item.getBoundingClientRect().width * 2
+            // ) {
+            //   console.log("hit " + index);
 
-              console.log("next: ", nextPosition);
+            //   console.log(
+            //     "next: ",
+            //     nextPosition,
+            //     -item.getBoundingClientRect().width,
+            //   );
 
-              positions[index] = nextPosition;
+            //   positions[index] = nextPosition;
 
-              item.style.transform = `translateX(${nextPosition}px)`;
+            //   item.style.transform = `translateX(${nextPosition}px)`;
 
-              return null;
-            }
+            //   return null;
+            // }
 
             item.style.transform = `translateX(${positions[index]}px)`;
           });
@@ -224,12 +288,12 @@
       document.readyState === "loading" ||
       document.readyState === "complete"
     ) {
-      initScroller();
+      //   initScroller();
       return null;
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-      initScroller();
+      //   initScroller();
     });
   })();
 </script>
