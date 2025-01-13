@@ -22,17 +22,17 @@
     margin-right: 1rem;
   }
 </style>
-<article class="infinite-video-scroller">
+<article class="infinite-video-scroller" style="position: relative">
   <div
     class="scroll-container"
     style="
       display: flex;
-      overflow-x: scroll;
+      overflow-x: hidden;
       padding-bottom: 2rem;
       align-items: flex-start;
     "
   >
-    <div class="scroll-item" style="background-color: yellow">
+    <!-- <div class="scroll-item" style="background-color: yellow">
       <picture>
         <source
           srcset="/public/assets/images/banner/Frame_1_D.jpg"
@@ -46,10 +46,50 @@
           alt="Amazing Lip Oil"
         />
       </picture>
+    </div> -->
+    <!-- <div class="scroll-item" style="background-color: yellow">
+      <picture>
+        <source
+          srcset="/public/assets/images/banner/Frame_2_D.jpg"
+          media="(min-width: 768px)"
+          sizes="(min-width: 768px) 50vw, 100vw"
+        />
+        <img
+          src="/public/assets/images/banner/Frame_2_M.jpg"
+          loading="lazy"
+          sizes="100vw"
+          alt="Amazing Lip Oil"
+        />
+      </picture>
+    </div> -->
+    <div class="scroll-item" style="background-color: pink">
+      <video autoplay muted loop controls>
+        <source src="/assets/videos/pixels-video-1-min.mp4" />
+      </video>
     </div>
     <div class="scroll-item" style="background-color: pink">
       <video autoplay muted loop controls>
-        <source src="/assets/videos/pixels-video-4-min.mp4" />
+        <source src="/assets/videos/pixels-video-2-min.mp4" />
+      </video>
+    </div>
+    <!-- <div class="scroll-item" style="background-color: yellow">
+      <picture>
+        <source
+          srcset="/public/assets/images/banner/Frame_3_D.jpg"
+          media="(min-width: 768px)"
+          sizes="(min-width: 768px) 50vw, 100vw"
+        />
+        <img
+          src="/public/assets/images/banner/Frame_3_M.jpg"
+          loading="lazy"
+          sizes="100vw"
+          alt="Amazing Lip Oil"
+        />
+      </picture>
+    </div> -->
+    <div class="scroll-item" style="background-color: pink">
+      <video autoplay muted loop controls>
+        <source src="/assets/videos/pixels-video-3-min.mp4" />
       </video>
     </div>
   </div>
@@ -104,6 +144,7 @@
       let totalWidth = 0;
 
       ensureMediaLoaded().then(() => {
+        console.log("width: ", scrollContainer.getBoundingClientRect().width);
         scrollItems.forEach((item, index) => {
           console.log(item.getBoundingClientRect());
           const itemWidth = item.getBoundingClientRect().width;
@@ -128,17 +169,17 @@
 
             // console.log("hit: ", positions);
 
+            console.log(positions[index], -item.getBoundingClientRect().width);
             if (
               positions[index] &&
-              positions[index] <= -item.getBoundingClientRect().width
+              positions[index] < -item.getBoundingClientRect().width
             ) {
-              positions[index] = item.getBoundingClientRect().width;
-
-              //   const nextPosition =
-              //     scrollItems[index + 1].getBoundingClientRect().width;
-
               const nextPosition =
                 scrollContainer.getBoundingClientRect().width;
+
+              //   console.log("next: ", nextPosition);
+
+              positions[index] = nextPosition;
 
               item.style.transform = `translateX(${nextPosition}px)`;
 
@@ -164,7 +205,7 @@
 
         doScrolling();
 
-        console.log(scrollContainer.getBoundingClientRect().width);
+        // console.log(scrollContainer.getBoundingClientRect().width);
       });
     };
 
