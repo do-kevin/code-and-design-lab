@@ -157,27 +157,32 @@
         console.log(positions, totalWidth);
 
         function doScrolling() {
+          const nextPosition = scrollContainer.getBoundingClientRect().width;
+
           scrollItems.forEach((item, index) => {
             // Something wrong with initial positions
             // We should try doing an actual for loop to get the width/position of the next item
 
             // 1. First, let's make sure the first item moves to the end of the scrollContainer elem
             // 2. Now do the same for the next scrollItem
-            const itemPosition = positions[index];
 
-            positions[index] -= 2;
+            positions[index] -= 6;
 
             // console.log("hit: ", positions);
 
-            console.log(positions[index], -item.getBoundingClientRect().width);
+            // console.log(
+            //   positions[index],
+            //   -item.getBoundingClientRect().width * index,
+            // );
+
             if (
+              index === 0 &&
               positions[index] &&
               positions[index] < -item.getBoundingClientRect().width
             ) {
-              const nextPosition =
-                scrollContainer.getBoundingClientRect().width;
+              console.log("HI1");
 
-              //   console.log("next: ", nextPosition);
+              console.log("next: ", nextPosition);
 
               positions[index] = nextPosition;
 
@@ -186,19 +191,25 @@
               return null;
             }
 
-            // console.log(scrollItems[scrollItems.length - 1]);
+            // something about this condition makes them stack on top of each other after 2 cycles
+            if (
+              index > 0 &&
+              positions[index] &&
+              positions[index] <
+                -(item.getBoundingClientRect().width * index * 2.03)
+            ) {
+              console.log("HI2");
 
-            // if (
-            //   positions[scrollItems.length - 1] <=
-            //   -scrollItems[scrollItems.length - 1].getBoundingClientRect().width
-            // ) {
-            //   const nextPosition = scrollItems[0].getBoundingClientRect().width;
+              console.log("next: ", nextPosition);
 
-            //   scrollItems[scrollItems.length - 1].style.transform =
-            //     `translateX(${nextPosition}px)`;
-            // }
+              positions[index] = nextPosition;
 
-            item.style.transform = `translateX(${itemPosition}px)`;
+              item.style.transform = `translateX(${nextPosition}px)`;
+
+              return null;
+            }
+
+            item.style.transform = `translateX(${positions[index]}px)`;
           });
           requestAnimationFrame(doScrolling);
         }
