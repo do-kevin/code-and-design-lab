@@ -15,13 +15,6 @@
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
   html {
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    box-sizing: border-box;
-    line-height: 1.15;
-    background-color: var(--background-site);
-    font-size: 62.5%;
     font-family:
       Inter,
       "system-ui",
@@ -36,86 +29,6 @@
       "Segoe UI Emoji",
       "Segoe UI Symbol";
   }
-  *,
-  *::before,
-  *::after {
-    box-sizing: inherit;
-  }
-  body {
-    background-color: var(--background-site);
-    color: var(--text-high-contrast);
-    font-size: 1.6rem;
-    line-height: 1.65;
-  }
-  .theme-light {
-    --brand-primary: rgb(47, 112, 193);
-    --brand-secondary: rgb(116, 97, 195);
-    --brand-alternative: rgb(19, 120, 134);
-    --background-site: rgb(249, 249, 249);
-    --background-code: rgb(244, 244, 244);
-    --text-body: rgb(54, 49, 61);
-    --text-comment: rgb(99, 94, 105);
-    --text-high-contrast: rgb(49, 49, 49);
-    --text-medium-contrast: rgb(99, 94, 105);
-    --text-low-contrast: rgb(116, 109, 118);
-    --detail-high-contrast: rgb(192, 192, 192);
-    --detail-medium-contrast: rgb(234, 234, 234);
-    --detail-low-contrast: rgb(240, 240, 242);
-    --admonition-note: rgb(46, 109, 188);
-    --admonition-warning: rgb(255, 196, 9);
-    --admonition-danger: rgb(220, 38, 38);
-    --brand-primary-rgb-value: 47, 112, 193;
-    --brand-secondary-rgb-value: 116, 97, 195;
-    --brand-alternative-rgb-value: 19, 120, 134;
-    --background-site-rgb-value: 249, 249, 249;
-    --background-code-rgb-value: 244, 244, 244;
-    --text-body-rgb-value: 54, 49, 61;
-    --text-comment-rgb-value: 99, 94, 105;
-    --text-high-contrast-rgb-value: 49, 49, 49;
-    --text-medium-contrast-rgb-value: 99, 94, 105;
-    --text-low-contrast-rgb-value: 116, 109, 118;
-    --detail-high-contrast-rgb-value: 192, 192, 192;
-    --detail-medium-contrast-rgb-value: 234, 234, 234;
-    --detail-low-contrast-rgb-value: 240, 240, 242;
-    --admonition-note-rgb-value: 46, 109, 188;
-    --admonition-warning-rgb-value: 255, 196, 9;
-    --admonition-danger-rgb-value: 220, 38, 38;
-  }
-  .theme-dark {
-    --brand-primary: rgb(138, 180, 248);
-    --brand-secondary: rgb(193, 168, 226);
-    --brand-alternative: rgb(136, 186, 191);
-    --background-site: rgb(0, 0, 0);
-    --background-code: rgb(12, 12, 12);
-    --text-body: rgb(222, 222, 222);
-    --text-comment: rgb(170, 170, 170);
-    --text-high-contrast: rgb(230, 230, 230);
-    --text-medium-contrast: rgb(202, 202, 202);
-    --text-low-contrast: rgb(170, 170, 170);
-    --detail-high-contrast: rgb(101, 101, 101);
-    --detail-medium-contrast: rgb(25, 25, 25);
-    --detail-low-contrast: rgb(21, 21, 21);
-    --admonition-note: rgb(138, 180, 248);
-    --admonition-warning: rgb(253, 186, 116);
-    --admonition-danger: rgb(220, 38, 38);
-    --brand-primary-rgb-value: 138, 180, 248;
-    --brand-secondary-rgb-value: 193, 168, 226;
-    --brand-alternative-rgb-value: 136, 186, 191;
-    --background-site-rgb-value: 0, 0, 0;
-    --background-code-rgb-value: 12, 12, 12;
-    --text-body-rgb-value: 222, 222, 222;
-    --text-comment-rgb-value: 170, 170, 170;
-    --text-high-contrast-rgb-value: 230, 230, 230;
-    --text-medium-contrast-rgb-value: 202, 202, 202;
-    --text-low-contrast-rgb-value: 170, 170, 170;
-    --detail-high-contrast-rgb-value: 101, 101, 101;
-    --detail-medium-contrast-rgb-value: 25, 25, 25;
-    --detail-low-contrast-rgb-value: 21, 21, 21;
-    --admonition-note-rgb-value: 138, 180, 248;
-    --admonition-warning-rgb-value: 253, 186, 116;
-    --admonition-danger-rgb-value: 220, 38, 38;
-  }
-
   .embla {
     width: 100%;
     max-width: 100%;
@@ -151,6 +64,9 @@
   article[data-enable-accessibility="true"] .embla__viewport {
     overflow-x: auto;
   }
+  article[data-enable-accessibility="false"] .embla__controls {
+    display: none;
+  }
   .embla__container {
     display: flex;
     touch-action: pan-y pinch-zoom;
@@ -161,17 +77,6 @@
     flex: 0 0 var(--slide-size);
     min-width: 0;
     padding-left: var(--slide-spacing);
-  }
-  .embla__slide__number {
-    box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
-    border-radius: 1.8rem;
-    font-size: 4rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: var(--slide-height);
-    user-select: none;
   }
   .embla__controls {
     display: grid;
@@ -251,14 +156,6 @@
     max-width: 90%;
     overflow: hidden;
   }
-  .embla__progress__bar {
-    background-color: var(--text-body);
-    position: absolute;
-    width: 100%;
-    top: 0;
-    bottom: 0;
-    left: -100%;
-  }
   .embla__controls {
     grid-template-columns: auto 1fr auto;
   }
@@ -270,14 +167,6 @@
   .embla__progress--hidden {
     opacity: 0;
   }
-  .embla__progress__bar {
-    animation-name: autoplay-progress;
-    animation-timing-function: linear;
-    animation-iteration-count: 1;
-  }
-  .embla__progress--hidden .embla__progress__bar {
-    animation-play-state: paused;
-  }
   @keyframes autoplay-progress {
     0% {
       transform: translate3d(0, 0, 0);
@@ -286,12 +175,64 @@
       transform: translate3d(100%, 0, 0);
     }
   }
+  .infinite-multimedia-banner__content {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .infinite-multimedia-banner__left-side {
+    width: 100%;
+    transform: translateY(-25%);
+  }
+  .infinite-multimedia-banner__left-side h1 {
+    font-size: 32px;
+    font-size: clamp(32px, 6vw, 72px);
+    line-height: 1.2;
+    background: red;
+    display: inline;
+    font-style: italic;
+  }
+  .infinite-multimedia-banner__right-side {
+    max-width: 100%;
+    min-width: 300px;
+    transform: translateY(-15%);
+  }
+  .infinite-multimedia-banner__right-side p {
+    font-size: 1rem;
+    font-size: clamp(1rem, 1.4vw, 20px);
+    font-weight: 600;
+  }
+  @media screen and (min-width: 768px) {
+    .infinite-multimedia-banner__content {
+      height: 17rem;
+    }
+    .infinite-multimedia-banner__content {
+      flex-direction: row;
+    }
+    .infinite-multimedia-banner__left-side {
+      transform: translateY(-50%);
+    }
+    .infinite-multimedia-banner__left-side,
+    .infinite-multimedia-banner__right-side {
+      width: 50%;
+    }
+    .infinite-multimedia-banner__right-side {
+      max-width: 50%;
+      transform: unset;
+    }
+  }
 </style>
-<article data-enable-accessibility="false">
+<article
+  class="infinite-multimedia-banner"
+  data-enable-accessibility="false"
+  aria-labelledby="infinite-multimedia-banner__title"
+  aria-describedby="infinite-multimedia-banner__desc"
+>
   <div class="embla" style="background-color: #000">
     <div class="embla__viewport">
       <div class="embla__container">
-        <div class="embla__slide" style="border: 2px solid red">
+        <div class="embla__slide">
           <video autoplay muted loop controls>
             <source src="/assets/videos/pixels-video-1-min.mp4" />
           </video>
@@ -409,33 +350,46 @@
       </button>
     </div>
   </div>
-  <section
+  <div
+    class="infinite-multimedia-banner__content"
     style="padding: 1.5rem 3rem 3rem; background-color: #000; color: #fff"
   >
-    <h1>Hello World</h1>
-    <p style="max-width: 50%; min-width: 300px">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.
-    </p>
-    <a
-      href="#"
-      style="
-        padding: 0.75rem 1.5rem;
-        border: 1px solid #fff;
-        font-size: 24px;
-        font-weight: bold;
-        text-decoration: none;
-        color: #fff;
-      "
+    <div class="infinite-multimedia-banner__left-side">
+      <h1 id="infinite-multimedia-banner__title">
+        that one product.<br />
+        new year, new stuff!<br />
+        Hello World
+      </h1>
+    </div>
+    <section
+      class="infinite-multimedia-banner__right-side"
+      id="infinite-multimedia-banner__desc"
     >
-      SHOP NOW
-    </a>
-  </section>
+      <p style="margin-bottom: 32px">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum.
+      </p>
+      <a
+        href="#"
+        style="
+          padding: 0.75rem 1.5rem;
+          border: 1px solid #fff;
+          background: #fff;
+          font-size: 16px;
+          font-weight: bold;
+          text-decoration: none;
+          color: #000;
+        "
+      >
+        SHOP NOW
+      </a>
+    </section>
+  </div>
 </article>
 <script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script>
 <script src="https://unpkg.com/embla-carousel-auto-scroll/embla-carousel-auto-scroll.umd.js"></script>
@@ -443,147 +397,166 @@
 <script src="https://unpkg.com/embla-carousel-auto-scroll/embla-carousel-auto-scroll.umd.js"></script>
 <script>
   (function () {
-    const DIRECTION = "backward";
+    function initSlider() {
+      const DIRECTION = "backward";
 
-    const addTogglePrevNextBtnsActive = (emblaApi, prevBtn, nextBtn) => {
-      const togglePrevNextBtnsState = () => {
-        if (emblaApi.canScrollPrev()) prevBtn.removeAttribute("disabled");
-        else prevBtn.setAttribute("disabled", "disabled");
+      const addTogglePrevNextBtnsActive = (emblaApi, prevBtn, nextBtn) => {
+        const togglePrevNextBtnsState = () => {
+          if (emblaApi.canScrollPrev()) {
+            prevBtn.removeAttribute("disabled");
+          } else {
+            prevBtn.setAttribute("disabled", "disabled");
+          }
 
-        if (emblaApi.canScrollNext()) nextBtn.removeAttribute("disabled");
-        else nextBtn.setAttribute("disabled", "disabled");
+          if (emblaApi.canScrollNext()) {
+            nextBtn.removeAttribute("disabled");
+          } else {
+            nextBtn.setAttribute("disabled", "disabled");
+          }
+        };
+
+        emblaApi
+          .on("select", togglePrevNextBtnsState)
+          .on("init", togglePrevNextBtnsState)
+          .on("reInit", togglePrevNextBtnsState);
+
+        return () => {
+          prevBtn.removeAttribute("disabled");
+          nextBtn.removeAttribute("disabled");
+        };
       };
 
-      emblaApi
-        .on("select", togglePrevNextBtnsState)
-        .on("init", togglePrevNextBtnsState)
-        .on("reInit", togglePrevNextBtnsState);
+      const addPrevNextBtnsClickHandlers = (emblaApi, prevBtn, nextBtn) => {
+        const scrollPrev = () => {
+          emblaApi.scrollPrev();
+        };
+        const scrollNext = () => {
+          emblaApi.scrollNext();
+        };
 
-      return () => {
-        prevBtn.removeAttribute("disabled");
-        nextBtn.removeAttribute("disabled");
+        if (DIRECTION === "forward") {
+          prevBtn.addEventListener("click", scrollPrev, false);
+          nextBtn.addEventListener("click", scrollNext, false);
+        }
+
+        if (DIRECTION === "backward") {
+          prevBtn.addEventListener("click", scrollNext, false);
+          nextBtn.addEventListener("click", scrollPrev, false);
+        }
+
+        const removeTogglePrevNextBtnsActive = addTogglePrevNextBtnsActive(
+          emblaApi,
+          prevBtn,
+          nextBtn,
+        );
+
+        return () => {
+          removeTogglePrevNextBtnsActive();
+          prevBtn.removeEventListener("click", scrollPrev, false);
+          nextBtn.removeEventListener("click", scrollNext, false);
+        };
       };
-    };
 
-    const addPrevNextBtnsClickHandlers = (emblaApi, prevBtn, nextBtn) => {
-      const scrollPrev = () => {
-        emblaApi.scrollPrev();
+      const addPlayBtnListeners = (emblaApi, playBtn) => {
+        const togglePlayBtnState = (emblaApi) => {
+          const autoScroll = emblaApi?.plugins()?.autoScroll;
+          if (!autoScroll) return;
+
+          const buttonText = autoScroll.isPlaying() ? "Start" : "Stop";
+          playBtn.innerHTML = buttonText;
+        };
+
+        const onPlayBtnClick = () => {
+          const autoScroll = emblaApi?.plugins()?.autoScroll;
+          if (!autoScroll) return;
+
+          const playOrStop = autoScroll.isPlaying()
+            ? autoScroll.stop
+            : autoScroll.play;
+          playOrStop();
+        };
+
+        playBtn.addEventListener("click", onPlayBtnClick);
+
+        console.log("play: ", playBtn);
+
+        emblaApi
+          .on("autoScroll:play", togglePlayBtnState)
+          .on("autoScroll:stop", togglePlayBtnState)
+          .on("reInit", togglePlayBtnState);
+
+        return () => {
+          playBtn.removeEventListener("click", onPlayBtnClick);
+          emblaApi
+            .off("autoScroll:play", togglePlayBtnState)
+            .off("autoScroll:stop", togglePlayBtnState)
+            .off("reInit", togglePlayBtnState);
+        };
       };
-      const scrollNext = () => {
-        emblaApi.scrollNext();
+
+      const addNavBtnListeners = (emblaApi, ...navButtons) => {
+        const onNavClick = () => {
+          const autoScroll = emblaApi?.plugins()?.autoScroll;
+          if (!autoScroll) return;
+
+          const resetOrStop =
+            autoScroll.options.stopOnInteraction === false
+              ? autoScroll.reset
+              : autoScroll.stop;
+
+          resetOrStop();
+        };
+
+        navButtons.forEach((navButton) =>
+          navButton.addEventListener("click", onNavClick, true),
+        );
+
+        return () => {
+          navButtons.forEach((navButton) =>
+            navButton.removeEventListener("click", onNavClick, true),
+          );
+        };
       };
 
-      if (DIRECTION === "forward") {
-        prevBtn.addEventListener("click", scrollPrev, false);
-        nextBtn.addEventListener("click", scrollNext, false);
-      }
+      const OPTIONS = { loop: true };
 
-      if (DIRECTION === "backward") {
-        prevBtn.addEventListener("click", scrollNext, false);
-        nextBtn.addEventListener("click", scrollPrev, false);
-      }
+      const emblaNode = document.querySelector(".embla");
+      const viewportNode = emblaNode.querySelector(".embla__viewport");
+      const prevBtn = emblaNode.querySelector(".embla__button--prev");
+      const nextBtn = emblaNode.querySelector(".embla__button--next");
+      const playBtn = document.querySelector(".embla__play");
 
-      const removeTogglePrevNextBtnsActive = addTogglePrevNextBtnsActive(
+      const emblaApi = EmblaCarousel(viewportNode, OPTIONS, [
+        EmblaCarouselAutoScroll({ playOnInit: true, direction: DIRECTION }),
+      ]);
+
+      const removePrevNextBtnsClickHandlers = addPrevNextBtnsClickHandlers(
+        emblaApi,
+        prevBtn,
+        nextBtn,
+      );
+      const removePlayBtnListeners = addPlayBtnListeners(emblaApi, playBtn);
+      const removeNavBtnListeners = addNavBtnListeners(
         emblaApi,
         prevBtn,
         nextBtn,
       );
 
-      return () => {
-        removeTogglePrevNextBtnsActive();
-        prevBtn.removeEventListener("click", scrollPrev, false);
-        nextBtn.removeEventListener("click", scrollNext, false);
-      };
-    };
-
-    const addPlayBtnListeners = (emblaApi, playBtn) => {
-      const togglePlayBtnState = (emblaApi) => {
-        const autoScroll = emblaApi?.plugins()?.autoScroll;
-        if (!autoScroll) return;
-
-        const buttonText = autoScroll.isPlaying() ? "Start" : "Stop";
-        playBtn.innerHTML = buttonText;
-      };
-
-      const onPlayBtnClick = () => {
-        const autoScroll = emblaApi?.plugins()?.autoScroll;
-        if (!autoScroll) return;
-
-        const playOrStop = autoScroll.isPlaying()
-          ? autoScroll.stop
-          : autoScroll.play;
-        playOrStop();
-      };
-
-      playBtn.addEventListener("click", onPlayBtnClick);
-
-      console.log("play: ", playBtn);
-
       emblaApi
-        .on("autoScroll:play", togglePlayBtnState)
-        .on("autoScroll:stop", togglePlayBtnState)
-        .on("reInit", togglePlayBtnState);
+        .on("destroy", removePrevNextBtnsClickHandlers)
+        .on("destroy", removePlayBtnListeners)
+        .on("destroy", removeNavBtnListeners);
+    }
 
-      return () => {
-        playBtn.removeEventListener("click", onPlayBtnClick);
-        emblaApi
-          .off("autoScroll:play", togglePlayBtnState)
-          .off("autoScroll:stop", togglePlayBtnState)
-          .off("reInit", togglePlayBtnState);
-      };
-    };
+    if (
+      document.readyState === "loading" ||
+      document.readyState === "complete"
+    ) {
+      initSlider();
 
-    const addNavBtnListeners = (emblaApi, ...navButtons) => {
-      const onNavClick = () => {
-        const autoScroll = emblaApi?.plugins()?.autoScroll;
-        if (!autoScroll) return;
+      return null;
+    }
 
-        const resetOrStop =
-          autoScroll.options.stopOnInteraction === false
-            ? autoScroll.reset
-            : autoScroll.stop;
-
-        resetOrStop();
-      };
-
-      navButtons.forEach((navButton) =>
-        navButton.addEventListener("click", onNavClick, true),
-      );
-
-      return () => {
-        navButtons.forEach((navButton) =>
-          navButton.removeEventListener("click", onNavClick, true),
-        );
-      };
-    };
-
-    const OPTIONS = { loop: true };
-
-    const emblaNode = document.querySelector(".embla");
-    const viewportNode = emblaNode.querySelector(".embla__viewport");
-    const prevBtn = emblaNode.querySelector(".embla__button--prev");
-    const nextBtn = emblaNode.querySelector(".embla__button--next");
-    const playBtn = document.querySelector(".embla__play");
-
-    const emblaApi = EmblaCarousel(viewportNode, OPTIONS, [
-      EmblaCarouselAutoScroll({ playOnInit: true, direction: DIRECTION }),
-    ]);
-
-    const removePrevNextBtnsClickHandlers = addPrevNextBtnsClickHandlers(
-      emblaApi,
-      prevBtn,
-      nextBtn,
-    );
-    const removePlayBtnListeners = addPlayBtnListeners(emblaApi, playBtn);
-    const removeNavBtnListeners = addNavBtnListeners(
-      emblaApi,
-      prevBtn,
-      nextBtn,
-    );
-
-    emblaApi
-      .on("destroy", removePrevNextBtnsClickHandlers)
-      .on("destroy", removePlayBtnListeners)
-      .on("destroy", removeNavBtnListeners);
+    document.addEventListener("DOMContentLoaded", initSlider);
   })();
 </script>
