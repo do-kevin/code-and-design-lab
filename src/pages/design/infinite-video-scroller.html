@@ -1,0 +1,67 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body style="margin: 0">
+    <slot />
+  </body>
+</html>
+<style>
+  /* Objective: Infinite scrolling videos without requesting video assets too many times */
+  /* May have to do something with translate x 100% and -100% */
+  .infinite-video-scroller video {
+    max-width: 375px;
+    margin-right: 1rem;
+    animation: horizontally-scroll 10s infinite linear;
+  }
+
+  .infinite-video-scroller .scroll-container:hover video {
+    animation-play-state: paused;
+  }
+
+  @keyframes horizontally-scroll {
+    0% {
+      transform: translateX(-100%);
+    }
+    50% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+</style>
+<article class="infinite-video-scroller">
+  <div
+    class="scroll-container"
+    style="
+      display: flex;
+      overflow-x: scroll;
+      padding-bottom: 2rem;
+      align-items: flex-start;
+    "
+  >
+    <video controls muted autoplay>
+      <source src="/assets/videos/pixels-video-1-min.mp4" />
+    </video>
+    <video controls muted autoplay>
+      <source src="/assets/videos/pixels-video-2-min.mp4" />
+    </video>
+    <video controls muted autoplay>
+      <source src="/assets/videos/pixels-video-3-min.mp4" />
+    </video>
+    <video controls muted autoplay>
+      <source src="/assets/videos/pixels-video-4-min.mp4" />
+    </video>
+    <video controls muted autoplay>
+      <source src="/assets/videos/pixels-video-5-min.mp4" />
+    </video>
+  </div>
+</article>
+<script></script>

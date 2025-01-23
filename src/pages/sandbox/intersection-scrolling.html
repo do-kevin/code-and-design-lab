@@ -1,0 +1,210 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body style="margin: 0">
+    <slot />
+  </body>
+</html>
+<style>
+  .infinite-video-scroller img,
+  .infinite-video-scroller video {
+    width: 100%;
+  }
+  .infinite-video-scroller .scroll-item {
+    max-width: 400px;
+    /* margin-right: 1rem; */
+  }
+</style>
+<article class="infinite-video-scroller" style="position: relative">
+  <button id="stop-btn">stop</button>
+  <button id="play-btn">play</button>
+  <div
+    class="scroll-container"
+    style="
+      display: flex;
+      overflow-x: hidden;
+      padding-bottom: 2rem;
+      align-items: flex-start;
+    "
+  >
+    <div class="scroll-item" style="background-color: pink">
+      <video autoplay muted loop controls>
+        <source src="/assets/videos/pixels-video-1-min.mp4" />
+      </video>
+    </div>
+    <div class="scroll-item" style="background-color: pink">
+      <video autoplay muted loop controls>
+        <source src="/assets/videos/pixels-video-2-min.mp4" />
+      </video>
+    </div>
+    <div class="scroll-item" style="background-color: pink">
+      <video autoplay muted loop controls>
+        <source src="/assets/videos/pixels-video-3-min.mp4" />
+      </video>
+    </div>
+    <div class="scroll-item" style="background-color: pink">
+      <video autoplay muted loop controls>
+        <source src="/assets/videos/pixels-video-4-min.mp4" />
+      </video>
+    </div>
+    <div class="scroll-item" style="background-color: pink">
+      <video autoplay muted loop controls>
+        <source src="/assets/videos/pixels-video-5-min.mp4" />
+      </video>
+    </div>
+  </div>
+</article>
+<script>
+  console.log("init 0");
+  (function () {
+    const initScroller = function () {
+      let defaultSpeed = 8;
+      let speed = 8;
+
+      document
+        .querySelector("#stop-btn")
+        .addEventListener("click", function () {
+          speed = 0;
+        });
+      document
+        .querySelector("#play-btn")
+        .addEventListener("click", function () {
+          speed = defaultSpeed;
+        });
+
+      const scrollContainer = document.querySelector(".scroll-container");
+      let scrollItems = document.querySelectorAll(
+        ".infinite-video-scroller .scroll-item",
+      );
+
+      scrollItems = Array.from(scrollItems);
+
+      console.log("scrollItems: ", scrollItems);
+
+      function ensureMediaLoaded() {
+        const mediaElements = scrollItems.flatMap((item) =>
+          Array.from(item.querySelectorAll("img, video")),
+        );
+
+        console.log("mediaElements", mediaElements);
+
+        const mediaPromises = mediaElements.map((media) => {
+          if (media.tagName === "VIDEO") {
+            return new Promise((resolve) => {
+              if (media.readyState >= 3) {
+                resolve();
+              } else {
+                media.addEventListener("loadeddata", resolve, { once: true });
+              }
+            });
+          } else if (media.tagName === "IMG") {
+            return new Promise((resolve) => {
+              if (media.complete) {
+                resolve();
+              } else {
+                media.addEventListener("load", resolve, { once: true });
+              }
+            });
+          }
+          return Promise.resolve();
+        });
+
+        return Promise.all(mediaPromises);
+      }
+
+      const positions = [];
+      const initialPositions = [];
+
+      ensureMediaLoaded().then(() => {
+        console.log("width: ", scrollContainer.getBoundingClientRect().width);
+        scrollItems.forEach((item, index) => {
+          const itemWidth = item.getBoundingClientRect().width;
+
+          if (index === 0) {
+            positions[index] = itemWidth * index;
+            item.style.transform = `translateX(${positions[index]}px)`;
+            return;
+          } else {
+            positions[index] = (itemWidth * index) / 2000;
+            item.style.transform = `translateX(${positions[index]}px)`;
+          }
+        });
+
+        console.log(positions);
+
+        function doScrolling() {
+          const nextPosition = scrollContainer.getBoundingClientRect().width;
+
+          scrollItems.forEach((item, index) => {
+            const itemWidth = item.getBoundingClientRect().width;
+
+            positions[index] -= speed;
+
+            if (index === 0 && positions[index] < -400) {
+              //   positions[index] = nextPosition + itemWidth * index;
+              positions[index] = nextPosition;
+
+              item.style.transform = `translateX(${positions[index]}px)`;
+              return;
+            }
+
+            if (index === 1 && positions[index] < -800) {
+              positions[index] = nextPosition - (400 + 8);
+
+              item.style.transform = `translateX(${positions[index]}px)`;
+              return;
+            }
+
+            if (index === 2 && positions[index] < -1200) {
+              positions[index] = nextPosition - (800 + 8);
+
+              item.style.transform = `translateX(${positions[index]}px)`;
+              return;
+            }
+
+            if (index === 3 && positions[index] < -1600) {
+              positions[index] = nextPosition - (1200 + 12);
+
+              item.style.transform = `translateX(${positions[index]}px)`;
+              return;
+            }
+
+            if (index === 4 && positions[index] < -2000) {
+              positions[index] = nextPosition - (1600 + 12);
+
+              item.style.transform = `translateX(${positions[index]}px)`;
+              return;
+            }
+
+            item.style.transform = `translateX(${positions[index]}px)`;
+          });
+
+          console.log(positions);
+
+          requestAnimationFrame(doScrolling);
+        }
+
+        doScrolling();
+      });
+    };
+
+    if (
+      document.readyState === "loading" ||
+      document.readyState === "complete"
+    ) {
+      initScroller();
+      return null;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      initScroller();
+    });
+  })();
+</script>
