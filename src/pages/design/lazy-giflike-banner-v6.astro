@@ -195,6 +195,21 @@ import Layout from "../../layouts/Layout.astro";
       display: block;
     }
 
+    article[data-enable-accessibility="true"].lazy-side-by-side .headline,
+    article[data-enable-accessibility="true"].lazy-side-by-side .copy {
+      background: #fff;
+      color: #000;
+      padding: 0.5rem 1rem;
+    }
+
+    article[data-enable-accessibility="true"].lazy-side-by-side
+      .call-to-action:hover,
+    article[data-enable-accessibility="true"].lazy-side-by-side
+      .call-to-action:active {
+      outline: 2px solid red;
+      outline-offset: 2px;
+    }
+
     .lazy-side-by-side .slide-btn {
       height: 30px;
       width: 30px;
