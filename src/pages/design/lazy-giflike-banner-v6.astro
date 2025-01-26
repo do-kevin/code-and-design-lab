@@ -381,14 +381,14 @@ import Layout from "../../layouts/Layout.astro";
             class="d-flex"
             style="flex-direction: row-reverse; align-items: center; background-color: #4d4d4d"
           >
-            <button id="play-btn">
-              <span>&#9654;</span>
+            <button id="play-btn" aria-label="Play or pause button">
+              <span aria-hidden="true">&#9654;</span>
             </button>
             <div class="control-buttons d-flex" style="gap: 5px">
-              <button class="slide-btn">1</button>
-              <button class="slide-btn">2</button>
-              <button class="slide-btn">3</button>
-              <button class="slide-btn">4</button>
+              <button class="slide-btn" aria-label="Play slide 1">1</button>
+              <button class="slide-btn" aria-label="Play slide 2">2</button>
+              <button class="slide-btn" aria-label="Play slide 3">3</button>
+              <button class="slide-btn" aria-label="Play slide 4">4</button>
             </div>
           </div>
         </div>
@@ -470,7 +470,7 @@ import Layout from "../../layouts/Layout.astro";
         playBtn.querySelector("span").innerHTML = "&#9654;";
       }
 
-      function generateSlideButtons() {
+      function addSlideClickHandlers() {
         const slideBtns = document.querySelectorAll(
           ".lazy-side-by-side .slide-btn",
         );
@@ -525,7 +525,7 @@ import Layout from "../../layouts/Layout.astro";
         nextBtn.addEventListener("click", goToNextSlide);
       }
 
-      function initBanner() {
+      function initSideBySide() {
         if (!state.observerFinished) {
           const _lozad = lozad(".lozad-2025-01-25-load", {
             load: function (el) {
@@ -553,7 +553,7 @@ import Layout from "../../layouts/Layout.astro";
           _lozad.observe();
         }
         initPlayButton();
-        generateSlideButtons();
+        addSlideClickHandlers();
         showSlide(0);
       }
 
@@ -561,9 +561,9 @@ import Layout from "../../layouts/Layout.astro";
         document.readyState === "complete" ||
         document.readyState === "interactive"
       ) {
-        initBanner();
+        initSideBySide();
       } else {
-        document.addEventListener("DOMContentLoaded", initBanner);
+        document.addEventListener("DOMContentLoaded", initSideBySide);
       }
     })();
   </script>
