@@ -1,5 +1,5 @@
 ---
-import Layout from "../../../../layouts/Layout.astro";
+import Layout from "../../layouts/Layout.astro";
 ---
 
 <style>
@@ -9,8 +9,8 @@ import Layout from "../../../../layouts/Layout.astro";
 </style>
 <Layout title="Lazyloading Banner">
   <style>
-    .lazyloading-banner,
-    .lazyloading-banner * {
+    .lazy-side-by-side,
+    .lazy-side-by-side * {
       box-sizing: border-box;
       font-family:
         system-ui,
@@ -27,27 +27,27 @@ import Layout from "../../../../layouts/Layout.astro";
       text-align: center;
       color: #000;
     }
-    .lazyloading-banner img {
+    .lazy-side-by-side img {
       max-width: 100%;
     }
-    .lazyloading-banner .d-flex {
+    .lazy-side-by-side .d-flex {
       display: flex;
     }
-    .lazyloading-banner .position-relative {
+    .lazy-side-by-side .position-relative {
       position: relative;
     }
-    .lazyloading-banner .hidden {
+    .lazy-side-by-side .hidden {
       display: none;
     }
-    .lazyloading-banner .container {
+    .lazy-side-by-side .container {
       flex-direction: column;
       position: relative;
     }
-    .lazyloading-banner .left-side,
-    .lazyloading-banner .right-side {
+    .lazy-side-by-side .left-side,
+    .lazy-side-by-side .right-side {
       width: 100%;
     }
-    .lazyloading-banner .content {
+    .lazy-side-by-side .content {
       position: absolute;
       top: 0;
       width: 100%;
@@ -57,20 +57,20 @@ import Layout from "../../../../layouts/Layout.astro";
       align-items: center;
       flex-direction: column;
     }
-    .lazyloading-banner .headline {
+    .lazy-side-by-side .headline {
       font-size: 30px;
       font-size: clamp(30px, 4vw, 48px);
       line-height: 1;
       font-weight: 600;
       margin-bottom: 1rem;
     }
-    .lazyloading-banner .copy {
+    .lazy-side-by-side .copy {
       margin-bottom: 1rem;
       font-weight: 600;
       font-size: 14px;
       font-size: clamp(14px, 2vw, 1rem);
     }
-    .lazyloading-banner .call-to-action {
+    .lazy-side-by-side .call-to-action {
       color: #fff;
       padding: 0.5rem 1.25rem;
       background: #000;
@@ -80,76 +80,76 @@ import Layout from "../../../../layouts/Layout.astro";
       border: 1px solid #000;
       transition: all 270ms;
     }
-    .lazyloading-banner .call-to-action:-webkit-any-link {
+    .lazy-side-by-side .call-to-action:-webkit-any-link {
       color: #fff;
       background: #000;
       text-decoration: none;
       border: 1px solid #000;
     }
-    .lazyloading-banner .call-to-action:active,
-    .lazyloading-banner .call-to-action:hover {
+    .lazy-side-by-side .call-to-action:active,
+    .lazy-side-by-side .call-to-action:hover {
       background: transparent;
       border: 1px solid #000;
       color: #000;
     }
-    .lazyloading-banner .call-to-action:active:-webkit-any-link,
-    .lazyloading-banner .call-to-action:hover:-webkit-any-link {
+    .lazy-side-by-side .call-to-action:active:-webkit-any-link,
+    .lazy-side-by-side .call-to-action:hover:-webkit-any-link {
       background: transparent;
       border: 1px solid #000;
       color: #000;
     }
     @media screen and (min-width: 768px) {
-      .lazyloading-banner .call-to-action {
+      .lazy-side-by-side .call-to-action {
         color: #000;
         background: #fff;
         border: 1px solid #fff;
       }
-      .lazyloading-banner .call-to-action:-webkit-any-link {
+      .lazy-side-by-side .call-to-action:-webkit-any-link {
         color: #000;
         background: #fff;
         border: 1px solid #fff;
       }
-      .lazyloading-banner .call-to-action:active,
-      .lazyloading-banner .call-to-action:hover {
+      .lazy-side-by-side .call-to-action:active,
+      .lazy-side-by-side .call-to-action:hover {
         color: #fff;
         background: transparent;
         border: 1px solid #fff;
       }
-      .lazyloading-banner .call-to-action:active:-webkit-any-link,
-      .lazyloading-banner .call-to-action:hover:-webkit-any-link {
+      .lazy-side-by-side .call-to-action:active:-webkit-any-link,
+      .lazy-side-by-side .call-to-action:hover:-webkit-any-link {
         color: #fff;
         background: transparent;
         border: 1px solid #fff;
       }
-      .lazyloading-banner,
-      .lazyloading-banner * {
+      .lazy-side-by-side,
+      .lazy-side-by-side * {
         color: #fff;
       }
-      .lazyloading-banner .container {
+      .lazy-side-by-side .container {
         flex-direction: row;
       }
-      .lazyloading-banner .left-side,
-      .lazyloading-banner .right-side {
+      .lazy-side-by-side .left-side,
+      .lazy-side-by-side .right-side {
         width: 50%;
       }
     }
 
-    .lazyloading-banner .blur img {
+    .lazy-side-by-side .blur img {
       filter: blur(4px);
       transform: scale(1.025);
       transition: filter 200ms ease-out;
     }
 
-    .lazyloading-banner .no-blur img {
+    .lazy-side-by-side .no-blur img {
       filter: blur(0);
       transform: scale(1);
     }
 
-    .lazyloading-banner .overflow-hidden {
+    .lazy-side-by-side .overflow-hidden {
       overflow: hidden;
     }
 
-    .lazyloading-banner #play-btn {
+    .lazy-side-by-side #play-btn {
       position: absolute;
       right: 0;
       bottom: 0;
@@ -161,7 +161,7 @@ import Layout from "../../../../layouts/Layout.astro";
       cursor: pointer;
     }
 
-    .lazyloading-banner #play-btn span {
+    .lazy-side-by-side #play-btn span {
       background: hsla(0, 0%, 0%, 30%);
       color: #fff;
       padding: 8px 4px;
@@ -170,30 +170,51 @@ import Layout from "../../../../layouts/Layout.astro";
       height: 32px;
     }
 
-    .lazyloading-banner #play-btn:hover span,
-    .lazyloading-banner #play-btn:active span {
+    .lazy-side-by-side #play-btn:hover span,
+    .lazy-side-by-side #play-btn:active span {
       background: hsla(0, 0%, 0%, 50%);
     }
 
-    .lazyloading-banner #play-btn:focus span {
+    .lazy-side-by-side #play-btn:focus span {
       outline: none;
       box-shadow:
         0 0 0 2px hsl(0deg 0% 0% / 30%),
         0 0 3px 5px #85c1ff;
     }
+    .lazy-side-by-side .controls {
+      display: none;
+    }
+    article[data-enable-accessibility="true"].lazy-side-by-side .controls {
+      display: block;
+    }
+    .control-buttons {
+      border: 1px solid lime;
+    }
+    .slide-btn {
+      padding: 10px 15px;
+      margin: 5px;
+      background-color: #000;
+      color: #fff;
+      border: 1px solid #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .slide-btn:hover {
+      background-color: #fff;
+      color: #000;
+    }
   </style>
-  <article class="lazyloading-banner">
+  <article class="lazy-side-by-side" data-enable-accessibility="true">
     <div class="container d-flex position-relative">
       <div
         class="overflow-hidden left-side position-relative d-flex"
-        style="min-height: 275px"
+        style="min-height: 275px; flex-direction: column"
       >
-        <button id="play-btn">
-          <span>&#9654;</span>
-        </button>
         <a class="" aria-label="" href="#" style="line-height: 0; width: 100%">
           <picture
-            class="blur lozad-2024-04-14-load slide slide--first"
+            class="blur lozad-2025-01-25-load slide slide--first"
             style="min-height: 275px"
           >
             <source
@@ -205,7 +226,7 @@ import Layout from "../../../../layouts/Layout.astro";
               media="(max-width: 767px)"
             />
             <img
-              class="lozad-2024-04-14-load"
+              class="lozad-2025-01-25-load"
               src="/assets/images/banner/Frame_1_M_Placeholder_MIN.jpg"
               data-src="/assets/images/banner/Frame_1_M.jpg"
               alt="Your alt text"
@@ -265,14 +286,32 @@ import Layout from "../../../../layouts/Layout.astro";
           </picture>
         </a>
         <div class="controls">
-          <button>Play</button>
+          <div
+            style="    position: absolute;
+      width: 100%;
+      display: flex
+  ;
+      justify-content: space-between;
+      top: calc(50% - 22px);
+      padding-left: 1rem;
+      padding-right: 1rem;"
+          >
+            <button id="prev-btn">Prev</button>
+            <button id="next-btn">Next</button>
+          </div>
+          <div>
+            <button id="play-btn">
+              <span>&#9654;</span>
+            </button>
+            <div class="control-buttons"></div>
+          </div>
         </div>
       </div>
       <div
         class="right-side position-relative overflow-hidden"
-        style="min-height: 275px"
+        style="min-height: 275px;"
       >
-        <picture class="blur lozad-2024-04-14-load" style="min-height: 275px">
+        <picture class="blur lozad-2025-01-25-load" style="min-height: 275px">
           <source
             data-srcset="/assets/images/banner/Frame_Background_D.jpg"
             media="(min-width: 768px)"
@@ -282,7 +321,7 @@ import Layout from "../../../../layouts/Layout.astro";
             media="(max-width: 767px)"
           />
           <img
-            class="lozad-2024-04-14-load"
+            class="lozad-2025-01-25-load"
             src="/assets/images/banner/Frame_Background_M_Placeholder_MIN.jpg"
             data-src="/assets/images/banner/Frame_Background_M.jpg"
             alt=""
@@ -321,65 +360,115 @@ import Layout from "../../../../layouts/Layout.astro";
   ></script>
   <script type="text/javascript">
     (function () {
-      var slider = new customSlider({
-        targetClassName: ".lazyloading-banner .slide",
+      const slider = new customSlider({
+        targetClassName: ".lazy-side-by-side .slide",
       });
 
-      var state = {
+      const state = {
         observerFinished: false,
-        sliderPause: false,
+        sliderPaused: false,
         addedListener: false,
+        currentSlide: 0,
       };
 
-      const _lozad = lozad(".lozad-2024-04-14-load", {
-        load: function (el) {
-          if (el.nodeName === "IMG") {
-            const sourceElements = el.parentNode.querySelectorAll("source");
+      const slides = document.querySelectorAll(".lazy-side-by-side .slide");
+      const controlsContainer = document.querySelector(
+        ".lazy-side-by-side .control-buttons",
+      );
+      const playBtn = document.getElementById("play-btn");
+      const prevBtn = document.getElementById("prev-btn");
+      const nextBtn = document.getElementById("next-btn");
 
-            sourceElements.forEach((source) => {
-              source.srcset = source.dataset.srcset;
-            });
-            el.src = el.dataset.src;
-          }
-          el.onload = function () {
-            el.parentNode.classList.add("no-blur");
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("hidden", i !== index);
+        });
+        state.currentSlide = index;
+        pauseSlider();
+      }
 
-            if (
-              el.parentNode.classList.contains("slide--first") &&
-              !state.observerFinished
-            ) {
-              slider.start();
-              _lozad.observer.disconnect();
-              state.observerFinished = true;
-            }
-          };
-        },
-      });
+      function generateSlideButtons() {
+        controlsContainer.innerHTML = "";
+        slides.forEach((slide, index) => {
+          const btn = document.createElement("button");
+          btn.innerText = index + 1;
+          btn.setAttribute("data-index", index);
+          btn.classList.add("slide-btn");
+          btn.addEventListener("click", function () {
+            showSlide(index);
+          });
+          controlsContainer.appendChild(btn);
+        });
+      }
 
-      var playAndPause = function () {
+      function pauseSlider() {
+        slider.stop();
+        state.sliderPaused = true;
+        playBtn.querySelector("span").innerHTML = "&#9654;"; // Play icon
+      }
+
+      function goToNextSlide() {
+        pauseSlider();
+        let nextIndex = (state.currentSlide + 1) % slides.length;
+        showSlide(nextIndex);
+      }
+
+      function goToPrevSlide() {
+        pauseSlider();
+        let prevIndex =
+          (state.currentSlide - 1 + slides.length) % slides.length;
+        showSlide(prevIndex);
+      }
+
+      function togglePlayPause() {
         if (state.sliderPaused) {
           slider.start();
-          this.querySelector("span").innerHTML = "&#9654;";
+          playBtn.querySelector("span").innerHTML = "&#9208;"; // Pause icon
         } else {
-          slider.stop();
-          this.querySelector("span").innerHTML = "&#9208;";
+          pauseSlider();
         }
         state.sliderPaused = !state.sliderPaused;
-      };
+      }
 
       function initPlayButton() {
-        var toggleButton = document.getElementById("play-btn");
         if (!state.addedListener) {
-          toggleButton.addEventListener("click", playAndPause);
+          playBtn.addEventListener("click", togglePlayPause);
+          prevBtn.addEventListener("click", goToPrevSlide);
+          nextBtn.addEventListener("click", goToNextSlide);
           state.addedListener = true;
         }
       }
 
       function initBanner() {
         if (!state.observerFinished) {
+          const _lozad = lozad(".lozad-2025-01-25-load", {
+            load: function (el) {
+              if (el.nodeName === "IMG") {
+                const sourceElements = el.parentNode.querySelectorAll("source");
+                sourceElements.forEach((source) => {
+                  source.srcset = source.dataset.srcset;
+                });
+                el.src = el.dataset.src;
+              }
+              el.onload = function () {
+                el.parentNode.classList.add("no-blur");
+
+                if (
+                  el.parentNode.classList.contains("slide--first") &&
+                  !state.observerFinished
+                ) {
+                  slider.start();
+                  _lozad.observer.disconnect();
+                  state.observerFinished = true;
+                }
+              };
+            },
+          });
           _lozad.observe();
         }
         initPlayButton();
+        generateSlideButtons();
+        showSlide(0);
       }
 
       if (
@@ -387,9 +476,9 @@ import Layout from "../../../../layouts/Layout.astro";
         document.readyState === "interactive"
       ) {
         initBanner();
-        return null;
+      } else {
+        document.addEventListener("DOMContentLoaded", initBanner);
       }
-      document.addEventListener("DOMContentLoaded", initBanner);
     })();
   </script>
 </Layout>
