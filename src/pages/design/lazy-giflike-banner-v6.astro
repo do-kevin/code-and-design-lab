@@ -7,7 +7,7 @@ import Layout from "../../layouts/Layout.astro";
     margin: 0;
   }
 </style>
-<Layout title="Lazyloading Banner">
+<Layout title="Lazyloading Side by Side">
   <style>
     .lazy-side-by-side,
     .lazy-side-by-side * {
@@ -36,6 +36,9 @@ import Layout from "../../layouts/Layout.astro";
     .lazy-side-by-side .position-relative {
       position: relative;
     }
+    .lazy-side-by-side .position-absolute {
+      position: absolute;
+    }
     .lazy-side-by-side .hidden {
       display: none;
     }
@@ -48,7 +51,6 @@ import Layout from "../../layouts/Layout.astro";
       width: 100%;
     }
     .lazy-side-by-side .content {
-      position: absolute;
       top: 0;
       width: 100%;
       padding: 1rem 15px;
@@ -63,6 +65,7 @@ import Layout from "../../layouts/Layout.astro";
       line-height: 1;
       font-weight: 600;
       margin-bottom: 1rem;
+      margin-top: 0;
     }
     .lazy-side-by-side .copy {
       margin-bottom: 1rem;
@@ -89,14 +92,14 @@ import Layout from "../../layouts/Layout.astro";
     .lazy-side-by-side .call-to-action:active,
     .lazy-side-by-side .call-to-action:hover {
       background: transparent;
-      border: 1px solid #000;
-      color: #000;
+      border: 1px solid #fff;
+      color: #fff;
     }
     .lazy-side-by-side .call-to-action:active:-webkit-any-link,
     .lazy-side-by-side .call-to-action:hover:-webkit-any-link {
       background: transparent;
-      border: 1px solid #000;
-      color: #000;
+      border: 1px solid #fff;
+      color: #fff;
     }
     @media screen and (min-width: 768px) {
       .lazy-side-by-side .call-to-action {
@@ -150,60 +153,143 @@ import Layout from "../../layouts/Layout.astro";
     }
 
     .lazy-side-by-side #play-btn {
+      border: none;
+      background: transparent;
+      outline: none;
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+
+    .lazy-side-by-side #play-btn:focus,
+    .lazy-side-by-side #play-btn:active {
+      outline: none;
+      box-shadow: none;
+    }
+
+    .lazy-side-by-side #play-btn span {
+      background: #dbdbdb;
+      border: 1px solid #dbdbdb;
+      color: #0f0f0f;
       width: 30px;
       height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .lazy-side-by-side #play-btn:hover span,
     .lazy-side-by-side #play-btn:active span {
-      background: hsla(0, 0%, 0%, 50%);
+      border-color: red;
     }
 
     .lazy-side-by-side #play-btn:focus span {
-      outline: none;
-      box-shadow:
-        0 0 0 2px hsl(0deg 0% 0% / 30%),
-        0 0 3px 5px #85c1ff;
+      box-shadow: none;
+      outline: #639af9 inset 3px;
+      outline-offset: 3px;
     }
+
     .lazy-side-by-side .controls {
       display: none;
     }
     article[data-enable-accessibility="true"].lazy-side-by-side .controls {
       display: block;
     }
-    .control-buttons {
-    }
-    .slide-btn {
-      background-color: red;
+
+    .lazy-side-by-side .slide-btn {
       height: 30px;
       width: 30px;
+      background-color: #101010;
+      color: #fff;
+      border: 1px solid #101010;
+      font-size: 1rem;
     }
 
-    .slide-btn:hover {
-      background-color: #fff;
-      color: #000;
+    .lazy-side-by-side .slide-btn:focus-visible,
+    .lazy-side-by-side #next-btn:focus-visible,
+    .lazy-side-by-side #prev-btn:focus-visible {
+      box-shadow: none;
+      outline: #639af9 inset 3px;
+      outline-offset: 3px;
     }
-    button {
-      background-color: red;
+
+    .lazy-side-by-side .slide-btn:hover,
+    .lazy-side-by-side .slide-btn:active {
+      border: 1px solid red;
     }
-    .slide-btn.active {
+    .lazy-side-by-side .slide-btn.active {
       background: white;
+      color: #000;
+      border: 1px solid #fff;
+    }
+    .lazy-side-by-side .caret {
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      bottom: 0;
+      display: inline-block;
+      height: 10px;
+      margin: auto;
+      padding: 3px;
+      top: 0;
+      width: 10px;
+    }
+    .lazy-side-by-side .caret.caret--right {
+      transform: rotate(315deg);
+      right: 26px;
+    }
+    .lazy-side-by-side .caret.caret--left {
+      transform: rotate(135deg);
+      left: 26px;
+    }
+    .lazy-side-by-side #next-btn,
+    .lazy-side-by-side #prev-btn {
+      width: 27px;
+      height: 60px;
+      border: 1px solid #000;
+      background-color: #000;
+    }
+    .lazy-side-by-side #next-btn:hover,
+    .lazy-side-by-side #next-btn:active,
+    .lazy-side-by-side #prev-btn:hover,
+    .lazy-side-by-side #prev-btn:active {
+      border: 1px solid red;
+    }
+    .lazy-side-by-side .anchor {
+      outline: none;
+      box-shadow: none;
+    }
+
+    .lazy-side-by-side .anchor:focus-visible .call-to-action {
+      box-shadow: none;
+      outline: #639af9 inset 3px;
+      outline-offset: 5px;
+      visibility: visible;
+      opacity: 1;
+      background: 0 0;
+      border: 1px solid #fff;
+      color: #fff;
     }
   </style>
-  <article class="lazy-side-by-side" data-enable-accessibility="true">
+  <article
+    class="lazy-side-by-side"
+    data-enable-accessibility="true"
+    aria-labelledby="title-RT5pCwH"
+    aria-describedby="description-RT5pCwH cta-RT5pCwH"
+  >
     <div class="container d-flex position-relative">
       <div
         class="overflow-hidden left-side position-relative d-flex"
         style="min-height: 275px; flex-direction: column"
       >
-        <a class="" aria-label="" href="#" style="line-height: 0; width: 100%">
-          <picture
-            class="blur lozad-2025-01-25-load slide slide--first"
-            style="min-height: 275px"
-          >
+        <a
+          aria-label="Shop the collection"
+          href="#"
+          style="line-height: 0; width: 100%"
+        >
+          <picture class="blur lozad-2025-01-25-load slide slide--first">
             <source
               data-srcset="/assets/images/banner/Frame_1_D.jpg"
               media="(min-width: 768px)"
+              sizes="(min-width: 768px) 50vw, 100vw"
             />
             <source
               data-srcset="/assets/images/banner/Frame_1_M.jpg"
@@ -225,10 +311,11 @@ import Layout from "../../layouts/Layout.astro";
               />
             </noscript>
           </picture>
-          <picture class="slide hidden" style="min-height: 376px">
+          <picture class="slide hidden">
             <source
               srcset="/assets/images/banner/Frame_2_D.jpg"
               media="(min-width: 768px)"
+              sizes="(min-width: 768px) 50vw, 100vw"
             />
             <img
               src="/assets/images/banner/Frame_2_M.jpg"
@@ -236,10 +323,11 @@ import Layout from "../../layouts/Layout.astro";
               alt=""
             />
           </picture>
-          <picture class="slide hidden" style="min-height: 275px">
+          <picture class="slide hidden">
             <source
               srcset="/assets/images/banner/Frame_3_D.jpg"
               media="(min-width: 768px)"
+              sizes="(min-width: 768px) 50vw, 100vw"
             />
             <img
               src="/assets/images/banner/Frame_3_M.jpg"
@@ -247,10 +335,11 @@ import Layout from "../../layouts/Layout.astro";
               alt=""
             />
           </picture>
-          <picture class="slide hidden" style="min-height: 275px">
+          <picture class="slide hidden">
             <source
               srcset="/assets/images/banner/Frame_4_D.jpg"
               media="(min-width: 768px)"
+              sizes="(min-width: 768px) 50vw, 100vw"
             />
             <img
               src="/assets/images/banner/Frame_4_M.jpg"
@@ -261,41 +350,41 @@ import Layout from "../../layouts/Layout.astro";
         </a>
         <div class="controls">
           <div
-            style="position: absolute; width: 100%; display: flex; justify-content: space-between; top: calc(50% - 22px); padding-left: 1rem; padding-right: 1rem"
+            class="d-flex position-absolute"
+            style="width: 100%; justify-content: space-between; top: calc(50% - 60px); padding-left: 1rem; padding-right: 1rem"
           >
-            <button id="prev-btn">Prev</button>
-            <button id="next-btn">Next</button>
+            <button id="prev-btn" aria-label="Previous slide"
+              ><i class="caret caret--left position-absolute" aria-hidden="true"
+              ></i></button
+            >
+            <button id="next-btn" aria-label="Next slide">
+              <i class="caret caret--right position-absolute" aria-hidden="true"
+              ></i>
+            </button>
           </div>
           <div
-            style="display: flex; flex-direction: row-reverse; gap: 3px; align-items: center; padding: 2px; background-color: #252525"
+            class="d-flex"
+            style="flex-direction: row-reverse; align-items: center; background-color: #4d4d4d"
           >
             <button id="play-btn">
               <span>&#9654;</span>
             </button>
-            <div class="control-buttons" style="display: flex; gap: 5px">
-              <button class="slide-btn" style="width: 30px; height: 30px;"
-                >1</button
-              >
-              <button class="slide-btn" style="width: 30px; height: 30px;"
-                >2</button
-              >
-              <button class="slide-btn" style="width: 30px; height: 30px;"
-                >3</button
-              >
-              <button class="slide-btn" style="width: 30px; height: 30px;"
-                >4</button
-              >
+            <div class="control-buttons d-flex" style="gap: 5px">
+              <button class="slide-btn">1</button>
+              <button class="slide-btn">2</button>
+              <button class="slide-btn">3</button>
+              <button class="slide-btn">4</button>
             </div>
           </div>
         </div>
       </div>
       <a
-        class="right-side position-relative overflow-hidden"
+        class="anchor right-side position-relative overflow-hidden"
         style="min-height: 275px;"
         href="#"
-        aria-label=""
+        aria-label="Shop the collections now"
       >
-        <picture class="blur lozad-2025-01-25-load" style="min-height: 275px">
+        <picture class="blur lozad-2025-01-25-load">
           <source
             data-srcset="/assets/images/banner/Frame_Background_D.jpg"
             media="(min-width: 768px)"
@@ -319,15 +408,15 @@ import Layout from "../../layouts/Layout.astro";
             />
           </noscript>
         </picture>
-        <div class="content d-flex">
-          <h2 class="headline">
+        <div class="content d-flex position-absolute">
+          <h2 class="headline" id="title-RT5pCwH">
             Be your<br />best self.
           </h2>
-          <p class="copy">
+          <p class="copy" id="description-RT5pCwH">
             Dive in and see our collections<br />
             and pick up your faves from our lineups.
           </p>
-          <span class="call-to-action"> SHOP NOW </span>
+          <span class="call-to-action" id="cta-RT5pCwH"> SHOP NOW </span>
         </div>
       </a>
     </div>
@@ -348,9 +437,9 @@ import Layout from "../../layouts/Layout.astro";
       };
 
       const slides = document.querySelectorAll(".lazy-side-by-side .slide");
-      const playBtn = document.getElementById("play-btn");
-      const prevBtn = document.getElementById("prev-btn");
-      const nextBtn = document.getElementById("next-btn");
+      const playBtn = document.querySelector(".lazy-side-by-side #play-btn");
+      const prevBtn = document.querySelector(".lazy-side-by-side #prev-btn");
+      const nextBtn = document.querySelector(".lazy-side-by-side #next-btn");
 
       function showSlide(index) {
         slides.forEach((slide, i) => {
@@ -363,11 +452,13 @@ import Layout from "../../layouts/Layout.astro";
       function pauseSlider() {
         slider.stop();
         state.sliderPaused = true;
-        playBtn.querySelector("span").innerHTML = "&#9654;"; // Play icon
+        playBtn.querySelector("span").innerHTML = "&#9654;";
       }
 
       function generateSlideButtons() {
-        const slideBtns = document.querySelectorAll(".slide-btn");
+        const slideBtns = document.querySelectorAll(
+          ".lazy-side-by-side .slide-btn",
+        );
 
         slides.forEach((_, index) => {
           const btn = slideBtns[index];
@@ -391,13 +482,13 @@ import Layout from "../../layouts/Layout.astro";
 
       function goToNextSlide() {
         pauseSlider();
-        let nextIndex = (state.currentSlide + 1) % slides.length;
+        const nextIndex = (state.currentSlide + 1) % slides.length;
         showSlide(nextIndex);
       }
 
       function goToPrevSlide() {
         pauseSlider();
-        let prevIndex =
+        const prevIndex =
           (state.currentSlide - 1 + slides.length) % slides.length;
         showSlide(prevIndex);
       }
@@ -406,7 +497,7 @@ import Layout from "../../layouts/Layout.astro";
         if (state.sliderPaused) {
           pauseSlider();
           slider.start();
-          playBtn.querySelector("span").innerHTML = "&#9208;"; // Pause icon
+          playBtn.querySelector("span").innerHTML = "&#9208;";
         } else {
           pauseSlider();
         }
