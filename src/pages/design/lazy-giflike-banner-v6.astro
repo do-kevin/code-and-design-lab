@@ -28,7 +28,7 @@ import Layout from "../../layouts/Layout.astro";
       color: #000;
     }
     .lazy-side-by-side img {
-      max-width: 100%;
+      width: 100%;
     }
     .lazy-side-by-side .d-flex {
       display: flex;
@@ -150,24 +150,8 @@ import Layout from "../../layouts/Layout.astro";
     }
 
     .lazy-side-by-side #play-btn {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      z-index: 99;
-      display: flex;
-      background: transparent;
-      border: none;
-      padding: 0.5rem;
-      cursor: pointer;
-    }
-
-    .lazy-side-by-side #play-btn span {
-      background: hsla(0, 0%, 0%, 30%);
-      color: #fff;
-      padding: 8px 4px;
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
     }
 
     .lazy-side-by-side #play-btn:hover span,
@@ -188,22 +172,22 @@ import Layout from "../../layouts/Layout.astro";
       display: block;
     }
     .control-buttons {
-      border: 1px solid lime;
     }
     .slide-btn {
-      padding: 10px 15px;
-      margin: 5px;
-      background-color: #000;
-      color: #fff;
-      border: 1px solid #fff;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
+      background-color: red;
+      height: 30px;
+      width: 30px;
     }
 
     .slide-btn:hover {
       background-color: #fff;
       color: #000;
+    }
+    button {
+      background-color: red;
+    }
+    .slide-btn.active {
+      background: white;
     }
   </style>
   <article class="lazy-side-by-side" data-enable-accessibility="true">
@@ -230,16 +214,12 @@ import Layout from "../../layouts/Layout.astro";
               src="/assets/images/banner/Frame_1_M_Placeholder_MIN.jpg"
               data-src="/assets/images/banner/Frame_1_M.jpg"
               alt="Your alt text"
-              height="275"
-              width="100%"
-              style="height: auto"
+              style="min-height: 275px; height: auto; width: 100%"
             />
             <noscript>
               <img
                 src="/assets/images/banner/Frame_1_M.jpg"
-                width="100%"
-                height="275"
-                style="height: auto"
+                style="min-height: 275px; height: auto; width: 100%"
                 loading="lazy"
                 alt=""
               />
@@ -252,9 +232,7 @@ import Layout from "../../layouts/Layout.astro";
             />
             <img
               src="/assets/images/banner/Frame_2_M.jpg"
-              width="100%"
-              height="275"
-              style="height: auto"
+              style="min-height: 275px; height: auto; width: 100%"
               alt=""
             />
           </picture>
@@ -265,9 +243,7 @@ import Layout from "../../layouts/Layout.astro";
             />
             <img
               src="/assets/images/banner/Frame_3_M.jpg"
-              width="100%"
-              height="275"
-              style="height: auto"
+              style="min-height: 275px; height: auto; width: 100%"
               alt=""
             />
           </picture>
@@ -278,38 +254,46 @@ import Layout from "../../layouts/Layout.astro";
             />
             <img
               src="/assets/images/banner/Frame_4_M.jpg"
-              width="100%"
-              height="275"
-              style="height: auto"
+              style="min-height: 275px; height: auto; width: 100%"
               alt=""
             />
           </picture>
         </a>
         <div class="controls">
           <div
-            style="    position: absolute;
-      width: 100%;
-      display: flex
-  ;
-      justify-content: space-between;
-      top: calc(50% - 22px);
-      padding-left: 1rem;
-      padding-right: 1rem;"
+            style="position: absolute; width: 100%; display: flex; justify-content: space-between; top: calc(50% - 22px); padding-left: 1rem; padding-right: 1rem"
           >
             <button id="prev-btn">Prev</button>
             <button id="next-btn">Next</button>
           </div>
-          <div>
+          <div
+            style="display: flex; flex-direction: row-reverse; gap: 3px; align-items: center; padding: 2px; background-color: #252525"
+          >
             <button id="play-btn">
               <span>&#9654;</span>
             </button>
-            <div class="control-buttons"></div>
+            <div class="control-buttons" style="display: flex; gap: 5px">
+              <button class="slide-btn" style="width: 30px; height: 30px;"
+                >1</button
+              >
+              <button class="slide-btn" style="width: 30px; height: 30px;"
+                >2</button
+              >
+              <button class="slide-btn" style="width: 30px; height: 30px;"
+                >3</button
+              >
+              <button class="slide-btn" style="width: 30px; height: 30px;"
+                >4</button
+              >
+            </div>
           </div>
         </div>
       </div>
-      <div
+      <a
         class="right-side position-relative overflow-hidden"
         style="min-height: 275px;"
+        href="#"
+        aria-label=""
       >
         <picture class="blur lozad-2025-01-25-load" style="min-height: 275px">
           <source
@@ -325,34 +309,27 @@ import Layout from "../../layouts/Layout.astro";
             src="/assets/images/banner/Frame_Background_M_Placeholder_MIN.jpg"
             data-src="/assets/images/banner/Frame_Background_M.jpg"
             alt=""
-            width="100%"
-            height="275"
-            style="height: auto"
+            style="min-height: 275px; height: auto; width: 100%"
           />
           <noscript>
             <img
               src="/assets/images/banner/Frame_Background_M.jpg"
               alt=""
-              width="100%"
-              height="275"
-              loading="lazy"
-              style="height: auto"
+              style="min-height: 275px; height: auto; width: 100%"
             />
           </noscript>
         </picture>
         <div class="content d-flex">
           <h2 class="headline">
-            <a href="#" aria-label="" style="text-decoration: none">
-              Be your<br />best self.
-            </a>
+            Be your<br />best self.
           </h2>
           <p class="copy">
             Dive in and see our collections<br />
             and pick up your faves from our lineups.
           </p>
-          <a class="call-to-action" href="#" aria-label=""> SHOP NOW </a>
+          <span class="call-to-action"> SHOP NOW </span>
         </div>
-      </div>
+      </a>
     </div>
   </article>
   <script type="text/javascript" src="/assets/lib/lozad.min.js"></script>
@@ -367,14 +344,10 @@ import Layout from "../../layouts/Layout.astro";
       const state = {
         observerFinished: false,
         sliderPaused: false,
-        addedListener: false,
         currentSlide: 0,
       };
 
       const slides = document.querySelectorAll(".lazy-side-by-side .slide");
-      const controlsContainer = document.querySelector(
-        ".lazy-side-by-side .control-buttons",
-      );
       const playBtn = document.getElementById("play-btn");
       const prevBtn = document.getElementById("prev-btn");
       const nextBtn = document.getElementById("next-btn");
@@ -387,24 +360,33 @@ import Layout from "../../layouts/Layout.astro";
         pauseSlider();
       }
 
-      function generateSlideButtons() {
-        controlsContainer.innerHTML = "";
-        slides.forEach((slide, index) => {
-          const btn = document.createElement("button");
-          btn.innerText = index + 1;
-          btn.setAttribute("data-index", index);
-          btn.classList.add("slide-btn");
-          btn.addEventListener("click", function () {
-            showSlide(index);
-          });
-          controlsContainer.appendChild(btn);
-        });
-      }
-
       function pauseSlider() {
         slider.stop();
         state.sliderPaused = true;
         playBtn.querySelector("span").innerHTML = "&#9654;"; // Play icon
+      }
+
+      function generateSlideButtons() {
+        const slideBtns = document.querySelectorAll(".slide-btn");
+
+        slides.forEach((_, index) => {
+          const btn = slideBtns[index];
+          btn.innerText = index + 1;
+          btn.setAttribute("data-index", index);
+          btn.addEventListener("click", function () {
+            pauseSlider();
+
+            btn.classList.add("active");
+
+            slideBtns.forEach((slideBtn, index2) => {
+              if (index !== index2) {
+                slideBtn.classList.remove("active");
+              }
+            });
+
+            showSlide(index);
+          });
+        });
       }
 
       function goToNextSlide() {
@@ -422,6 +404,7 @@ import Layout from "../../layouts/Layout.astro";
 
       function togglePlayPause() {
         if (state.sliderPaused) {
+          pauseSlider();
           slider.start();
           playBtn.querySelector("span").innerHTML = "&#9208;"; // Pause icon
         } else {
@@ -431,12 +414,9 @@ import Layout from "../../layouts/Layout.astro";
       }
 
       function initPlayButton() {
-        if (!state.addedListener) {
-          playBtn.addEventListener("click", togglePlayPause);
-          prevBtn.addEventListener("click", goToPrevSlide);
-          nextBtn.addEventListener("click", goToNextSlide);
-          state.addedListener = true;
-        }
+        playBtn.addEventListener("click", togglePlayPause);
+        prevBtn.addEventListener("click", goToPrevSlide);
+        nextBtn.addEventListener("click", goToNextSlide);
       }
 
       function initBanner() {
