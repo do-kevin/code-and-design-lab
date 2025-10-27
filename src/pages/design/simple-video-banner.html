@@ -1,0 +1,236 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body style="margin: 0">
+    <slot />
+  </body>
+</html>
+<style>
+  .my-simple-video-banner,
+  .my-simple-video-banner * {
+    box-sizing: border-box;
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      "Open Sans",
+      "Helvetica Neue",
+      sans-serif;
+    text-align: center;
+    color: #fff;
+  }
+  article[data-enable-accessibility="true"].my-simple-video-banner
+    .call-to-action:hover,
+  article[data-enable-accessibility="true"].my-simple-video-banner
+    .call-to-action:active {
+    outline: 2px solid red;
+    outline-offset: 2px;
+  }
+
+  article[data-enable-accessibility="true"].my-simple-video-banner .anchor {
+    position: relative;
+    width: auto;
+    margin-top: 1rem;
+  }
+
+  article[data-enable-accessibility="true"].my-simple-video-banner
+    .call-to-action {
+    margin-bottom: 0;
+  }
+
+  .my-simple-video-banner .anchor {
+    outline: none;
+    box-shadow: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: flex-end;
+    text-decoration: none;
+  }
+
+  .my-simple-video-banner .anchor:focus-visible .call-to-action {
+    box-shadow: none;
+    outline: #639af9 inset 3px;
+    outline-offset: 5px;
+    visibility: visible;
+    opacity: 1;
+    background: white;
+    border: 1px solid white;
+    color: black;
+  }
+  .call-to-action {
+    border-radius: 25px;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    background: #000;
+    padding: 0.75rem 1.5rem;
+  }
+  .my-simple-video-banner .call-to-action:hover,
+  .my-simple-video-banner .call-to-action:active {
+    background: 0 0;
+    border: 1px solid black;
+    color: black;
+  }
+</style>
+<article
+  class="my-simple-video-banner"
+  data-enable-accessibility="false"
+  aria-labelledby="title-RT5pCwH"
+  style="position: relative"
+>
+  <video
+    id="video-player"
+    width="100%"
+    autoplay=""
+    loop=""
+    muted=""
+    playsinline=""
+    poster="https://cdn.media.amplience.net/v/elfcosmetics/lip-oil-launch-spotlight-2024-11-background-video_D?fmt=auto"
+  >
+    <source
+      id="webm"
+      type="video/webm; codecs='vp9'"
+      src="/assets/videos/simple-banner-video_D.mp4"
+    />
+    <source
+      id="hevc"
+      type="video/mp4; codecs='hev1'"
+      src="/assets/videos/simple-banner-video_D.mp4"
+    />
+    <source
+      id="mp4"
+      type="video/mp4"
+      src="/assets/videos/simple-banner-video_D.mp4"
+    />
+    Your browser does not support video tag. The video is a looping scene of the
+    patterns animating.
+  </video>
+  <a
+    id="title-RT5pCwH"
+    class="anchor"
+    href="https://www.youtube.com/"
+    aria-label="Shop the product now"
+  >
+    <span class="call-to-action"> SHOP NOW </span></a
+  >
+</article>
+<script>
+  (function () {
+    function debounce(func, wait, immediate) {
+      let timeout;
+      return function () {
+        let context = this,
+          args = arguments;
+        let later = function () {
+          timeout = null;
+          if (!immediate) func.apply(context, args);
+        };
+        let callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+      };
+    }
+    const initSimpleVideoBanner = function () {
+      const isAllyModeEnabled = document
+        .querySelector("body")
+        .classList.contains("enabled-accessbility");
+
+      const videoPlayerElem = document.querySelector(
+        ".my-simple-video-banner #video-player",
+      );
+
+      if (isAllyModeEnabled) {
+        videoPlayerElem.setAttribute("controls", true);
+      } else {
+        videoPlayerElem.removeAttribute("controls");
+      }
+
+      const videoSource = {
+        desktop: {
+          thumbnail: "",
+          mpeg: {
+            src: "/assets/videos/simple-banner-video_D.mp4",
+          },
+          hevc: {
+            src: "/assets/videos/simple-banner-video_D.mp4",
+          },
+          webm: {
+            src: "/assets/videos/simple-banner-video_D.mp4",
+          },
+        },
+        mobile: {
+          thumbnail: "",
+          mpeg: {
+            src: "/assets/videos/simple-banner-video_M.mp4",
+          },
+          hevc: {
+            src: "/assets/videos/simple-banner-video_M.mp4",
+          },
+          webm: {
+            src: "/assets/videos/simple-banner-video_M.mp4",
+          },
+        },
+      };
+      const mpegSource = document.querySelector(
+        ".my-simple-video-banner #video-player #mp4",
+      );
+      const hevcSource = document.querySelector(
+        ".my-simple-video-banner #video-player #hevc",
+      );
+      const webmSource = document.querySelector(
+        ".my-simple-video-banner #video-player #webm",
+      );
+      function updateSources(mode = "mobile") {
+        console.log(videoSource[mode].webm.src);
+        if (webmSource.src !== videoSource[mode].webm.src) {
+          webmSource.src = videoSource[mode].webm.src;
+          videoPlayerElem.load();
+        }
+        if (hevcSource.src !== videoSource[mode].hevc.src) {
+          hevcSource.src = videoSource[mode].hevc.src;
+          videoPlayerElem.load();
+        }
+        if (mpegSource.src !== videoSource[mode].mpeg.src) {
+          mpegSource.src = videoSource[mode].mpeg.src;
+          videoPlayerElem.load();
+        }
+      }
+      if (window.innerWidth < 768) {
+        videoPlayerElem.poster = videoSource.mobile.thumbnail;
+        updateSources("mobile");
+      } else {
+        videoPlayerElem.poster = videoSource.desktop.thumbnail;
+        updateSources("desktop");
+      }
+    };
+    if (
+      document.readyState === "complete" ||
+      document.readyState === "interactive"
+    ) {
+      initSimpleVideoBanner();
+      window.addEventListener("resize", debounce(initSimpleVideoBanner, 170));
+      return null;
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+      initSimpleVideoBanner();
+      window.addEventListener("resize", debounce(initSimpleVideoBanner, 170));
+    });
+  })();
+</script>
