@@ -1,0 +1,190 @@
+<style>
+body {
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.rotating-button {
+    display: inline-block;
+    text-decoration: none;
+    color: #242424;
+    font-size: 1rem;
+    border: 1px solid #242424;
+    padding: 0.75rem 1.5rem;
+    /* could be important? */
+    position: relative;
+    overflow: hidden;
+}
+.rotating-button:before {
+    content: "";
+    position: absolute;
+    left: 0; 
+    top: 0; 
+    background-color: rgb(252, 69, 69);
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    transform-origin: bottom left;
+    transform: rotate(-90deg);
+    transition: transform 1s;
+}
+.rotating-button:hover:before {
+    transform: rotate(0deg);
+}
+
+.animated-card {
+    width: 375px;
+    height: 400px;
+    background: rgb(126,159,176);
+    background: linear-gradient(47deg, rgba(126,159,176,1) 0%, rgba(66,233,122,1) 100%);
+    color: #fdfdfd;
+    padding: 0.5rem 1rem;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+.animated-card h2 {
+    margin: 1rem;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    text-align: right;
+    font-size: 1.75rem;
+}
+.animated-card p {
+    font-size: 1.25rem;
+}
+.animated-card .first-frame {
+    position: absolute;
+    background: #242424;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    padding: 1rem;
+    box-sizing: border-box;
+    transform: rotate(90deg);
+    transform-origin: bottom right;
+    transition: transform 1s;
+    z-index: 1;
+  
+}
+
+.animated-card:hover .first-frame,
+.animated-card:active .first-frame {
+    transform: rotate(0);
+}
+
+.animated-card .second-frame {
+    position: absolute;
+    background: #fe456b;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    padding: 1rem;
+    box-sizing: border-box;
+    transform: rotate(270deg);
+    transform-origin: top left;
+    transition: transform 1s;
+    z-index: 1;
+}
+
+
+.animated-card .first-frame:active + .second-frame {
+    transform: rotate(0);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .animated-card:hover .first-frame {
+        transform: rotate(0deg);
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .animated-card:hover .first-frame {
+        transform: rotate(0deg);
+    }
+
+    .animated-card .first-frame:active + .second-frame {
+       transform: rotate(360deg);
+    }
+}
+
+.flashcard {
+    display: inline-block;
+}
+
+.flashcard .container {
+    height: 600px;
+    width: 400px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: all 0.8s ease-in;
+}
+
+.flashcard.flip .container { transform: rotateY(180deg); }
+
+.flashcard .container .front {
+    background: rgb(147, 147, 245);
+    backface-visibility: hidden;
+    z-index: 1;
+}
+
+.flashcard .container .front,
+.flashcard .container .back {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: bold;
+    font-size: clamp(20px, 4vw, 48px);
+    cursor: pointer;
+}
+
+.flashcard .container .back {
+    background-color: rgb(250, 216, 216);
+    transform: rotateY(180deg);
+}
+</style>
+<article style="padding: 2rem 0">
+    <h1>
+        Rotation Animation Practice
+    </h1>
+    <a class="rotating-button" href="/animations/rotation" style="font-weight: bold">SHOP NOW</a>
+    <hr />
+    <article class="animated-card">
+        <h2>
+            Unholy Hydration Cream
+        </h2>
+        <div class="first-frame">
+            <p>
+                Risen from the underworld to be shared with many. Persephone invites you to follow her routine when it comes to skin hygiene.
+            </p>
+        </div>
+        <div class="second-frame">
+            <p>
+                The pomegranate enzymes and squalane will greatly smooth out and leave your skin smooth and hydrated.
+            </p>
+        </div>
+    </article>
+    <hr />
+    <article class="flashcard">
+        <div class="container">
+            <div class="front">
+                FRONT
+            </div>
+            <div class="back">
+                BACK
+            </div>
+        </div>
+    </article>
+</article>
+<script type="text/javascript">
+    document.querySelector(".flashcard").addEventListener("click", function () {
+        this.classList.toggle("flip");
+    });
+</script>
